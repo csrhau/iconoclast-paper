@@ -1,0 +1,20 @@
+\section{Introduction}
+
+The power draw of CMOS chips can be separated into distinct components as described by equation~\ref{eq:totpwr}. The most significant of these components are dynamic power and leakage power. Dynamic power is essentially the power consumed as logic gates change state while a processor performs work. Leakage power dissipation stems from the fact that at very small scales the insulating properties of silicon break down, allowing some current to flow (or leak) even when gates remain inactive. Other forms of power dissipation exist, however their effects are relatively minor. \todo{citation}
+
+
+\begin{equation}
+\label{eq:totpwr}
+P_{tot} = P_{dyn} + P_{leak} + P_{other}
+\end{equation}
+\begin{equation} 
+\label{eq:dynpwr}
+P_{dyn} \propto CV^{2}Af
+\end{equation}
+
+Equation~\ref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance (a property influenced by wire lengths of on-chip structures), $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency. Most of these terms are properties of the processor itself, however the activity factor loosely equates to processor workload. Finally, the $V$ and $f$ terms are linked and vary in tandem as higher clock frequencies require higher supply voltages to sustain them. 
+
+
+An important feature of the equations governing power draw is that only $P_{dyn}$ is directly influenced by software, in particular due to its inclusion of the $A$ term. Software can also indirectly effect both dynamic and leakage current if it triggers changes to clock frequency and therefore supply voltage through DVFS. \todo{Ensure define dvfs} \todo{reword this bit - no equations now}
+
+Historically, dynamic power has been the biggest contributor to $P_{tot}$, however leakage power has been on track to overtake it since the breakdown of Dennard Scaling.  Sub-threshold and gate-oxide leakage dominate total leakage current, and they both increase exponentially as transistors shrink. Process improvements like the introduction of high-k dielectric materials~\cite{jan:2009aa} have kept leakage power in check over the last decade, however there is no avoiding the fact that insulating properties will degrade as transistors get smaller.

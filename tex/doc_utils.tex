@@ -1,0 +1,18 @@
+%COMMANDS
+
+\newcommand{\todo}[1]{•}
+
+\ifdefined\DRAFT
+	\usepackage{color} %Used for colored text (TODO)
+	\renewcommand{\todo}[1]{{\color{red} TODO: {#1}}} % comment me out for prod  
+\fi 
+
+%COLOR LIST
+\ifdefined\pgfplotscreateplotcyclelist
+\pgfplotscreateplotcyclelist{mycolorlist}{%
+green\\
+red\\
+brown, densely dashed\\
+blue, densely dashed\\%
+}
+\fi
