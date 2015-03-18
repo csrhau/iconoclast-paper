@@ -3,7 +3,7 @@
 <%= data.headers.join(' & ') %> \\
 \midrule
 <% data.each do |row| -%>
-  <%= row.collect{|k, v| v}.join(' & ') %> \\
+  <%= row.collect{|k, v| sprintf('%.2f', v)}.join(' & ') %> \\
 <% end -%>
 \bottomrule
 \end{tabular}

@@ -7,7 +7,7 @@ class Parser
   def self.parse(args)
     options = Options.new
     opt_parser = OptionParser.new do |opts|
-      opts.banner = 'Usage: example.rb [args]'
+      opts.banner = 'Usage: ruby ruler.rb [args]'
       opts.on('-dFILE', '--data=FILE', 'Data Filename') { |f|  options.datafile = f }
       opts.on('-tFILE', '--template=FILE', 'Template Filename') { |f|  options.templatefile = f }
       opts.on('-oFILE', '--output=FILE', 'Output Filename') { |f| options.outfile = f }

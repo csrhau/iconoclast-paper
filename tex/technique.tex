@@ -1,7 +1,25 @@
 \section{Power/Runtime Optimized Software Envelope}
+\todo{reword}
+We define the range of values that activity factor can take whilst running a code as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$. By plotting lines with gradients $P_{\alpha}$ and $P_{\beta}$ in \figurename~\ref{fig:modeldraw} we establish a feasible performance envelope. This represents the set of all $(E_\theta, D_\theta)$ pairs for which $P_{\alpha}~<~P_\theta~<~P_{\beta}$, with no bounds placed on runtime, $D_\theta$. It should be clear that all code executions, and by extension their maximally-optimized logical equivalents, must be represented somewhere within this envelope. We label the point which corresponds to our original run as $\theta$.
+\begin{align}
+\frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} &= \frac{{P_{\lambda}}^m}{{D_{\lambda}}^{m+n}} \nonumber \\
+\implies {P_{\lambda}}^m &= \frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} \times {D_\lambda}^{m+n} \nonumber \\ 
+\implies {E_{\lambda}}^m &= \frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} \times {D_\lambda}^{m+n+1} \nonumber \\ 
+\implies E_{\lambda} &= (\frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} \times {D_\lambda}^{m+n+1})^{\frac{1}{m}} 
+\end{align}
+
+
 \begin{figure}
 \centering
 \input{plot/technique/plot_core}
 \caption{$ED^2P$ Code Optimization Space}
 \label{fig:modeldraw}
 \end{figure}
+The bounds describe above allow us to identify the area of the Energy/Runtime plane in which power-optimized versions of a given code may exist. We also add lines of constant time and power draw corresponding to the original code for the purpose of illustration. This allows us to subdivide \figurename~\ref{fig:modeldraw} into areas labelled as follows:
+\begin{enumerate}
+\item Power-only optimizations
+\item Power-mostly optimizations
+\item Time-mostly optimizations
+\item Time-only optimizations
+\item Performance Degradation
+\end{enumerate}
