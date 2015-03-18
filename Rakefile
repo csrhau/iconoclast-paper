@@ -2,7 +2,7 @@ TEX_FILES = Rake::FileList.new("**/*.tex")
 
 namespace :latex do
   desc "Compile Latex Paper"
-  file 'paper.pdf' => TEX_FILES do |texfile|
+  file 'paper.pdf' => TEX_FILES do |pdf|
     system("pdflatex paper.tex")
     system("bibtex paper.aux")
     system("pdflatex paper.tex")
