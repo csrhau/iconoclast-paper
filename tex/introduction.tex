@@ -1,6 +1,10 @@
 \section{Introduction}
 
-The power draw of CMOS chips can be separated into distinct components as described by equation~\ref{eq:totpwr}. The most significant of these components are dynamic power and leakage power. Dynamic power is essentially the power consumed as logic gates change state while a processor performs work. Leakage power dissipation stems from the fact that at very small scales the insulating properties of silicon break down, allowing some current to flow (or leak) even when gates remain inactive. Other forms of power dissipation exist, however their effects are relatively minor. \todo{citation}
+Minimizing power consumption has been a driving force in hardware design since the dawn of computing. Early valve-based systems from the late 1940s had power draws comparable to supercomputers in the current Top500 list and strained the limits of the power delivery and cooling technologies available at the time~\cite{birnbaum:2000aa}.
+
+Hardware development has always followed a pattern of producing incremental improvements to the same basic design until rapid escalation of power draw renders further improvements infeasible. When this happens, system architects must turn to new technologies to sustain progress. This pattern began in the 1950s when transistors replaced power-hungry thermionic valves, and led ultimately to the multi-core chips based on Complimentary Metal Oxide Semiconductor (CMOS) technology in use today.
+
+The power draw of CMOS chips can be divided into different sources as described by equation~\ref{eq:totpwr}. The most significant of these components are dynamic power and leakage power. Dynamic power is essentially the power consumed as logic gates change state while a processor performs work. Leakage power dissipation stems from the fact that at very small scales the insulating properties of silicon break down, allowing some current to leak out even when gates remain inactive. Other forms of power dissipation exist, however their effects are relatively minor. \todo{citation}
 
 
 \begin{equation}
