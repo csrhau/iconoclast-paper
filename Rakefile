@@ -1,6 +1,12 @@
+require 'rake/clean'
+
 TEX_FILES = Rake::FileList.new("**/*.tex").exclude('tab/tex/*.tex')
 # Remember to include all generated files in this list (as well as in tasks)
 GEN_FILES = ['tab/tex/power_of_cores_x_freq.tex', 'tab/tex/code_metrics.tex']
+
+
+CLEAN.include (%w[aux log blg bbl synctex.gz].map { |f| "**/*.#{f}" } )
+CLOBBER.include GEN_FILES + ['paper.pdf']
 
 namespace :latex do
   desc "Compile Latex Paper"
@@ -9,19 +15,6 @@ namespace :latex do
     system("bibtex paper.aux")
     system("pdflatex paper.tex")
     system("pdflatex paper.tex")
-  end
-  desc 'remove latex build cruft'
-  task :tidy do 
-    ['aux', 'log', 'blg', 'bbl', 'synctex.gz'].each do |ftype|
-      Rake::Task['admin:fileclean'].invoke(ftype)
-      Rake::Task['admin:fileclean'].reenable
-    end
-  end
-
-  desc 'remove all build artefacts'
-  task :clean => [:tidy, 'admin:genclean'] do
-    Rake::Task["admin:fileclean"].invoke('pdf')
-    Rake::Task["admin:fileclean"].reenable
   end
 
   namespace :tables do
@@ -35,22 +28,6 @@ namespace :latex do
     file 'tab/tex/code_metrics.tex' => ['tab/data/code_metrics.csv',
                                         'tab/tmpl/generic.erb']  do |t|
       ruby "./tab/ruler.rb -d#{t.prerequisites[0]} -t#{t.prerequisites[1]} -o#{t.name}"
-    end
-  end
-end
-
-namespace :admin do
-  desc 'delete one type of file globally'
-  task :fileclean, [:filetype] do |t, args|
-    Dir["**/*.#{args.filetype}"].each do |f|
-      File.unlink(f)
-    end
-  end
-
-  desc 'delete auto-generated tex files'
-  task :genclean do
-    Dir['tab/tex/**.tex'].each do |f|
-      File.unlink(f)
     end
   end
 end
