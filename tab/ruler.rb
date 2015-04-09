@@ -1,3 +1,6 @@
+# This program takes a csv datafile and an erb template and combines them.
+# The use case for this simple script is to produce latex tables from csv.
+#
 require 'csv'
 require 'erb'
 require 'optparse'
@@ -23,12 +26,17 @@ class Parser
   end
 end
 
-options = Parser.parse ARGV.empty? ? %w[--help] : ARGV
-data = CSV.read(options.datafile, headers:true)
-template = ERB.new(File.new(options.templatefile).read, nil, '-')
-output = template.result(binding)
-if options.outfile.nil?
-  puts output
-else
-  File.write(options.outfile, output)
+def process(args)
+  options = Parser.parse args.empty? ? %w[--help] : args
+  data = CSV.read(options.datafile, headers:true)
+  template = ERB.new(File.new(options.templatefile).read, nil, '-')
+  output = template.result(binding)
+  if options.outfile.nil?
+    puts output
+  else
+    File.write(options.outfile, output)
+  end
 end
+
+process ARGV
+
