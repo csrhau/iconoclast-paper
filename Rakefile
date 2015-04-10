@@ -38,7 +38,8 @@ namespace :standalone do
   desc 'builds all plots in standalone format (for development)'
   task :plots => PLOT_FILES
 
-  rule(%r{plot/.*/plot\.pdf} => [lambda { |fn| fn.sub(/\.pdf$/, '.tex') }]) do |t|
+  rule(%r{plot/.*/plot\.pdf} => [lambda { |fn| fn.sub(/plot\.pdf$/, 'plot_core.tex') },
+                                 lambda { |fn| fn.sub(/\.pdf$/, '.tex') }]) do |t|
     Dir.chdir((File.dirname(t.prerequisites.first))) do
       system('pdflatex plot.tex')
     end
