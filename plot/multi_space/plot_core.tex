@@ -1,0 +1,98 @@
+\usetikzlibrary{patterns}
+\usepgfplotslibrary{fillbetween}
+\begin{tikzpicture}
+  \begin{axis}[ticks = none, 
+    axis on top,
+    axis x line=bottom,
+    axis y line=left,
+  	xlabel={Runtime \emph{(s)}},
+    ylabel={Energy \emph{(J)}},    
+    xmin=0, xmax=50,
+    ymin=0, ymax=3000,
+    width=\linewidth,
+    legend style={legend pos=north west},
+    cycle list name=mycolorlist
+    ]
+
+    %% Model Parameters %%
+    \pgfmathsetmacro{\baselinepower}{30} % NOP code
+    \pgfmathsetmacro{\rooflinepower}{60}
+    \pgfmathsetmacro{\codepower}{(\baselinepower*3 + \rooflinepower*4) / 7}
+    \pgfmathsetmacro{\codetime}{30}
+    % Sadly, pgfplots sucks too much to calculate cube roots
+    \pgfmathsetmacro{\anodex}{26.20741}
+    \pgfmathsetmacro{\anodey}{\anodex * \baselinepower}
+    \pgfmathsetmacro{\cnodex}{34.34143}
+    \pgfmathsetmacro{\cnodey}{\cnodex * \baselinepower}
+    \pgfmathsetmacro{\tnodex}{27.25681}
+ 
+    %% Intermezzo Values %%
+    \pgfmathsetmacro{\codeenergy}{\codepower * \codetime}
+    \pgfmathsetmacro{\baselineenergy}{\baselinepower * \codetime}
+    \pgfmathsetmacro{\rooflineenergy}{\rooflinepower * \codetime}
+    \pgfmathsetmacro{\lowdisplayline}{(2 * \baselinepower + \codepower) / 3}
+    \pgfmathsetmacro{\highdisplayline}{(1 * \rooflinepower + 1 * \codepower) / 2}
+    \pgfmathsetmacro{\rooflinetime}{\codeenergy/\rooflinepower}
+    \pgfmathsetmacro{\baselinetime}{\codeenergy/\baselinepower}
+
+    % arguments: code power, code time, x - todo, apparently not supposed to do pgfmathparse
+    \pgfmathdeclarefunction{metricbound}{3}{%
+      \pgfmathparse{((#1 * #2^3) / #3^2)}%
+    }
+    \pgfmathdeclarefunction{definitionbound}{3}{%
+      \pgfmathparse{((#1 / #2^3) * #3^4)}%
+    }
+     \pgfmathdeclarefunction{optimizationlimits}{3}{%
+      \pgfmathparse{(min(metricbound(#1, #2, #3), definitionbound(#1, #2, #3)))}
+    }
+
+    % ALPHA BASELINE BOUND 
+    \addplot+[name path=basebound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
+    \addlegendentry{$P_{\alpha}$ Energy Bound} 
+    % BETA ROOFLINE BOUND
+    \addplot+[name path=roofbound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
+    \addlegendentry{$P_{\beta}$ Energy Bound} 
+
+
+
+    %Energy Optimization
+    \addplot[style={ pattern=north west lines, pattern color=lightgray, draw=none}] coordinates { 
+      (\rooflinetime, \codeenergy)
+      (\baselinetime, \codeenergy)
+      (0, 0) };
+    \addlegendentry{Energy Optimization}
+
+    %Runtime Optimization
+    \addplot[style={ pattern=north east lines, pattern color=lightgray, draw=none}] coordinates { 
+      (\codetime,\rooflineenergy)
+      (\codetime,\baselineenergy)
+    (0,0)};
+ 
+
+    \addplot[style={ pattern=horizontal lines, pattern color=red!40, draw=none}] coordinates { (\codetime,\codeenergy)
+                           (\pgfkeysvalueof{/pgfplots/xmax},\pgfkeysvalueof{/pgfplots/xmax}*\codepower)
+                           (\pgfkeysvalueof{/pgfplots/xmax}, \pgfkeysvalueof{/pgfplots/xmax}*\baselinepower)
+                           (\baselinetime, \codeenergy)
+                         } ;
+
+
+    % Constant Time, Energy and Power Dashes
+    %vertical
+    \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\rooflineenergy});
+    %horizontal
+    \draw[densely dotted, name path=constenergy] ({axis cs:\rooflinetime,\codeenergy}) -- ({axis cs:\baselinetime,\codeenergy});
+    %diagonal
+    \draw[densely dotted, name path=constpwr] ({axis cs:0,0}) -- ({axis cs:\pgfkeysvalueof{/pgfplots/xmax},\pgfkeysvalueof{/pgfplots/xmax}*\codepower});
+
+
+
+    %    \addplot[opacity=0] fill between[of=constenergy and constpwr, split,
+    %every segment no 1/.style={red, opacity=0.3}];
+
+
+    \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};
+    \node[below right] at (axis cs:\codetime,\codeenergy) {$\theta$};
+
+
+ \end{axis}
+\end{tikzpicture}
