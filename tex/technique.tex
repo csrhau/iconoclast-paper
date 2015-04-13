@@ -1,4 +1,13 @@
 \section{Power/Runtime Optimized Software Envelope}
+
+\begin{figure}
+\centering
+\input{plot/motivation/plot_core}
+\caption{Power/Energy/Time tradeoff}
+\label{fig:motivation}
+\end{figure}
+
+
 \todo{reword}
 We define the range of values that activity factor can take whilst running a code as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$. By plotting lines with gradients $P_{\alpha}$ and $P_{\beta}$ in \figurename~\ref{fig:modeldraw} we establish a feasible performance envelope. This represents the set of all $(E_\theta, D_\theta)$ pairs for which $P_{\alpha}~<~P_\theta~<~P_{\beta}$, with no bounds placed on runtime, $D_\theta$. It should be clear that all code executions, and by extension their maximally-optimized logical equivalents, must be represented somewhere within this envelope. We label the point which corresponds to our original run as $\theta$.
 \begin{align}
