@@ -23,6 +23,13 @@ The remaining two terms are less important to our discussion as they are not lin
 
  The remainder are largely determined by processor design. The $V$ and $f$ terms are linked and vary in tandem as higher clock frequencies require higher supply voltages to sustain them. 
 
+ \todo{Point out that dynamic power is cubic in terms of voltage, this supports the notion that dynamic power is more important}
+ \todo{Describe leakage power. It is dependent on a number of physical characteristics but not the activity factor. It is linear in terms of Voltage}
+
+As such, reductions in the dynamic component of cpu power consumption will dominate any gains to be made from optimization. 
+
+As previously mentioned, only dynamic power consumption may be reduced through code optimizations. \autoref{eq:dynpwr} shows that if an optimization leads to a reduction in activity factor then there will be a corresponding reduction in power consumption. 
+
 
 An important feature of the equations governing power draw is that only $P_{dyn}$ is directly influenced by software, in particular due to its inclusion of the $A$ term. Software can also indirectly effect both dynamic and leakage current if it triggers changes to clock frequency and therefore supply voltage through DVFS. \todo{Ensure define dvfs} \todo{reword this bit - no equations now}
 
