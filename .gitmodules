@@ -1,0 +1,3 @@
+[submodule "bibtex-bibleography"]
+	path = bibtex-bibleography
+	url = git@github.com:csrhau/bibtex-bibleography.git
