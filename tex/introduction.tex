@@ -4,7 +4,7 @@ Minimizing power consumption has been a driving force in hardware design since t
 
 Current state-of-the-art processors are based on Complimentary Metal Oxide Semiconductor (CMOS) technology and multi- and many-core super-scalar architectures. The limits of these technologies are fast  approaching, however, and research into the next generation of power-efficient architectures and semiconductor fabrication techniques is under way \cite{esmaeilzadeh:2011aa}.
 
-The power draw of CMOS chips can be divided into constituent parts as described by \autoref{eq:totpwr}. The most significant of these are dynamic power and leakage power. Dynamic power is essentially the power consumed as logic gates change state while a processor performs work. Leakage power dissipation stems from the fact that at very small scales the insulating properties of silicon break down, allowing some current to leak out even when gates remain inactive. Other forms of power dissipation exist, however their effects are relatively minor \cite{kaxiras:2008aa}.
+The power draw of CMOS chips can be divided into components as described by \autoref{eq:totpwr}, the most significant of which are dynamic and leakage power. Dynamic power refers to power consumed as logic gates change state while a processor performs work. Leakage power stems from the fact that at very small scales the insulating properties of silicon break down, allowing some current to leak out even when gates remain inactive. Other forms of power dissipation exist, however their effects are relatively minor \cite{kaxiras:2008aa}.
 
 
 \begin{equation}
@@ -16,7 +16,12 @@ P_{tot} = P_{dyn} + P_{leak} + P_{other}
 P_{dyn} \propto CV^{2}Af
 \end{equation}
 
-Equation~\ref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance (a property influenced by wire lengths of on-chip structures), $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency. Whilst the majority of these terms capture static properties determined by processor design, the activity factor term loosely equates to current workload. Finally, the $V$ and $f$ terms are linked and vary in tandem as higher clock frequencies require higher supply voltages to sustain them. 
+Equation~\ref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency. Activity factor captures the percentage of logic elements which change state each clock cycle, and is therefore directly influenced by workload. \todo{we want to cast activity factor as most important term, frequency as semi-important, correlated with activity factor and computational intensity, voltage is conditioned on frequency and capacitance go away.}.
+
+
+The remaining two terms are less important to our discussion as they are not linked directly to workload. Capacitance is a property arising from the wire lengths of on-chip structures and as such never changes. Supply voltage does change, but only to enable changes in clock frequency. This is required because the maximum switching speed a digital circuit can achieve, and hence its frequency, is proportional to the difference in voltage between states.
+
+ The remainder are largely determined by processor design. The $V$ and $f$ terms are linked and vary in tandem as higher clock frequencies require higher supply voltages to sustain them. 
 
 
 An important feature of the equations governing power draw is that only $P_{dyn}$ is directly influenced by software, in particular due to its inclusion of the $A$ term. Software can also indirectly effect both dynamic and leakage current if it triggers changes to clock frequency and therefore supply voltage through DVFS. \todo{Ensure define dvfs} \todo{reword this bit - no equations now}
