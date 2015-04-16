@@ -1,0 +1,22 @@
+\section{metrics}
+
+\todo{in order to both identify expensive code and assess the utility of any optimizations}
+
+
+The final thing to consider in this section is the choice of metric to use when optimizing code. Energy is defined as the integral of power and time, so power may seem the natural metric to complement runtime techniques. This metric should be avoided, however, as it fails to consider the runtime implications of any code changes. Paradoxically, optimizations to reduce power draw can lead to increases in runtime and in turn greater total energy consumption.
+
+\begin{figure}
+\centering
+\input{plot/motivation/plot_core}
+\caption{Power/Energy/Time tradeoff}
+\label{fig:motivation}
+\end{figure}
+
+Energy to completion is often chosen when energy consumption is of critical importance. It is often used in domains like mobile robotics where available energy is severely restricted. That said, in most domains energy is not the only limiting factor. In practice the most useful metrics are those which combine the effects of both energy and runtime. The simplest of these is the energy-delay product (EDP) \cite{gonzales:1995aa}, which assigns an equal weighting to both runtime and energy consumption and is defined as follows:
+\begin{align}
+  EDP = Energy \times Runtime \nonumber \\
+      \Leftrightarrow Power \times Runtime^{2} 
+  \label{eq:edp}
+\end{align}
+
+Several extensions to EDP have been proposed which assign greater weight to the runtime component in accordance with the demands of high performance computing. Common examples include energy-delay-squared product ($ED^{2}P$) and energy-delay-cubed product ($ED^{3}P$). We refer to this as the $E^mD^n$ family of metrics, which also includes simple power ($E^1D^{-1}$), energy ($E^1D^0$) and time ($E^0D^1$) as members. It can be argued that that $ED^{2}P$ is most suited when considering a fixed micro-architecture \cite{brooks:2000aa}, however our work applies to all members of this group with $m > 0$ and $n \geq 0$.

@@ -9,8 +9,7 @@
     xmin=0, xmax=46,
     ymin=0, ymax=3000,
     width=\linewidth,
-    legend style={legend pos=north west},
-    cycle list name=mycolorlist
+    legend style={legend pos=north west}
     ]
 
     %% Model Parameters %%
@@ -43,22 +42,23 @@
       \pgfmathparse{(min(metricbound(#1, #2, #3), definitionbound(#1, #2, #3)))}
     }
 
-    % ALPHA BASELINE BOUND 
-    \addplot+[domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
-    \addlegendentry{$P_{\alpha}$ Energy Bound} 
     % BETA ROOFLINE BOUND
-    \addplot+[domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
-    \addlegendentry{$P_{\beta}$ Energy Bound} 
+    \addplot[color=red, name path=roofbound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
+    \addlegendentry{$P_{\beta}$ Energy Bound}
+
+    % ALPHA BASELINE BOUND 
+    \addplot[color=green, name path=basebound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
+    \addlegendentry{$P_{\alpha}$ Energy Bound} 
 
     % Constant Time and Power Dashes
     \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\codeenergy});
     \draw[densely dotted] ({axis cs:\pgfkeysvalueof{/pgfplots/xmin},\pgfkeysvalueof{/pgfplots/ymin}}) -- ({axis cs:\codetime,\codeenergy});
  
 
-    \addplot+[domain=\tnodex:\cnodex] { metricbound(\codepower, \codetime, x)};
+    \addplot[domain=\tnodex:\cnodex] { metricbound(\codepower, \codetime, x)};
     \addlegendentry{Optimization Bound}
 
-    \addplot+[domain=\anodex:\codetime] { definitionbound(\codepower, \codetime, x)};
+    \addplot[domain=\anodex:\codetime] { definitionbound(\codepower, \codetime, x)};
     \addlegendentry{Contribution Bound}
 
 
