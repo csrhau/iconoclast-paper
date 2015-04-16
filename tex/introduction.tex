@@ -16,19 +16,20 @@ P_{tot} = P_{dyn} + P_{leak} + P_{other}
 P_{dyn} \propto CV^{2}Af
 \end{equation}
 
-Equation~\ref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency. Activity factor captures the percentage of logic elements which change state each clock cycle, and is therefore directly influenced by workload. \todo{we want to cast activity factor as most important term, frequency as semi-important, correlated with activity factor and computational intensity, voltage is conditioned on frequency and capacitance go away.}.
+Equation~\ref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency. Activity factor captures the percentage of logic elements which change state each clock cycle, and is therefore directly influenced by workload. \todo{we want to cast activity factor as most important term, frequency as semi-important, correlated with activity factor and CPU occupancy, voltage is conditioned on frequency and capacitance go away.}.
 
 
-The remaining two terms are less important to our discussion as they are not linked directly to workload. Capacitance is a property arising from the wire lengths of on-chip structures and as such never changes. Supply voltage does change, but only to enable changes in clock frequency. This is required because the maximum switching speed a digital circuit can achieve, and hence its frequency, is proportional to the difference in voltage between states.
+\todo{Point out that dynamic power is cubic in terms of voltage, this supports the notion that dynamic power is more important}
 
- The remainder are largely determined by processor design. The $V$ and $f$ terms are linked and vary in tandem as higher clock frequencies require higher supply voltages to sustain them. 
+The remaining two terms are less important to our discussion as they are not linked directly to workload. Capacitance is a property arising from the wire lengths of on-chip structures and as such never changes. Supply voltage does vary according to workload, but only in order to enable changes in clock frequency. This is required because the maximum switching speed a digital circuit can achieve, and hence its frequency, is proportional to the difference in voltage between states. 
 
- \todo{Point out that dynamic power is cubic in terms of voltage, this supports the notion that dynamic power is more important}
- \todo{Describe leakage power. It is dependent on a number of physical characteristics but not the activity factor. It is linear in terms of Voltage}
+\todo{Describe leakage power. It is dependent on a number of physical characteristics but not the activity factor. It is linear in terms of Voltage, as such reductions in the dynamic cpu power consumption are likely to dominate any optimization gains.}
 
-As such, reductions in the dynamic component of cpu power consumption will dominate any gains to be made from optimization. 
 
+\todo{REWORD:
 As previously mentioned, only dynamic power consumption may be reduced through code optimizations. \autoref{eq:dynpwr} shows that if an optimization leads to a reduction in activity factor then there will be a corresponding reduction in power consumption. 
+Activity factor and CPU occupancy are the two factors which should be reduced in order to realize power optimization. 
+}
 
 
 An important feature of the equations governing power draw is that only $P_{dyn}$ is directly influenced by software, in particular due to its inclusion of the $A$ term. Software can also indirectly effect both dynamic and leakage current if it triggers changes to clock frequency and therefore supply voltage through DVFS. \todo{Ensure define dvfs} \todo{reword this bit - no equations now}
