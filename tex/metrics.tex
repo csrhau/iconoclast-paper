@@ -1,9 +1,6 @@
 \section{metrics}
 
-\todo{in order to both identify expensive code and assess the utility of any optimizations}
-
-
-The final thing to consider in this section is the choice of metric to use when optimizing code. Energy is defined as the integral of power and time, so power may seem the natural metric to complement runtime techniques. This metric should be avoided, however, as it fails to consider the runtime implications of any code changes. Paradoxically, optimizations to reduce power draw can lead to increases in runtime and in turn greater total energy consumption.
+Any attempt to optimize a code must be underpinned by a well defined metric, both to help identify possible improvements and to derive the utility of potential changes. The metric chosen should capture the practical requirements placed on a system. In performance critical domains runtime is typically the metric of choice. That said, metrics which capture the importance of power as well as time are becoming more prominent as the power needs of modern systems continue to rise.
 
 \begin{figure}
 \centering
@@ -11,6 +8,18 @@ The final thing to consider in this section is the choice of metric to use when 
 \caption{Power/Energy/Time tradeoff}
 \label{fig:motivation}
 \end{figure}
+
+We introduce the notion of a feasible performance envelope in order to compare the implications of choosing particular metrics.
+To build this envelope we first plot a point corresponding to the measured energy and runtime costs of executing an unoptimized code $\theta$. We then plot lines of gradients $P_{max}$ and $P_{min}$ with no bounds placed on runtime. These values correspond to the range of values a processor's power draw could possibly take whilst operating. By definition, all code executions must correspond to a point within this envelope.
+
+Power consumption is an intuitive choice of metric as it captures the rate at which a given code consumes energy. It also has the benefit of being relatively easy to measure at scale. As \autoref{fig:motivation} shows, however, power alone is not an appropriate metric for this domain. Paradoxically, optimizations to reduce power draw can lead to increases in runtime and in turn greater total energy consumption. For an unoptimized code $\theta$, the rightmost shaded sector of this plot corresponds to feasible  
+
+
+
+A more suitable metric is Energy \todo{mention the beta alpha bounds}
+
+
+
 
 Energy to completion is often chosen when energy consumption is of critical importance. It is often used in domains like mobile robotics where available energy is severely restricted. That said, in most domains energy is not the only limiting factor. In practice the most useful metrics are those which combine the effects of both energy and runtime. The simplest of these is the energy-delay product (EDP) \cite{gonzales:1995aa}, which assigns an equal weighting to both runtime and energy consumption and is defined as follows:
 \begin{align}
