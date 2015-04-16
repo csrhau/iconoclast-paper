@@ -1,10 +1,10 @@
 \section{Introduction}
 
-Minimizing power consumption has been a driving force in hardware design since the dawn of computing. Hardware development follows a pattern of producing incremental improvements to the same basic design until rapid escalation of power draw renders further improvements infeasible. When this happens, system architects must identify new technologies to sustain progress.
+Minimizing power consumption has been a driving force in hardware design since the dawn of computing. Hardware development has always followed a pattern of producing incremental improvements to the same basic design until rapid escalation of power draw renders further improvements infeasible. When this happens, system architects must identify new technologies to sustain progress.
 
 Current state-of-the-art processors are based on Complimentary Metal Oxide Semiconductor (CMOS) technology and multi- and many-core super-scalar architectures. The limits of these technologies are fast  approaching, however, and research into the next generation of power-efficient architectures and semiconductor fabrication techniques is under way \cite{esmaeilzadeh:2011aa}.
 
-The power draw of CMOS chips can be divided into components as described by \autoref{eq:totpwr}, the most significant of which are dynamic and leakage power. Dynamic power refers to power consumed as logic gates change state while a processor performs work. Leakage power stems from the fact that at very small scales the insulating properties of silicon break down, allowing some current to leak out even when gates remain inactive. Other forms of power dissipation exist, however their effects are relatively minor \cite{kaxiras:2008aa}.
+The power draw of CMOS chips can be divided into the components as described by \autoref{eq:totpwr}, the most significant of which are dynamic and leakage power. Dynamic power refers to power consumed as logic gates change state while a processor performs work. Leakage power stems from the fact that at very small scales the insulating properties of silicon break down, allowing some current to leak out even when gates remain inactive. Other forms of power dissipation exist, however their effects are relatively minor \cite{kaxiras:2008aa}.
 
 
 \begin{equation}
@@ -16,14 +16,20 @@ P_{tot} = P_{dyn} + P_{leak} + P_{other}
 P_{dyn} \propto CV^{2}Af
 \end{equation}
 
-Equation~\ref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency. Activity factor captures the percentage of logic elements which change state each clock cycle, and is therefore directly influenced by workload. \todo{we want to cast activity factor as most important term, frequency as semi-important, correlated with activity factor and CPU occupancy, voltage is conditioned on frequency and capacitance go away.}.
+Equation~\ref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency. Of these, only activity factor is directly related to processor workload as it captures the percentage of logic elements which change state each clock cycle. Conversely, capacitance is a fixed value arising from the wire lengths of on-chip structures.
+
+Processor frequency and supply voltage may also be influenced by workload through the actions of Dynamic Voltage and Frequency Scaling (DVFS) activity. These properties vary in tandem, taking on predetermined values dependent on a hardware-specific number of fixed P-States. To paraphrase, DVFS can act to reduce the clock speed of underutilized processors. When this happens, voltage requirements also decrease.
+
+Unsurprisingly, leakage power is less sensitive to processor workload as it as it does not 
+\todo{mention that leakage is linear in terms of frequency, whereas dynamic power is effectively cubic in terms of frequency and linear in terms of activity factor.}
 
 
-\todo{Point out that dynamic power is cubic in terms of voltage, this supports the notion that dynamic power is more important}
+\todo{On the nature of software power optimizations... }
+We can either reduce activity factor directly or work to tune software to be more dvfs friendly.\todo{Intel energy efficiency optimization guide citation...}
 
-The remaining two terms are less important to our discussion as they are not linked directly to workload. Capacitance is a property arising from the wire lengths of on-chip structures and as such never changes. Supply voltage does vary according to workload, but only in order to enable changes in clock frequency. This is required because the maximum switching speed a digital circuit can achieve, and hence its frequency, is proportional to the difference in voltage between states. 
+\todo{Different processor subsystems operate at different frequencies. The clock distribution network operates at $\alpha=1$.}
+\todo{Clock gating, in which processor elements are isolated from the clock signal and cease to function. When this happens, their activity factor, and hence dynamic power consumption, is zero.}
 
-\todo{Describe leakage power. It is dependent on a number of physical characteristics but not the activity factor. It is linear in terms of Voltage, as such reductions in the dynamic cpu power consumption are likely to dominate any optimization gains.}
 
 
 \todo{REWORD:

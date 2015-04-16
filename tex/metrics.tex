@@ -5,11 +5,11 @@ Any attempt to optimize a code must be underpinned by a well defined metric, bot
 \begin{figure}
 \centering
 \input{plot/motivation/plot_core}
-\caption{Power/Energy/Time tradeoff}
+\caption{Feasible Performance Envelope}
 \label{fig:motivation}
 \end{figure}
 
-We introduce the notion of a feasible performance envelope in order to compare the implications of choosing particular metrics.
+We introduce the notion of a feasible performance envelope in order to compare  the implications of choosing particular metrics.
 To build this envelope we first plot a point corresponding to the measured energy and runtime costs of executing an unoptimized code $\theta$. We then plot lines of gradients $P_{max}$ and $P_{min}$ with no bounds placed on runtime. These values correspond to the range of values a processor's power draw could possibly take whilst operating. By definition, all code executions must correspond to a point within this envelope.
 
 Power consumption is an intuitive choice of metric as it captures the rate at which a given code consumes energy. It also has the benefit of being relatively easy to measure at scale. As \autoref{fig:motivation} shows, however, power alone is not an appropriate metric for this domain. Paradoxically, optimizations to reduce power draw can lead to increases in runtime and in turn greater total energy consumption. For an unoptimized code $\theta$, the rightmost shaded sector of this plot corresponds to feasible  
