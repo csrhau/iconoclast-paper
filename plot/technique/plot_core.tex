@@ -14,14 +14,16 @@
     %% Model Parameters %%
     \pgfmathsetmacro{\baselinepower}{30} % NOP code
     \pgfmathsetmacro{\rooflinepower}{60}
-    \pgfmathsetmacro{\codepower}{(\baselinepower*3 + \rooflinepower*4) / 7}
+    \pgfmathsetmacro{\codepower}{47} 
     \pgfmathsetmacro{\codetime}{30}
     % Sadly, pgfplots sucks too much to calculate cube roots
-    \pgfmathsetmacro{\anodex}{26.20741}
-    \pgfmathsetmacro{\anodey}{\anodex * \baselinepower}
-    \pgfmathsetmacro{\cnodex}{34.34143}
+    % These values are calculated with a ruby script in tools
+    \pgfmathsetmacro{\anodex}{25.83028}
+    \pgfmathsetmacro{\cnodex}{34.84283}
+    \pgfmathsetmacro{\tnodex}{27.65477}
+
     \pgfmathsetmacro{\cnodey}{\cnodex * \baselinepower}
-    \pgfmathsetmacro{\tnodex}{27.25681}
+    \pgfmathsetmacro{\anodey}{\anodex * \baselinepower}
  
     %% Intermezzo Values %%
     \pgfmathsetmacro{\codeenergy}{\codepower * \codetime}
@@ -53,12 +55,10 @@
     \addplot[color=green, name path=basebound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
     \addlegendentry{$P_{\alpha}$ Energy Bound} 
 
-
-
-    \addplot[domain=\tnodex:\cnodex] { metricbound(\codepower, \codetime, x)};
+    \addplot[color=orange, domain=\tnodex:\cnodex] { metricbound(\codepower, \codetime, x)};
     \addlegendentry{Optimization Bound}
 
-    \addplot[domain=\anodex:\codetime] { definitionbound(\codepower, \codetime, x)};
+    \addplot[color=blue!80, domain=\anodex:\codetime] { definitionbound(\codepower, \codetime, x)};
     \addlegendentry{Contribution Bound}
 
     % Constant Time, Energy Dashes
