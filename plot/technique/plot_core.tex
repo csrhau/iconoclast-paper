@@ -1,13 +1,12 @@
 \begin{tikzpicture}
-
   \begin{axis}[ticks = none, 
     axis on top,
     axis x line=bottom,
     axis y line=left,
-	xlabel={Runtime \emph{(s)}},
+  	xlabel={Runtime \emph{(s)}},
     ylabel={Energy \emph{(J)}},    
-    xmin=0, xmax=46,
-    ymin=0, ymax=3000,
+    xmin=0, xmax=50,
+    ymin=0, ymax=3300,
     width=\linewidth,
     legend style={legend pos=north west}
     ]
@@ -15,7 +14,7 @@
     %% Model Parameters %%
     \pgfmathsetmacro{\baselinepower}{30} % NOP code
     \pgfmathsetmacro{\rooflinepower}{60}
-    \pgfmathsetmacro{\codepower}{(\baselinepower + \rooflinepower) / 2}
+    \pgfmathsetmacro{\codepower}{(\baselinepower*3 + \rooflinepower*4) / 7}
     \pgfmathsetmacro{\codetime}{30}
     % Sadly, pgfplots sucks too much to calculate cube roots
     \pgfmathsetmacro{\anodex}{26.20741}
@@ -46,14 +45,15 @@
     \addplot[color=red, name path=roofbound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
     \addlegendentry{$P_{\beta}$ Energy Bound}
 
+    %const power diagonal
+    \addplot[color=darkgray, densely dashed, name path=constpwr, forget plot, %forget plot prevents legend entry
+            domain=\pgfkeysvalueof{/pgfplots/xmin}:\codetime] {\codepower * x}; 
+
     % ALPHA BASELINE BOUND 
     \addplot[color=green, name path=basebound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
     \addlegendentry{$P_{\alpha}$ Energy Bound} 
 
-    % Constant Time and Power Dashes
-    \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\codeenergy});
-    \draw[densely dotted] ({axis cs:\pgfkeysvalueof{/pgfplots/xmin},\pgfkeysvalueof{/pgfplots/ymin}}) -- ({axis cs:\codetime,\codeenergy});
- 
+
 
     \addplot[domain=\tnodex:\cnodex] { metricbound(\codepower, \codetime, x)};
     \addlegendentry{Optimization Bound}
@@ -61,6 +61,9 @@
     \addplot[domain=\anodex:\codetime] { definitionbound(\codepower, \codetime, x)};
     \addlegendentry{Contribution Bound}
 
+    % Constant Time, Energy Dashes
+    %vertical
+    \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\codeenergy});
 
     \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};
     \node[above right] at (axis cs:\codetime,\codeenergy) {$\theta$};
