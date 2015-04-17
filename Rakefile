@@ -28,7 +28,7 @@ namespace :tables do
   rule(%r{^tab/tex/.*\.tex$} => [lambda { |fn| fn.sub(/tab\/tex/, 'tab/data').sub(/\.tex$/, '.csv')},
                                  lambda { |fn| fn.sub(/tab\/tex/, 'tab/tmpl').sub(/\.tex$/, '.erb')},
                                  'tab/tex']) do |t|
-    ruby "./tab/ruler.rb -d#{t.prerequisites[0]} -t#{t.prerequisites[1]} -o#{t.name}"
+    ruby "./tab/tools/ruler.rb -d#{t.prerequisites[0]} -t#{t.prerequisites[1]} -o#{t.name}"
   end
 end
 
