@@ -64,13 +64,13 @@ p options
 ri = opt_intercept(options.code_power, options.code_time, options.base_power,
                    options.energy_exp, options.delay_exp)
 puts "Baseline/Optimization Bound Intercept: #{ri}"
-
 li = con_intercept(options.code_power, options.code_time, options.base_power,
                     options.energy_exp, options.delay_exp)
 puts "Baseline/Contribution Bound Intercept: #{li}"
-
 if options.roof_power
   ti = opt_intercept(options.code_power, options.code_time, options.roof_power,
                      options.energy_exp, options.delay_exp)
 puts "Roofline/Optimization Bound Intercept: #{ti}"
 end
+puts "pgfplots text: domain=%.7g:%.7g" % [li, ri]
+

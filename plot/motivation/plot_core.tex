@@ -56,15 +56,15 @@
     }
 
     % BETA ROOFLINE BOUND
-    \addplot[color=red, name path=roofbound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
+    \addplot[color=red, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
     \addlegendentry{$P_{max}$ Energy Bound}
 
     %const power diagonal
-    \addplot[color=darkgray, densely dashed, name path=constpwr, forget plot, %forget plot prevents legend entry
+    \addplot[color=darkgray, densely dashed, forget plot, %forget plot prevents legend entry
             domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\codepower * x}; 
 
     % ALPHA BASELINE BOUND 
-    \addplot[color=green, name path=basebound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
+    \addplot[color=green, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
     \addlegendentry{$P_{min}$ Energy Bound} 
 
     %Runtime Optimization
@@ -97,7 +97,7 @@
     %vertical
     \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\rooflineenergy});
     %horizontal
-    \draw[densely dotted, name path=constenergy] ({axis cs:\rooflinetime,\codeenergy}) -- ({axis cs:\baselinetime,\codeenergy});
+    \draw[densely dotted] ({axis cs:\rooflinetime,\codeenergy}) -- ({axis cs:\baselinetime,\codeenergy});
    
 
     \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};

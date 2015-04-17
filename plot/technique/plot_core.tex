@@ -44,15 +44,15 @@
     }
 
     % BETA ROOFLINE BOUND
-    \addplot[color=red, name path=roofbound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
+    \addplot[color=red, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
     \addlegendentry{$P_{\beta}$ Energy Bound}
 
     %const power diagonal
-    \addplot[color=darkgray, densely dashed, name path=constpwr, forget plot, %forget plot prevents legend entry
+    \addplot[color=darkgray, densely dashed, forget plot, %forget plot prevents legend entry
             domain=\pgfkeysvalueof{/pgfplots/xmin}:\codetime] {\codepower * x}; 
 
     % ALPHA BASELINE BOUND 
-    \addplot[color=green, name path=basebound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
+    \addplot[color=green, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
     \addlegendentry{$P_{\alpha}$ Energy Bound} 
 
     \addplot[color=orange, domain=\tnodex:\cnodex] { metricbound(\codepower, \codetime, x)};

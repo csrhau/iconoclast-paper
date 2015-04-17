@@ -1,7 +1,5 @@
 \section{Power/Runtime Optimized Software Envelope}
-
-We are now ready to derive a visual heuristic to guide optimization. This heuristic is based on the feasible performance envelope introduced in \autoref{fig:motivation}. We first formalize the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$.
-
+We are now ready to derive a visual heuristic to guide optimization. This heuristic is based on the feasible performance envelope introduced in \autoref{fig:motivation}. We first formalize the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$. \todo{Point out in other (multi-system) domains the approach is still valid, we just need a sensible max and min.}
 
 \begin{figure}[ht]                                                               
 \centering                                                                      
@@ -13,6 +11,7 @@ We are now ready to derive a visual heuristic to guide optimization. This heuris
 
 We approximate $P_{\alpha}$ by monitoring the power consumed whilst running an appropriate baseline benchmark. This code performs the minimum amount of work possible whilst keeping the system active. In particular, we wish to minimize our activity factor whilst matching the clock frequency and voltage figures we expect to see when code is running. We cannot simply halt the CPU because this would also stop many of the background tasks which contribute to $P_{\alpha}$.
 
+\todo{Consider moving this to investigation. Make this section pure theory}
 We employ the code given in \figurename~\ref{fig:microbench} to derive our baseline.  It consists of a single instruction, performs no computation and places no demand on the memory subsystems. Any non-trivial computation will have a higher activity factor than this minimal micro-benchmark. If the application to be optimized blocks on IO this can be incorporated by measuring the power consumed when the CPU is inactive and adjusting $P_\alpha$ proportionately. We defer measurement of $P_{\beta}$ for now as its precise value is not relevant to the current discussion. 
 
 To constrain our search further we now consider the metric we wish to reduce. We know that for two logically equivalent codes $\theta$ and $\lambda$, the transformation $\theta \to \lambda$ is a valid optimization with respect to a cost metric $M$ if and only if $M(\lambda) < M(\theta)$. If we plot the curve linking all points having $M(\lambda) = M(\theta)$, then by definition any optimized versions of $\theta$ can only exist below this optimization bound. The exact equation of the curve depends on the chosen $E^mD^n$ metric as follows:
@@ -38,9 +37,9 @@ The definition we have settled on is that an optimization $\theta \to \lambda$ i
 \centering
 \input{plot/technique/plot_core}
 \caption{$ED^2P$ Code Optimization Space}
-\label{fig:modeldraw}
+\label{fig:technique}
 \end{figure}
-The bounds describe above allow us to identify the area of the Energy/Runtime plane in which power-optimized versions of a given code may exist. We also add lines of constant time and power draw corresponding to the original code for the purpose of illustration. This allows us to subdivide \autoref{fig:modeldraw} into the following labelled areas:
+The bounds describe above allow us to identify the area of the Energy/Runtime plane in which power-optimized versions of a given code may exist. We also add lines of constant time and power draw corresponding to the original code for the purpose of illustration. This allows us to subdivide \autoref{fig:technique} into the following labelled areas:
 \begin{enumerate}
 \item Power-only optimizations
 \item Power-mostly optimizations
@@ -49,5 +48,13 @@ The bounds describe above allow us to identify the area of the Energy/Runtime pl
 \item Performance Degradation
 \end{enumerate}
 
+
+
+\begin{figure}
+\centering
+\input{plot/multimetric-technique/plot_core}
+\caption{$ED^2P$ Code Optimization Space}
+\label{fig:multimetric-technique}
+\end{figure}
 
 
