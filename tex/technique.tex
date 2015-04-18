@@ -33,6 +33,8 @@ The definition we have settled on is that an optimization $\theta \to \lambda$ i
 \implies E_{\lambda} &= (\frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} \times {D_\lambda}^{m+n+1})^{\frac{1}{m}} 
 \end{align}
 
+It may appear somewhat academic to base a bound on the definition of power optimization. That said, this is an important consideration in practice. Intuitively it makes sense to use the most appropriate tools while searching for optimizations. If code is sub-optimal and the penalty is felt more in one domain than the other then the tools and techniques developed for that domain are better suited to finding the optimization.
+
 \begin{figure}
 \centering
 \input{plot/technique/plot_core}
@@ -48,7 +50,11 @@ The bounds describe above allow us to identify the area of the Energy/Runtime pl
 \item Performance Degradation
 \end{enumerate}
 
+Only three measurements are required to build this plot; the system's baseline power draw, $P_\alpha$, and the time and energy to solution for the code to be optimized, $D_\theta$ and $E_\theta$ respectively. We can ignore the value of $P_\beta$ when optimizing for power draw as we need not consider any values greater than our initial $P_\theta$. We also need to consider which metric we are optimizing. \figurename~\ref{fig:modeldraw} is based on $ED^2P$, whilst \figurename~\ref{fig:multimetric} demonstrates how the optimization area varies with metric choice.
 
+Despite its simplicity, this technique offers a surprising wealth of information. The vertical distance between $\theta$ and intercept $B$ places an upper limit on the absolute amount of energy which can be saved by power optimization alone. The value $M(\theta) / M(A)$ bounds the amount of improvement in our metric we can expect to see from power optimization. The difference in runtime between intersect $C$ and $\theta$ represents the amount of time we are able to trade off if we hope to achieve a slower yet more energy efficient code. Finally, the value $D(\theta) / D(A)$ represents the smallest speed-up which delivers more benefit than power optimization is capable of.
+
+At this point it is worth stating explicitly that our heuristic is a general one. Its only requirements are that power consumption is proportional to activity factor and that energy and time figures can be obtained for the system baseline and the code under investigation. As such it can be applied equally well at scales ranging from a single core to an entire system. We focus on CPU power consumption simply because measurements are relatively easy to obtain at this level.
 
 \begin{figure}
 \centering
@@ -56,5 +62,3 @@ The bounds describe above allow us to identify the area of the Energy/Runtime pl
 \caption{$ED^2P$ Code Optimization Space}
 \label{fig:multimetric-technique}
 \end{figure}
-
-
