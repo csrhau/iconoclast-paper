@@ -33,7 +33,6 @@ end
 
 namespace :standalone do
   PLOT_FILES = Rake::FileList.new('plot/**/plot.tex').map { |fn| fn.sub(/\.tex$/, '.pdf') }
-
   desc 'builds all plots in standalone format (for development)'
   task :plots => PLOT_FILES
 
