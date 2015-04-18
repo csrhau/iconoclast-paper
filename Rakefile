@@ -1,7 +1,7 @@
 require 'rake/clean'
 
 CLEAN.include %w[aux log blg bbl out synctex.gz].map { |f| "**/*.#{f}" }
-CLOBBER.include %w[paper.pdf tab/tex plot/**/*.pdf]
+CLOBBER.include %w[./paper.pdf tab/tex plot/**/*.pdf]
 TEX_FILES = Rake::FileList.new('**/*.tex')
 TAB_FILES = Rake::FileList.new('tab/data/*.csv').map do |f|
   f.sub(%r{^tab/data}, 'tab/tex').sub(%r{\.csv$}, '.tex')
