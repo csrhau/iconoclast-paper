@@ -12,7 +12,7 @@ end
 
 namespace :latex do
   desc "Compile Latex Paper"
-  file 'paper.pdf' => TEX_FILES + TABLES.map { |t| t[:tex] }  do |tex|
+  file 'paper.pdf' => TEX_FILES + TABLES.map { |t| t[:tex] } do |tex|
     system("pdflatex paper.tex")
     system("bibtex paper.aux")
     system("pdflatex paper.tex")
@@ -23,17 +23,13 @@ end
 namespace :tables do
   desc 'creates an output directory for latex tables'
   directory 'tab/tex'
-
-  task :all => FileList
   TABLES.each do |t|
     desc "Build table output file #{t[:tex]}"
     file t[:tex] => ['tab/tools/ruler.rb', t[:csv], t[:erb], 'tab/tex'] do |t|
       ruby "#{t.prerequisites[0]} -d#{t.prerequisites[1]} -t#{t.prerequisites[2]} -o#{t.name}"
     end
   end
-
 end
-
 
 namespace :standalone do
   PLOT_FILES = Rake::FileList.new('plot/**/plot.tex').map { |fn| fn.sub(/\.tex$/, '.pdf') }
