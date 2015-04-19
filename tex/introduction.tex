@@ -16,7 +16,7 @@ P_{tot} = P_{dyn} + P_{leak} + P_{other}
 P_{dyn} \propto CV^{2}Af
 \end{equation}
 
-Equation~\ref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency. Of these, only activity factor is directly related to processor workload as it captures the percentage of logic elements which change state each clock cycle. Conversely, capacitance is a fixed value arising from the wire lengths of on-chip structures.
+\autoref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency. Of these, only activity factor is directly related to processor workload as it captures the percentage of logic elements which change state each clock cycle. Conversely, capacitance is a fixed value arising from the wire lengths of on-chip structures.
 
 Processor frequency and supply voltage may also be influenced by workload through the actions of Dynamic Voltage and Frequency Scaling (DVFS) activity. These properties vary in tandem, taking on predetermined values dependent on a hardware-specific number of fixed P-States. To paraphrase, DVFS can act to reduce the clock speed of underutilized processors. When this happens, voltage requirements also decrease.
 
