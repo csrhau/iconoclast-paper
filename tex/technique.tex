@@ -1,4 +1,23 @@
 \section{Power/Runtime Optimized Software Envelope}
+
+\begin{figure}
+\centering
+\input{plot/motivation/plot_core}
+\caption{Feasible Performance Envelope}
+\label{fig:motivation}
+\end{figure}
+
+Our heuristic is based on the notion of a feasible performance envelope like the one shown in \autoref{fig:motivation}.
+This construct represents the set of all $(Runtime, Energy)$ costs it is possible for an arbitrary code to exhibit when running on a target platform. 
+
+To build the feasible performance envelope we first plot a point corresponding to the measured energy and runtime costs of executing an unoptimized code $\theta$. 
+We then plot lines of gradient $P_{max}$ and $P_{min}$ which represent the maximum and minimum bounds on system power consumption during normal operation.
+By definition, all possible code executions on the target platform must correspond to a point within this envelope.
+
+
+
+
+We then
 We are now ready to derive a visual heuristic to guide optimization. This heuristic is based on the feasible performance envelope introduced in \autoref{fig:motivation}. We first formalize the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$. \todo{Point out in other (multi-system) domains the approach is still valid, we just need a sensible max and min.}
 
 \begin{figure}[ht]                                                               

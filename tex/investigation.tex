@@ -1,5 +1,47 @@
 \section{Investigation}
 
+\todo{Introducory paragraph about how we're focussing on the single core case}
+
+Current state-of-the-art processors are based on Complimentary Metal Oxide Semiconductor (CMOS) technology and multi- and many-core super-scalar architectures. The limits of these technologies are fast  approaching, however, and research into the next generation of power-efficient architectures and semiconductor fabrication techniques is under way \cite{esmaeilzadeh:2011aa}.
+
+The power draw of CMOS chips can be divided into the components as described by \autoref{eq:totpwr}, the most significant of which are dynamic and leakage power. Dynamic power refers to power consumed as logic gates change state while a processor performs work. Leakage power stems from the fact that at very small scales the insulating properties of silicon break down, allowing some current to leak out even when gates remain inactive. Other forms of power dissipation exist, however their effects are relatively minor \cite{kaxiras:2008aa}.
+
+
+\begin{equation}
+\label{eq:totpwr}
+P_{tot} = P_{dyn} + P_{leak} + P_{other}
+\end{equation}
+\begin{equation} 
+\label{eq:dynpwr}
+P_{dyn} \propto CV^{2}Af
+\end{equation}
+
+\autoref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency. Of these, only activity factor is directly related to processor workload as it captures the percentage of logic elements which change state each clock cycle. Conversely, capacitance is a fixed value arising from the wire lengths of on-chip structures.
+
+Processor frequency and supply voltage may also be influenced by workload through the actions of Dynamic Voltage and Frequency Scaling (DVFS) activity. These properties vary in tandem, taking on predetermined values dependent on a hardware-specific number of fixed P-States. To paraphrase, DVFS can act to reduce the clock speed of underutilized processors. When this happens, voltage requirements also decrease.
+
+Unsurprisingly, leakage power is less sensitive to processor workload as it as it does not 
+\todo{mention that leakage is linear in terms of frequency, whereas dynamic power is effectively cubic in terms of frequency and linear in terms of activity factor.}
+
+
+\todo{On the nature of software power optimizations... }
+We can either reduce activity factor directly or work to tune software to be more dvfs friendly.\todo{Intel energy efficiency optimization guide citation...}
+
+\todo{Different processor subsystems operate at different frequencies. The clock distribution network operates at $\alpha=1$.}
+\todo{Clock gating, in which processor elements are isolated from the clock signal and cease to function. When this happens, their activity factor, and hence dynamic power consumption, is zero.}
+
+
+
+\todo{REWORD:
+As previously mentioned, only dynamic power consumption may be reduced through code optimizations. \autoref{eq:dynpwr} shows that if an optimization leads to a reduction in activity factor then there will be a corresponding reduction in power consumption. 
+Activity factor and CPU occupancy are the two factors which should be reduced in order to realize power optimization. 
+}
+
+
+An important feature of the equations governing power draw is that only $P_{dyn}$ is directly influenced by software, in particular due to its inclusion of the $A$ term. Software can also indirectly effect both dynamic and leakage current if it triggers changes to clock frequency and therefore supply voltage through DVFS. \todo{Ensure define dvfs} \todo{reword this bit - no equations now}
+
+Historically, dynamic power has been the biggest contributor to $P_{tot}$, however leakage power has been on track to overtake it since the breakdown of Dennard Scaling.  Sub-threshold and gate-oxide leakage dominate total leakage current, and they both increase exponentially as transistors shrink. Process improvements like the introduction of high-k dielectric materials~\cite{jan:2009aa} have kept leakage power in check over the last decade, however there is no avoiding the fact that insulating properties will degrade as transistors get smaller.
+
 \begin{figure}
 \centering
 \input{plot/multibaseline-investigation/plot_core}
@@ -18,4 +60,14 @@
 \input{tab/tex/code_metrics}
 \caption{Rodinia Results, 4 cores at 3.2 GHz}
 \end{table} 
+
+
+\begin{figure}
+\centering
+\input{plot/minimd-pstates/plot_core}
+\caption{MiniMD Pstate Optimization Space}
+\label{fig:minimd-pstates}
+\end{figure}
+
+
 
