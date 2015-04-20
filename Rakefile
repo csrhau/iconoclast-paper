@@ -20,7 +20,7 @@ namespace :latex do
   end
 
   desc 'Do a single pdflatex pass for paper'
-  task 'single' do 
+  task 'single' => TEX_FILES + TABLES.map { |t| t[:tex] } do |tex|
     system("pdflatex paper.tex")
   end
 end

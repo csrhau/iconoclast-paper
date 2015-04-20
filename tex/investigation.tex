@@ -70,4 +70,20 @@ Historically, dynamic power has been the biggest contributor to $P_{tot}$, howev
 \end{figure}
 
 
+\begin{figure}[ht]                                                               
+\centering                                                                      
+\lstset{basicstyle=\ttfamily\footnotesize\bfseries, frame=tb} %small bold text, lines top and bottom 
+\lstinputlisting[]{lst/alpha_benchmark.c}              
+\caption{Baseline Power Micro-Benchmark}                            
+\label{fig:microbench}                                                           
+\end{figure}  
 
+
+
+We are now ready to derive a visual heuristic to guide optimization. This heuristic is based on the feasible performance envelope introduced in \autoref{fig:motivation}. We first formalize the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$. \todo{Point out in other (multi-system) domains the approach is still valid, we just need a sensible max and min.}
+
+
+We approximate $P_{\alpha}$ by monitoring the power consumed whilst running an appropriate baseline benchmark. This code performs the minimum amount of work possible whilst keeping the system active. In particular, we wish to minimize our activity factor whilst matching the clock frequency and voltage figures we expect to see when code is running. We cannot simply halt the CPU because this would also stop many of the background tasks which contribute to $P_{\alpha}$.
+
+\todo{Consider moving this to investigation. Make this section pure theory}
+We employ the code given in \autoref{fig:microbench} to derive our baseline.  It consists of a single instruction, performs no computation and places no demand on the memory subsystems. Any non-trivial computation will have a higher activity factor than this minimal micro-benchmark. If the application to be optimized blocks on IO this can be incorporated by measuring the power consumed when the CPU is inactive and adjusting $P_\alpha$ proportionately. We defer measurement of $P_{\beta}$ for now as its precise value is not relevant to the current discussion. 
