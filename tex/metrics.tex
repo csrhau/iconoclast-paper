@@ -1,5 +1,5 @@
 \section{metrics}
-
+\label{sec:metrics}
 Any attempt to optimize a code must be based on a suitable metric.
 This is necessary both to help identify areas of improvement as well as to derive the utility of potential changes.
 Before we introduce our heuristic to guide optimization, we must first consider the metrics which we may wish to optimize. 
@@ -7,6 +7,16 @@ Before we introduce our heuristic to guide optimization, we must first consider 
 The choice of metric is often domain dependent and must capture the practical requirements of a system.
 This is why runtime has been the predominant metric in performance critical domains whilst energy has been largely confined to embedded systems.
 That said, metrics which capture the importance of power as well as time are becoming more prominent in high performance computing as the power needs of modern systems continue to rise.
+
+\autoref{fig:motivation} introduces the concept of a Feasible Performance Envelope to support this discussion of metrics.  As the name suggests, these constructs represent the set of all $(Runtime, Energy)$ costs it is possible for an arbitrary code to exhibit when running on a target platform. We cover the construction of this envelope in \ref{sec:pose}.
+By definition, we can state that any optimized or otherwise altered versions of a given code $\theta$ must also exist within this space.
+
+\begin{figure}
+\centering
+\input{plot/motivation/plot_core}
+\caption{Feasible Performance Envelope}
+\label{fig:motivation}
+\end{figure}
 
 Power consumption is an intuitive choice of metric as it captures the rate at which a given code consumes energy. It also has the benefit of being relatively easy to measure at scale. As \autoref{fig:motivation} shows, however, power alone is not an appropriate metric for this domain. Paradoxically, optimizations to reduce power draw can lead to increases in runtime and in turn greater total energy consumption. For an unoptimized code $\theta$, the rightmost shaded sector of this plot corresponds to feasible  
 

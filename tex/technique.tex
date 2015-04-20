@@ -1,24 +1,13 @@
 \section{Power Optimized Software Envelope}
+\label{sec:pose}
 
-\begin{figure}
-\centering
-\input{plot/motivation/plot_core}
-\caption{Feasible Performance Envelope}
-\label{fig:motivation}
-\end{figure}
+The POSE heuristic is based on the feasible performance envelope concept introduced in \autoref{sec:metrics}.
+To build this envelope for an invocation of code $\theta$  we first label the point corresponding to the observed runtime and energy costs of $\theta$. We then plot lines of gradient $P_{max}$ and $P_{min}$ to represent the maximum and minimum bounds on energy consumption during normal operation of the target platform. We also add lines of constant time and power draw corresponding to the original code for the purpose of illustration.
 
-The POSE heuristic is based on the notion of a feasible performance envelope like the one shown in \autoref{fig:motivation}.
-This construct represents the set of all $(Runtime, Energy)$ costs it is possible for an arbitrary code to exhibit when running on a target platform. 
+To constrain this search space further we now consider the metric we wish to reduce. We know that for two invocations of logically equivalent codes $\theta$ and $\lambda$, the transformation $\theta \to \lambda$ is a valid optimization with respect to a cost metric $M$ if and only if $M(\lambda) < M(\theta)$. If we plot the curve linking all points having $M(\lambda) = M(\theta)$, then by definition any optimized versions of $\theta$ can only exist below this optimization bound.
 
-To build the feasible performance envelope we first plot a point corresponding to the measured energy and runtime costs of executing an unoptimized code $\theta$. 
-We then plot lines of gradient $P_{max}$ and $P_{min}$ which represent the maximum and minimum bounds on system power consumption during normal operation.
-By definition, all possible code executions on the target platform must correspond to a point within this envelope.
-
-
-
-
-To constrain our search further we now consider the metric we wish to reduce. We know that for two logically equivalent codes $\theta$ and $\lambda$, the transformation $\theta \to \lambda$ is a valid optimization with respect to a cost metric $M$ if and only if $M(\lambda) < M(\theta)$. If we plot the curve linking all points having $M(\lambda) = M(\theta)$, then by definition any optimized versions of $\theta$ can only exist below this optimization bound. The exact equation of the curve depends on the chosen $E^mD^n$ metric as follows:
-
+Naturally the exact equation of the optimization bound depends on the metric chosen. 
+The general form for the $E^mD^n$ family of metrics is derived as follows:
 \begin{align}
 E^mD^n(\theta) &= E^mD^n(\lambda) \nonumber \\
 \implies {E_\lambda}^m &= \frac{{E_\theta}^m{D_\theta}^n}{{D_\lambda}^n} \nonumber \\
@@ -27,8 +16,10 @@ E^mD^n(\theta) &= E^mD^n(\lambda) \nonumber \\
 
 Our final bound considers what it means to optimize code for reduced power draw. We must avoid being too lenient; a large reduction in runtime associated with a negligible reduction in power draw should still be regarded as a classical optimization. On the other hand, our definition should include optimizations which deliver significant reductions in power draw with minuscule reductions in runtime. 
 
-The definition we have settled on is that an optimization $\theta \to \lambda$ is a power optimization with respect to metric $M$ if the change in power draw it delivers is responsible for the majority of the reduction in $M$. Conversely, if the primary benefit of an optimization comes from improved runtime then it is to be considered a runtime optimization. We plot a curve linking those points which have the same ratio of contributions from both power and runtime factors to $M$ as our original code. All valid power optimizations must lie below this so-called contribution bound. Again the equation for this bound depends on the metric chosen and is derived as follows:
+The definition we have settled on is that an optimization $\theta \to \lambda$ is a power optimization with respect to metric $M$ if the change in power draw it delivers is responsible for the majority of the reduction in $M$. Conversely, if the primary benefit of an optimization comes from improved runtime then it is to be considered a runtime optimization. We plot a curve linking those points which have the same ratio of contributions from both power and runtime factors to $M$ as our original code. All valid power optimizations must lie below this so-called contribution bound. 
 
+Again the equation for the contribution bound depends on the metric chosen.
+The general form for $E^mD^n$ metrics is derived as follows:
 \begin{align}
 \frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} &= \frac{{P_{\lambda}}^m}{{D_{\lambda}}^{m+n}} \nonumber \\
 \implies {P_{\lambda}}^m &= \frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} \times {D_\lambda}^{m+n} \nonumber \\ 
@@ -36,7 +27,7 @@ The definition we have settled on is that an optimization $\theta \to \lambda$ i
 \implies E_{\lambda} &= (\frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} \times {D_\lambda}^{m+n+1})^{\frac{1}{m}} 
 \end{align}
 
-It may appear somewhat academic to base a bound on the definition of power optimization. That said, this is an important consideration in practice. Intuitively it makes sense to use the most appropriate tools while searching for optimizations. If code is sub-optimal and the penalty is felt more in one domain than the other then the tools and techniques developed for that domain are better suited to finding the optimization.
+It may appear somewhat academic to base a bound on the definition of power optimization. That said, it is an important consideration in practice. Intuitively it makes sense to use the most appropriate tools while searching for optimizations.  If an optimization yields dramatic reductions in runtime with only minor reductions in power consumption then it is reasonable to state that conventional time-based profilers and performance engineering tools are better suited to finding it. The contribution bound enables our model to make this distinction.
 
 \begin{figure}
 \centering
@@ -44,7 +35,8 @@ It may appear somewhat academic to base a bound on the definition of power optim
 \caption{$ED^2P$ Code Optimization Space}
 \label{fig:technique}
 \end{figure}
-The bounds describe above allow us to identify the area of the Energy/Runtime plane in which power-optimized versions of a given code may exist. We also add lines of constant time and power draw corresponding to the original code for the purpose of illustration. This allows us to subdivide \autoref{fig:technique} into the following labelled areas:
+The bounds describe above allow us to identify the area of the Energy/Runtime plane in which power-optimized versions of a given code may exist. 
+Along with lines of constant time and power draw, these bounds allow us to subdivide \autoref{fig:technique} into the following labelled areas:
 \begin{enumerate}
 \item Power-only optimizations
 \item Power-mostly optimizations
@@ -53,11 +45,12 @@ The bounds describe above allow us to identify the area of the Energy/Runtime pl
 \item Performance Degradation
 \end{enumerate}
 
+
+Despite its simplicity, this technique offers a wealth of information. The difference in energy between $\theta$ and intercept $B$ places an upper limit on the absolute amount of energy which can be saved by power optimization alone. The value $M(A) - M(\theta)$ bounds the amount of improvement in our metric we can expect to see from power optimization. The difference in runtime between intersect $C$ and $\theta$ represents the maximum increase in runtime we could feasibly trade off to achieve a slower yet more energy efficient code. Finally, the value $D(\theta) / D(A)$ represents the smallest speed-up which delivers more benefit than power optimization is capable of.
+
 Only three measurements are required to build this plot; the system's baseline power draw, $P_\alpha$, and the time and energy to solution for the code to be optimized, $D_\theta$ and $E_\theta$ respectively. We can ignore the value of $P_\beta$ when optimizing for power draw as we need not consider any values greater than our initial $P_\theta$. We also need to consider which metric we are optimizing. \autoref{fig:technique} is based on $ED^2P$, whilst \autoref{fig:multimetric-technique} demonstrates how the optimization area varies with metric choice.
 
-Despite its simplicity, this technique offers a surprising wealth of information. The vertical distance between $\theta$ and intercept $B$ places an upper limit on the absolute amount of energy which can be saved by power optimization alone. The value $M(\theta) / M(A)$ bounds the amount of improvement in our metric we can expect to see from power optimization. The difference in runtime between intersect $C$ and $\theta$ represents the amount of time we are able to trade off if we hope to achieve a slower yet more energy efficient code. Finally, the value $D(\theta) / D(A)$ represents the smallest speed-up which delivers more benefit than power optimization is capable of.
-
-At this point it is worth stating explicitly that our heuristic is a general one. Its only requirements are that power consumption is proportional to activity factor and that energy and time figures can be obtained for the system baseline and the code under investigation. As such it can be applied equally well at scales ranging from a single core to an entire system. We focus on CPU power consumption simply because measurements are relatively easy to obtain at this level.
+At this point it is worth explicitly restating that our heuristic is a general one. Its only prerequisites are that accurate figures for energy and time can be obtained for the system baseline and the code under investigation. As such it can be applied equally well at scales ranging from a single core to an entire system. We focus on CPU power consumption simply because measurements are relatively easy to obtain at this level.
 
 \begin{figure}
 \centering
