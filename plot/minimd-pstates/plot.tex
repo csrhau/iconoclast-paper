@@ -9,6 +9,7 @@
 \usepgfplotslibrary{fillbetween}
 \begin{document}
 \begin{figure}[ht]
+\pgfplotstableread[col sep=comma]{data/pstate_power_4_cores.csv}\pstateminimdtable
 \include{plot_core}
 \end{figure}
 \end{document}
