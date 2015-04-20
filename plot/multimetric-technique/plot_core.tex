@@ -17,15 +17,10 @@
     \pgfmathsetmacro{\codepower}{47} 
     \pgfmathsetmacro{\codetime}{30}
 
-
-
-
     %% Intermezzo Values %%
     \pgfmathsetmacro{\codeenergy}{\codepower * \codetime}
     \pgfmathsetmacro{\baselineenergy}{\baselinepower * \codetime}
     \pgfmathsetmacro{\rooflineenergy}{\rooflinepower * \codetime}
-    \pgfmathsetmacro{\lowdisplayline}{(2 * \baselinepower + \codepower) / 3}
-    \pgfmathsetmacro{\highdisplayline}{(1 * \rooflinepower + 1 * \codepower) / 2}
 
     % arguments: code power, code time, x, n 
     \pgfmathdeclarefunction{metricbound}{4}{%

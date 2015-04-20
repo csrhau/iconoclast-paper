@@ -39,9 +39,6 @@
     \pgfmathdeclarefunction{definitionbound}{3}{%
       \pgfmathparse{((#1 / #2^3) * #3^4)}%
     }
-     \pgfmathdeclarefunction{optimizationlimits}{3}{%
-      \pgfmathparse{(min(metricbound(#1, #2, #3), definitionbound(#1, #2, #3)))}
-    }
 
     % BETA ROOFLINE BOUND
     \addplot[color=red, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
