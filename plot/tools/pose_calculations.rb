@@ -3,14 +3,14 @@ require 'ostruct'
 
 Mandatory = %i[base_power code_power code_time delay_exp energy_exp]
 Optional =%i[roof_power]
-ProseOptions = Struct.new(*(Mandatory + Optional))
+PoseOptions = Struct.new(*(Mandatory + Optional))
 
 class Parser
   def self.parse(args) 
-    options = ProseOptions.new
+    options = PoseOptions.new
     # Set any defaults here
     OptionParser.new do |opts|
-      opts.banner = "Usage: prose_calculations.rb [options]"
+      opts.banner = "Usage: pose_calculations.rb [options]"
       #P_{\alpha}
       opts.on('--base-power BP', Float, 'System Baseline Power (W)') do |bp|
         options.base_power = bp 
