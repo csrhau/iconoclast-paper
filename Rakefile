@@ -18,6 +18,11 @@ namespace :latex do
     system("pdflatex paper.tex")
     system("pdflatex paper.tex")
   end
+
+  desc 'Do a single pdflatex pass for paper'
+  task 'single' do 
+    system("pdflatex paper.tex")
+  end
 end
 
 namespace :tables do
