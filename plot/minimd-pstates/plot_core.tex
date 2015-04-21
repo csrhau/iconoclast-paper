@@ -9,8 +9,8 @@
     axis y line=left,
   	xlabel={Runtime \emph{(s)}},
     ylabel={Energy \emph{(J)}},    
-    xmin=0, xmax=200,
-    ymin=0, ymax=1500,
+    xmin=0, xmax=60,
+    ymin=0, ymax=1400,
     width=\linewidth,
     legend style={legend pos=north west}
     ]
@@ -20,7 +20,7 @@
     \pgfmathsetmacro{\codetime}{\pgfplotsretval} 
     \pgfplotstablegetelem{0}{Energy}\of{\pstateminimdtable}
     \pgfmathsetmacro{\codeenergy}{\pgfplotsretval} 
-    \pgfmathsetmacro{\baselinepower}{26.614061}
+    \pgfmathsetmacro{\baselinepower}{13.66845}
 
     %% Intermezzo Values %%
     \pgfmathsetmacro{\codepower}{\codeenergy / \codetime}
@@ -34,28 +34,23 @@
     }
 
     % ALPHA BASELINE BOUND 
-    \addplot[color=green, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
+    \addplot[color=green, name path=basebound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
     \addlegendentry{$P_{\alpha}$ Energy Bound} 
 
+    \addplot[name path=edpdef, draw=none, domain=23.8644287:\codetime+1, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+    \addplot[name path=edpopt, draw=none, domain=\codetime-1:38.455412, forget plot] {metricbound(\codepower, \codetime, x, 2)};
 
-    \addplot[domain=80:120, name path=basebound]{700};
-    \addlegendentry{Baseline}
 
-    \addplot[name path=edpdef, domain=80:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 1)};
-    \addplot[name path=edpopt, domain=\codetime:120, forget plot] {metricbound(\codepower, \codetime, x, 1)}; 
     \path[name path=edpspace,
       intersection segments={
         of=edpdef and edpopt,
         sequence=A0 -- B1,
       }
-    ]; 
-    \addplot[blue!13] fill between[of=edpspace and basebound];
-    \addlegendentry{$EDP$ Optimization Space}
-
-%    \addplot[blue!6] fill between[of=edp and basebound];
-    %Progression of PStates for MiniMD
+      ]; 
+    \addplot[blue!6] fill between[of=edpspace and basebound];
+    
     \addplot table[x=Runtime,y=Energy, trim cells=true] {\pstateminimdtable};
-    \addlegendentry{MiniMD PState Progression}
+    \addlegendentry{PState Progression}
 
  \end{axis}
 \end{tikzpicture}
