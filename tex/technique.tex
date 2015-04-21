@@ -2,7 +2,15 @@
 \label{sec:pose}
 
 The POSE heuristic is based on the feasible performance envelope concept introduced in \autoref{sec:metrics}.
-To build this envelope for an invocation of code $\theta$  we first label the point corresponding to the observed runtime and energy costs of $\theta$. We then plot lines of gradient $P_{max}$ and $P_{min}$ to represent the maximum and minimum bounds on energy consumption during normal operation of the target platform. We also add lines of constant time and power draw corresponding to the original code for the purpose of illustration.
+To build this envelope for an invocation of code $\theta$ we first label the point corresponding to the observed runtime and energy costs of $\theta$.
+We then plot lines of gradient $P_{max}$ and $P_{min}$ to represent the maximum and minimum bounds on energy consumption during normal operation of the target platform.
+Lines of constant time and power draw are also added for illustration purposses.
+
+At this point it is worth explicitly stating that our heuristic is a general one.
+Its only prerequisites are that accurate figures for energy and time can be obtained whilst running code on the system under investigation.
+As such it can be applied equally well at scales ranging from a single core to an entire system. 
+The only difference 
+
 
 To constrain this search space further we now consider the metric we wish to reduce. We know that for two invocations of logically equivalent codes $\theta$ and $\lambda$, the transformation $\theta \to \lambda$ is a valid optimization with respect to a cost metric $M$ if and only if $M(\lambda) < M(\theta)$. If we plot the curve linking all points having $M(\lambda) = M(\theta)$, then by definition any optimized versions of $\theta$ can only exist below this optimization bound.
 
@@ -48,9 +56,8 @@ Along with lines of constant time and power draw, these bounds allow us to subdi
 
 Despite its simplicity, this technique offers a wealth of information. The difference in energy between $\theta$ and intercept $B$ places an upper limit on the absolute amount of energy which can be saved by power optimization alone. The value $M(A) - M(\theta)$ bounds the amount of improvement in our metric we can expect to see from power optimization. The difference in runtime between intersect $C$ and $\theta$ represents the maximum increase in runtime we could feasibly trade off to achieve a slower yet more energy efficient code. Finally, the value $D(\theta) / D(A)$ represents the smallest speed-up which delivers more benefit than power optimization is capable of.
 
-Only three measurements are required to build this plot; the system's baseline power draw, $P_\alpha$, and the time and energy to solution for the code to be optimized, $D_\theta$ and $E_\theta$ respectively. We can ignore the value of $P_\beta$ when optimizing for power draw as we need not consider any values greater than our initial $P_\theta$. We also need to consider which metric we are optimizing. \autoref{fig:technique} is based on $ED^2P$, whilst \autoref{fig:multimetric-technique} demonstrates how the optimization area varies with metric choice.
+Only three measurements are required to build this plot; the system's baseline power draw, $P_{min}$, and the time and energy to solution for the code to be optimized, $D_\theta$ and $E_\theta$ respectively. We disregard the precise value of $P_{max}$ when optimizing for power draw as we need not consider any values greater than our initial $P_\theta$. We also need to consider which metric we are optimizing. \autoref{fig:technique} is based on $ED^2P$, whilst \autoref{fig:multimetric-technique} demonstrates how the optimization area varies with metric choice.
 
-At this point it is worth explicitly restating that our heuristic is a general one. Its only prerequisites are that accurate figures for energy and time can be obtained for the system baseline and the code under investigation. As such it can be applied equally well at scales ranging from a single core to an entire system. We focus on CPU power consumption simply because measurements are relatively easy to obtain at this level.
 
 \begin{figure}
 \centering

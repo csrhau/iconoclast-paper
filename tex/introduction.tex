@@ -1,13 +1,10 @@
 \section{Introduction}
-
-Minimizing power consumption has been a driving force in the design of computer systems since the dawn of computing.
-Hardware development has always followed a pattern of producing incremental improvements to the same basic design until rapid escalation of power draw renders further improvements infeasible.
-When this happens, system architects must identify new technologies to sustain progress.
+Driven by Moore's Law, advances in processor design have delivered improvements in CPU performance for decades. As physical limits are reached, however, refinements to the same basic technologies are beginning to show diminishing returns. One side-effect of this is an unsustainable rise in system power use, which the US Department of Energy has identified as a primary constraint for exascale systems \cite{shalf:2011aa}.
 
 Hardware manufacturers are increasingly prioritising energy efficiency in their processor designs~\cite{kurd:2014aa}.
 In turn, some groups expect that software modifications will be required to fully exploit energy efficiency improvements in modern processors~\cite{shao:2013aa}.
 They suggest this process will be analogous to the current practice of tuning code to reduce runtime.
 
-This paper presents the Power Optimized Software Envelope (POSE) model. 
-POSE is a visual heuristic which provides insights into the \todo{macro-scale} power consumption characteristics of a code running on a given architecture.
-The use of this model is then demonstrated with a number of benchmark codes for a single node system.
+This paper presents the Power Optimized Software Envelope (POSE) model.
+POSE is a visual model which provides performance engineers with insights into the optimization characteristics of their codes.
+We demonstrate the utility of this model with a study of the runtime and CPU power usage characteristics of several popular benchmarks.
