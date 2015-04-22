@@ -12,7 +12,7 @@
     ]
 
     %% Model Parameters %%
-    \pgfmathsetmacro{\baselinepower}{23.772020}
+    \pgfmathsetmacro{\baselinepower}{26.8166969}
     \pgfmathsetmacro{\codepower}{47} 
     \pgfmathsetmacro{\codetime}{30}
     % Sadly, pgfplots sucks too much to calculate cube roots
@@ -58,15 +58,7 @@
 
     \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};
     \node[above right] at (axis cs:\codetime,\codeenergy) {$\theta$};
-    \pgfmathsetmacro{\oneycoord}{\lowdisplayline * 31.4}
-    \node at (axis cs:31.4,\oneycoord) {\textit1.};
-    \pgfmathsetmacro{\twoycoord}{\lowdisplayline * 29.1}
-    \node at (axis cs:29.1,\twoycoord) {\textit2.};
-    \pgfmathsetmacro{\threeycoord}{\lowdisplayline * 24.5}
-    \node at (axis cs:24.5,\threeycoord) {\textit3.};
-    \pgfmathsetmacro{\fiveycoord}{\codepower * 37}
-    \node at (axis cs:37,\fiveycoord) {\textit5.};
-    
+   
     \node [below] at ({axis cs:\anodex, \anodey}) {A};
     \node [below] at ({axis cs:\codetime,\baselineenergy}) {B};
     \node [below] at ({axis cs:\cnodex, \cnodey}) {C};
