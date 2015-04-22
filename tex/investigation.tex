@@ -1,4 +1,5 @@
 \section{Investigation}
+\label{sec:investigation}
 
 \todo{Introducory paragraph about how we're focussing on the single core case}
 
@@ -77,5 +78,10 @@ We are now ready to derive a visual heuristic to guide optimization. This heuris
 
 
 We approximate $P_{\alpha}$ by monitoring the power consumed whilst running an appropriate baseline benchmark. This code performs the minimum amount of work possible whilst keeping the system active. In particular, we wish to minimize our activity factor whilst matching the clock frequency and voltage figures we expect to see when code is running. We cannot simply halt the CPU because this would also stop many of the background tasks which contribute to $P_{\alpha}$.
+
+
+Although a chip performing no work may use a very small amount of power, no amount of optimization will yield the same level of efficiency.
+
+\todo{describe the nature of the baseline, the tighter the better and all that}
 
 We employ the code given in \autoref{fig:microbench} to derive our baseline.  It consists of a single instruction, performs no computation and places no demand on the memory subsystems. Any non-trivial computation will have a higher activity factor than this minimal micro-benchmark. If the application to be optimized blocks on IO this can be incorporated by measuring the power consumed when the CPU is inactive and adjusting $P_\alpha$ proportionately. We defer measurement of $P_{\beta}$ for now as its precise value is not relevant to the current discussion. 
