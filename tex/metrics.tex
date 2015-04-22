@@ -1,8 +1,5 @@
 \section{metrics}
 \label{sec:metrics}
-
-
-Before we can introduce our heuristic to guide optimization, we must first consider the types of metric which we wish to optimize for. 
 Historically, runtime has been the predominant metric used in performance critical domains whilst energy has largely been confined to embedded systems.
 That said, metrics which capture the importance of power as well as time are gaining prominence as the power requirements of scientific computing continue to rise.
 
@@ -20,8 +17,8 @@ For now, we simply state that any optimized or otherwise altered versions of a g
 
 Power consumption is a seemingly obvious choice of metric in energy sensitive domains as it captures the rate at which energy is consumed.
 The ability to detect power hungry sections of code would clearly help identify candidates for optimization.
-That said, power alone is rarely an appropriate metric to optimize for.
-Paradoxically, optimizations to reduce power draw can lead to increases in runtime and in turn greater total energy consumption.
+That said, power is rarely an appropriate metric to optimize for.
+Optimizations to reduce power draw can in principle lead to increases in runtime and in turn greater total energy consumption.
 The upper right shaded sector of \autoref{fig:motivation} corresponds to this case.
 
 Energy to completion is a reasonable metric when energy consumption is of paramount importance.

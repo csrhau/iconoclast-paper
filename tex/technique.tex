@@ -27,7 +27,7 @@ E^mD^n(\theta) &= E^mD^n(\lambda) \nonumber \\
 
 Our final bound considers what it means to optimize code for reduced power draw. We must avoid being too lenient; a large reduction in runtime associated with a negligible reduction in power draw should still be regarded as a classical optimization. On the other hand, our definition should include optimizations which deliver significant reductions in power draw with minuscule reductions in runtime. 
 
-The definition we have settled on is that an optimization $\theta \to \lambda$ is a power optimization with respect to metric $M$ if the change in power draw it delivers is responsible for the majority of the reduction in $M$. Conversely, if the primary benefit of an optimization comes from improved runtime then it is to be considered a runtime optimization. We plot a curve linking those points which have the same ratio of contributions from both power and runtime factors to $M$ as our original code. All valid power optimizations must lie below this so-called contribution bound. 
+An optimization $\theta \to \lambda$ is a power optimization with respect to metric $M$ if the change in power draw it delivers is responsible for the majority of the reduction in $M$. Conversely, if the primary benefit of an optimization comes from improved runtime then it is to be considered a runtime optimization. We plot a curve linking those points which have the same ratio of contributions from both power and runtime factors to $M$ as our original code. All valid power optimizations must lie below this so-called contribution bound. 
 
 Again the equation for the contribution bound depends on the metric chosen.
 The general form for $E^mD^n$ metrics is derived as follows:
@@ -38,7 +38,7 @@ The general form for $E^mD^n$ metrics is derived as follows:
 \implies E_{\lambda} &= (\frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} \times {D_\lambda}^{m+n+1})^{\frac{1}{m}} 
 \end{align}
 
-It may appear somewhat academic to base a bound on the definition of power optimization. That said, it is an important consideration in practice. Intuitively it makes sense to use the most appropriate tools while searching for optimizations.  If an optimization yields dramatic reductions in runtime with only minor reductions in power consumption then it is reasonable to state that conventional time-based profilers and performance engineering tools are better suited to finding it. The contribution bound enables our model to make this distinction.
+Intuitively it makes sense to use the most appropriate tools while searching for optimizations.  If an optimization yields dramatic reductions in runtime with only minor reductions in power consumption then it is reasonable to state that conventional time-based profilers and performance engineering tools are better suited to finding it. The contribution bound enables our model to make this distinction.
 
 \begin{figure}
 \centering
