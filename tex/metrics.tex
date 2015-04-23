@@ -1,20 +1,18 @@
 \section{metrics}
 \label{sec:metrics}
-Historically, runtime has been the predominant metric used in performance critical domains whilst energy has largely been confined to embedded systems.
+Historically, runtime has been the predominant metric in performance critical domains whilst power and energy were largely confined to embedded systems.
 That said, metrics which capture the importance of power as well as time are gaining prominence as the power requirements of scientific computing continue to rise.
 
+Power consumption is a seemingly obvious choice of metric for energy sensitive domains as it captures the rate at which energy is consumed.
+The ability to correlate periods of increased power draw with specific sections of code would clearly help to identify optimization candidates.
+It is rarely used in practice however as optimizations which reduce power draw can in principle lead to increases in runtime and in turn greater total energy consumption.
 
-Power consumption is a seemingly obvious choice of metric in energy sensitive domains as it captures the rate at which energy is consumed.
-The ability to detect power hungry sections of code would clearly help identify candidates for optimization.
-That said, power is rarely an appropriate metric to optimize for.
-Optimizations to reduce power draw can in principle lead to increases in runtime and in turn greater total energy consumption.
-
-Energy to completion is a reasonable metric when energy consumption is of paramount importance.
-It is often used in domains like mobile robotics and sensor where available energy is severely restricted.
+Total energy use is a reasonable metric in cases where energy consumption is of paramount importance.
+As such it is often used in domains like mobile robotics and sensor where available energy is severely restricted.
 That said, whilst energy is becoming more important in domains like scientific computing, it is not the only limiting factor. 
 Reliance on energy as a metric leaves open the possibility of unacceptable loss of runtime performance.
 
-In practice the most useful metrics are those which combine both energy and runtime.
+These issues have led to the development of metrics which combine both energy and runtime costs.
 The simplest of these is the Energy-Delay Product (EDP) metric \cite{gonzales:1995aa}, which assigns an equal weighting to both runtime and energy consumption and is defined as follows:
 \begin{align}
   EDP = Energy \times Runtime \nonumber \\
@@ -25,4 +23,4 @@ The simplest of these is the Energy-Delay Product (EDP) metric \cite{gonzales:19
 Several extensions to EDP have been proposed which assign greater weight to the runtime component to better reflect the demands of high performance computing.
 Common examples include energy-delay-squared product ($ED^{2}$) and energy-delay-cubed product ($ED^{3}$).
 We refer to this as the $E^mD^n$ family of metrics, which also includes simple power ($E^1D^{-1}$), energy ($E^1D^0$) and time ($E^0D^1$) as members.
-It has been argued that that $ED^{2}P$ is most suited when considering a fixed micro-architecture \cite{brooks:2000aa}, however our work applies to all members of this group with $m > 0$ and $n \geq 0$.
+It has been argued that that $ED^{2}P$ is most suited when considering a fixed micro-architecture \cite{brooks:2000aa}, \todo{So we will focus on this metric} however our work applies to all members of this group with $m > 0$ and $n \geq 0$.

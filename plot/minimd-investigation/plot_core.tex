@@ -1,25 +1,26 @@
 \begin{tikzpicture}
-  \begin{axis}[ticks = none, 
+  \begin{axis}[
     axis on top,
     axis x line=bottom,
     axis y line=left,
   	xlabel={Runtime \emph{(s)}},
     ylabel={Energy \emph{(J)}},    
-    xmin=0, xmax=50,
-    ymin=0, ymax=3300,
+    xmin=25, xmax=31.5,
+    ymin=700, ymax=1500,
     width=\linewidth,
     legend style={legend pos=north west}
     ]
 
     %% Model Parameters %%
-    \pgfmathsetmacro{\baselinepower}{26.8166969}
-    \pgfmathsetmacro{\codepower}{47} 
-    \pgfmathsetmacro{\codetime}{30}
+    \pgfmathsetmacro{\baselinepower}{26.876067}
+    \pgfmathsetmacro{\rooflinepower}{43.861809}
+    \pgfmathsetmacro{\codepower}{27.959470} 
+    \pgfmathsetmacro{\codetime}{30.293834}
     % Sadly, pgfplots sucks too much to calculate cube roots
     % These values are calculated with a ruby script in tools
-    \pgfmathsetmacro{\anodex}{25.83028}
-    \pgfmathsetmacro{\cnodex}{34.84283}
-    \pgfmathsetmacro{\tnodex}{27.65477}
+    \pgfmathsetmacro{\anodex}{29.897382525363962}
+    \pgfmathsetmacro{\cnodex}{30.695542582732617}
+    \pgfmathsetmacro{\tnodex}{26.071641341179742}
 
     \pgfmathsetmacro{\cnodey}{\cnodex * \baselinepower}
     \pgfmathsetmacro{\anodey}{\anodex * \baselinepower}
@@ -37,10 +38,9 @@
       \pgfmathparse{((#1 / #2^3) * #3^4)}%
     }
 
-
-    %const power diagonal
-    \addplot[color=darkgray, densely dashed, forget plot, %forget plot prevents legend entry
-            domain=\pgfkeysvalueof{/pgfplots/xmin}:\codetime] {\codepower * x}; 
+    % BETA ROOFLINE BOUND 
+    \addplot[color=red, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
+    \addlegendentry{$P_{max}$ Energy Bound}
 
     % ALPHA BASELINE BOUND 
     \addplot[color=green, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};

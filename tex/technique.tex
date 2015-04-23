@@ -9,10 +9,9 @@
 \end{figure}
 
 The POSE heuristic is based on the concept of a \emph{Feasible Performance Envelope}.
-This represents the set of all $\langle Runtime, Energy\rangle$ costs it is possible for an arbitrary code to exhibit when running on a target platform.
-To build the feasible performance envelope for an invocation of code $\theta$ we first label the point corresponding to the observed runtime and energy costs of $\theta$.
-We then plot lines of gradient $P_{max}$ and $P_{min}$ to represent the maximum and minimum bounds on energy consumption during normal operation of the target platform.
-Lines of constant time and power draw are also added for the purpose of illustration.
+We construct this by plotting lines of gradient $P_{max}$ and $P_{min}$ in \autoref{fig:technique}.
+These lines represent the maximum and minimum bounds on power consumption during normal operation of the target platform.
+By definition the $\langle Runtime, Energy\rangle$ cost associated with running any arbitrary code must be represented somewhere within this space.
 
 At this point it is worth stating that our heuristic is a very general one.
 It works for arbitrary metrics and is equally applicable at scales ranging from a single core to entire clusters.

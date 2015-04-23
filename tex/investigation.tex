@@ -51,12 +51,14 @@ An important feature of the equations governing power draw is that only $P_{dyn}
 
 Historically, dynamic power has been the biggest contributor to $P_{tot}$, however leakage power has been on track to overtake it since the breakdown of Dennard Scaling.  Sub-threshold and gate-oxide leakage dominate total leakage current, and they both increase exponentially as transistors shrink. Process improvements like the introduction of high-k dielectric materials~\cite{jan:2009aa} have kept leakage power in check over the last decade, however there is no avoiding the fact that insulating properties will degrade as transistors get smaller.
 
+
 \begin{table}
 \centering
 \input{tab/tex/power_of_cores_x_freq.tex}
 \caption{Base CPU Power (W)}
 \end{table} 
 
+%TODO Linpack table
 \begin{table}
 \centering
 \input{tab/tex/code_metrics}
@@ -82,7 +84,7 @@ Historically, dynamic power has been the biggest contributor to $P_{tot}$, howev
 
 
 
-We are now ready to derive a visual heuristic to guide optimization. This heuristic is based on the feasible performance envelope introduced in \autoref{fig:motivation}. We first formalize the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$. \todo{Point out in other (multi-system) domains the approach is still valid, we just need a sensible max and min.}
+We first formalize the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$. \todo{Point out in other (multi-system) domains the approach is still valid, we just need a sensible max and min.}
 
 
 We approximate $P_{\alpha}$ by monitoring the power consumed whilst running an appropriate baseline benchmark. This code performs the minimum amount of work possible whilst keeping the system active. In particular, we wish to minimize our activity factor whilst matching the clock frequency and voltage figures we expect to see when code is running. We cannot simply halt the CPU because this would also stop many of the background tasks which contribute to $P_{\alpha}$.
