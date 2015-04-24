@@ -5,30 +5,31 @@
     axis y line=left,
   	xlabel={Runtime \emph{(s)}},
     ylabel={Energy \emph{(J)}},    
-    xmin=25, xmax=31.5,
-    ymin=700, ymax=1500,
+    xmin=25, xmax=31,
+    ymin=650, ymax=1650,
     width=\linewidth,
     legend style={legend pos=north west}
     ]
 
     %% Model Parameters %%
     \pgfmathsetmacro{\baselinepower}{26.876067}
-    \pgfmathsetmacro{\rooflinepower}{43.861809}
+    \pgfmathsetmacro{\rooflinepower}{43.570651}
     \pgfmathsetmacro{\codepower}{27.959470} 
     \pgfmathsetmacro{\codetime}{30.293834}
     % Sadly, pgfplots sucks too much to calculate cube roots
     % These values are calculated with a ruby script in tools
-    \pgfmathsetmacro{\anodex}{29.897382525363962}
-    \pgfmathsetmacro{\cnodex}{30.695542582732617}
-    \pgfmathsetmacro{\tnodex}{26.071641341179742}
+    \pgfmathsetmacro{\blnodex}{29.897382525363962}
+    \pgfmathsetmacro{\brnodex}{30.695542582732617}
+    \pgfmathsetmacro{\trnodex}{26.129586468297543}
+    \pgfmathsetmacro{\tlnodex}{25.450152567484604}
 
-    \pgfmathsetmacro{\cnodey}{\cnodex * \baselinepower}
-    \pgfmathsetmacro{\anodey}{\anodex * \baselinepower}
- 
     %% Intermezzo Values %%
+    \pgfmathsetmacro{\brnodey}{\brnodex * \baselinepower}
+    \pgfmathsetmacro{\blnodey}{\blnodex * \baselinepower}
+    \pgfmathsetmacro{\tlnodey}{\tlnodex * \rooflinepower}
+    \pgfmathsetmacro{\trnodey}{\trnodex * \rooflinepower}
     \pgfmathsetmacro{\codeenergy}{\codepower * \codetime}
     \pgfmathsetmacro{\baselineenergy}{\baselinepower * \codetime}
-    \pgfmathsetmacro{\lowdisplayline}{(2 * \baselinepower + \codepower) / 3}
 
     % arguments: code power, code time, x - todo, apparently not supposed to do pgfmathparse
     \pgfmathdeclarefunction{metricbound}{3}{%
@@ -46,24 +47,25 @@
     \addplot[color=green, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
     \addlegendentry{$P_{min}$ Energy Bound} 
 
-    \addplot[color=orange, domain=\tnodex:\cnodex] { metricbound(\codepower, \codetime, x)};
+    \addplot[color=orange, domain=\trnodex:\brnodex] { metricbound(\codepower, \codetime, x)};
     \addlegendentry{Optimization Bound}
 
-    \addplot[color=blue!80, domain=\anodex:\codetime] { definitionbound(\codepower, \codetime, x)};
+    \addplot[color=blue!80, domain=\blnodex:\codetime] { definitionbound(\codepower, \codetime, x)};
     \addlegendentry{Contribution Bound}
 
-    % Constant Time, Energy Dashes
-    %vertical
+    \addplot[color=orange, dashed, domain=\tlnodex:\blnodex] {metricbound(\baselinepower, \blnodex, x)};
+    \addlegendentry{Optimization Limit}
+
+    % Constant Time (Vertical) dotted line
     \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\codeenergy});
 
     \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};
     \node[above right] at (axis cs:\codetime,\codeenergy) {$\theta$};
-   
-    \node [below] at ({axis cs:\anodex, \anodey}) {A};
-    \node [below] at ({axis cs:\codetime,\baselineenergy}) {B};
-    \node [below] at ({axis cs:\cnodex, \cnodey}) {C};
-    %\node [below, name intersections={of=metric bound and baseline}] at (intersection-1) {C};
-
-
+    
+    \node [above] at ({axis cs:\tlnodex, \tlnodey}) {A};
+    \node [above] at ({axis cs:\trnodex, \trnodey}) {B};
+    \node [below] at ({axis cs:\blnodex, \blnodey}) {C};
+    \node [below] at ({axis cs:\codetime,\baselineenergy}) {D};
+    \node [below] at ({axis cs:\brnodex, \brnodey}) {E};
  \end{axis}
 \end{tikzpicture}

@@ -18,19 +18,19 @@
     \pgfmathsetmacro{\codetime}{30}
     % Sadly, pgfplots sucks too much to calculate cube roots
     % These values are calculated with a ruby script in tools
-    \pgfmathsetmacro{\anodex}{25.83028}
-    \pgfmathsetmacro{\cnodex}{34.84283}
-    \pgfmathsetmacro{\tnodex}{27.65477}
+    \pgfmathsetmacro{\blnodex}{25.83028}
+    \pgfmathsetmacro{\brnodex}{34.84283}
+    \pgfmathsetmacro{\trnodex}{27.65477}
+    \pgfmathsetmacro{\tlnodex}{20.50151} % TODO
 
-    \pgfmathsetmacro{\cnodey}{\cnodex * \baselinepower}
-    \pgfmathsetmacro{\anodey}{\anodex * \baselinepower}
- 
     %% Intermezzo Values %%
+    \pgfmathsetmacro{\brnodey}{\brnodex * \baselinepower}
+    \pgfmathsetmacro{\blnodey}{\blnodex * \baselinepower}
+    \pgfmathsetmacro{\tlnodey}{\tlnodex * \rooflinepower}
+    \pgfmathsetmacro{\trnodey}{\trnodex * \rooflinepower}
     \pgfmathsetmacro{\codeenergy}{\codepower * \codetime}
     \pgfmathsetmacro{\baselineenergy}{\baselinepower * \codetime}
-    \pgfmathsetmacro{\rooflineenergy}{\rooflinepower * \codetime}
-    \pgfmathsetmacro{\lowdisplayline}{(2 * \baselinepower + \codepower) / 3}
-    \pgfmathsetmacro{\highdisplayline}{(1 * \rooflinepower + 1 * \codepower) / 2}
+
 
     % arguments: code power, code time, x - todo, apparently not supposed to do pgfmathparse
     \pgfmathdeclarefunction{metricbound}{3}{%
@@ -40,46 +40,65 @@
       \pgfmathparse{((#1 / #2^3) * #3^4)}%
     }
 
-    % BETA ROOFLINE BOUND
+   % BETA ROOFLINE BOUND 
     \addplot[color=red, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
     \addlegendentry{$P_{max}$ Energy Bound}
-
-    %const power diagonal
-    \addplot[color=darkgray, densely dashed, forget plot, %forget plot prevents legend entry
-            domain=\pgfkeysvalueof{/pgfplots/xmin}:\codetime] {\codepower * x}; 
 
     % ALPHA BASELINE BOUND 
     \addplot[color=green, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
     \addlegendentry{$P_{min}$ Energy Bound} 
 
-    \addplot[color=orange, domain=\tnodex:\cnodex] { metricbound(\codepower, \codetime, x)};
+    \addplot[color=orange, domain=\trnodex:\brnodex] { metricbound(\codepower, \codetime, x)};
     \addlegendentry{Optimization Bound}
 
-    \addplot[color=blue!80, domain=\anodex:\codetime] { definitionbound(\codepower, \codetime, x)};
+    \addplot[color=blue!80, domain=\blnodex:\codetime] { definitionbound(\codepower, \codetime, x)};
     \addlegendentry{Contribution Bound}
 
-    % Constant Time, Energy Dashes
-    %vertical
+    \addplot[color=orange, dashed, domain=\tlnodex:\blnodex] {metricbound(\baselinepower, \blnodex, x)};
+    \addlegendentry{Optimization Limit}
+
+    % Constant Time (Vertical) dotted line
     \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\codeenergy});
 
     \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};
     \node[above right] at (axis cs:\codetime,\codeenergy) {$\theta$};
-    \pgfmathsetmacro{\oneycoord}{\lowdisplayline * 31.4}
-    \node at (axis cs:31.4,\oneycoord) {\textit1.};
-    \pgfmathsetmacro{\twoycoord}{\lowdisplayline * 29.1}
-    \node at (axis cs:29.1,\twoycoord) {\textit2.};
-    \pgfmathsetmacro{\threeycoord}{\lowdisplayline * 24.5}
-    \node at (axis cs:24.5,\threeycoord) {\textit3.};
-    \pgfmathsetmacro{\fourycoord}{\highdisplayline * 24.5}
-    \node at (axis cs:24.5,\fourycoord) {\textit4.};
-    \pgfmathsetmacro{\fiveycoord}{\codepower * 37}
-    \node at (axis cs:37,\fiveycoord) {\textit5.};
     
-    \node [below] at ({axis cs:\anodex, \anodey}) {A};
-    \node [below] at ({axis cs:\codetime,\baselineenergy}) {B};
-    \node [below] at ({axis cs:\cnodex, \cnodey}) {C};
-    %\node [below, name intersections={of=metric bound and baseline}] at (intersection-1) {C};
+    \node [above left] at ({axis cs:\tlnodex, \tlnodey}) {A};
+    \node [above left] at ({axis cs:\trnodex, \trnodey}) {B};
+    \node [below right] at ({axis cs:\blnodex, \blnodey}) {C};
+    \node [below right] at ({axis cs:\codetime,\baselineenergy}) {D};
+    \node [below right=0cm] at ({axis cs:\brnodex, \brnodey}) {E};
+ 
+
+    \pgfmathsetmacro{\onexcoord}{15}
+    \node at (axis cs: \onexcoord, 44 * \onexcoord){1.};
+
+    \pgfmathsetmacro{\twoxcoord}{25.8}
+    \node at (axis cs: \twoxcoord, 44 * \twoxcoord){2.};
+
+    \pgfmathsetmacro{\threexcoord}{29}
+    \node at (axis cs: \threexcoord, 34.5 * \threexcoord){3.};
+
+    \pgfmathsetmacro{\fourxcoord}{32}
+    \node at (axis cs: \fourxcoord, 34.5 * \fourxcoord){4.};
+    
+    \pgfmathsetmacro{\fivexcoord}{40}
+    \node at (axis cs: \fivexcoord, 44 * \fivexcoord){5.};
 
 
+
+%    \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};
+%    \node[above right] at (axis cs:\codetime,\codeenergy) {$\theta$};
+%    \pgfmathsetmacro{\oneycoord}{\lowdisplayline * 31.4}
+%    \node at (axis cs:31.4,\oneycoord) {\textit1.};
+%    \pgfmathsetmacro{\twoycoord}{\lowdisplayline * 29.1}
+%    \node at (axis cs:29.1,\twoycoord) {\textit2.};
+%    \pgfmathsetmacro{\threeycoord}{\lowdisplayline * 24.5}
+%    \node at (axis cs:24.5,\threeycoord) {\textit3.};
+%    \pgfmathsetmacro{\fourycoord}{\highdisplayline * 24.5}
+%    \node at (axis cs:24.5,\fourycoord) {\textit4.};
+%    \pgfmathsetmacro{\fiveycoord}{\codepower * 37}
+%    \node at (axis cs:37,\fiveycoord) {\textit5.};
+%    
  \end{axis}
 \end{tikzpicture}
