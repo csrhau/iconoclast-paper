@@ -1,7 +1,8 @@
-\section{metrics}
-\label{sec:metrics}
+\section{metrics }
+\label{sec:metrics}\todo{Rethink}
 Historically, runtime has been the predominant metric in performance critical domains whilst power and energy were largely confined to embedded systems.
 That said, metrics which capture the importance of power as well as time are gaining prominence as the power requirements of scientific computing continue to rise.
+
 
 Power consumption is a seemingly obvious choice of metric for energy sensitive domains as it captures the rate at which energy is consumed.
 The ability to correlate periods of increased power draw with specific sections of code would clearly help to identify optimization candidates.
@@ -14,6 +15,7 @@ Reliance on energy as a metric leaves open the possibility of unacceptable loss 
 
 These issues have led to the development of metrics which combine both energy and runtime costs.
 The simplest of these is the Energy-Delay Product (EDP) metric \cite{gonzales:1995aa}, which assigns an equal weighting to both runtime and energy consumption and is defined as follows:
+
 \begin{align}
   EDP = Energy \times Runtime \nonumber \\
       \Leftrightarrow Power \times Runtime^{2} 
@@ -23,4 +25,5 @@ The simplest of these is the Energy-Delay Product (EDP) metric \cite{gonzales:19
 Several extensions to EDP have been proposed which assign greater weight to the runtime component to better reflect the demands of high performance computing.
 Common examples include energy-delay-squared product ($ED^{2}$) and energy-delay-cubed product ($ED^{3}$).
 We refer to this as the $E^mD^n$ family of metrics, which also includes simple power ($E^1D^{-1}$), energy ($E^1D^0$) and time ($E^0D^1$) as members.
-It has been argued that that $ED^{2}P$ is most suited when considering a fixed micro-architecture \cite{brooks:2000aa}, \todo{So we will focus on this metric} however our work applies to all members of this group with $m > 0$ and $n \geq 0$.
+
+It has been argued that that $ED^{2}P$ is the most suitable of the $E^mD^n$ metrics when considering a fixed micro-architecture \cite{brooks:2000aa}. Most of the examples within this paper use $ED^2P$ for this reason, however our work applies to all members of this group with $m > 0$ and $n \geq 0$, and indeed any metric which increases when either runtime or energy consumption increases.
