@@ -1,7 +1,13 @@
 \section{metrics }
 \label{sec:metrics}\todo{Rethink}
+
+Two factors influence the overall cost of running a scientific code at scale, runtime and energy consumption.
 Historically, runtime has been the predominant metric in performance critical domains whilst power and energy were largely confined to embedded systems.
 That said, metrics which capture the importance of power as well as time are gaining prominence as the power requirements of scientific computing continue to rise.
+
+\todo{Even though the cost is associated with energy consumed rather than power directly, we still consider POSE to be a power optimization tool. This is because energy is defined as $E=PD$.
+The energy to completion of a code can reduce as a side effect of classical runtime optimizations. 
+It would be invalid to claim this side effect as a power optimization.}
 
 
 Power consumption is a seemingly obvious choice of metric for energy sensitive domains as it captures the rate at which energy is consumed.

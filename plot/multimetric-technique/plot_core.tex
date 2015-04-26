@@ -39,34 +39,55 @@
     \addlegendentry{$P_{min}$ Energy Bound} 
 
     % Constant Time vertical dots
-    %vertical
     \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\codeenergy});
 
-    % Sadly, pgfplots sucks too much to calculate cube roots
-    % Domain values are calculated with a ruby script in tools
-
     %% Energy Area %%
-    \addplot[name path=energy, draw=none, domain=19.14894:47, forget plot]{ min(definitionbound(\codepower, \codetime, x, 0),metricbound(\codepower, \codetime, x, 0))};
-    \addplot[blue!6] fill between[of=energy and basebound];
+    \addplot[name path=energyopt, forget plot, domain=19.14894:47, blue!6] {metricbound(\codepower, \codetime, x, 0)};
+    \addplot[name path=energydef, forget plot, draw=none, domain=19.14894:\codetime+1] {definitionbound(\codepower, \codetime, x, 0)};
+    \path[name path=energyspace,
+      intersection segments={
+        of=energydef and energyopt,
+        sequence=A0 -- B1,
+      }
+      ]; 
+    \addplot[blue!6] fill between[of=energyspace and basebound];
     \addlegendentry{Energy}
 
     %% Energy Delay Product Area %% 
-    \addplot[name path=edp, draw=none, domain=23.96806:37.54997, forget plot] { min(definitionbound(\codepower, \codetime, x, 1),metricbound(\codepower, \codetime, x, 1))};
-    \addplot[blue!13] fill between[of=edp and basebound];
+    \addplot[name path=edpopt, forget plot, domain=19.14894:47, blue!15] {metricbound(\codepower, \codetime, x, 1)};
+    \addplot[name path=edpdef, forget plot, draw=none, domain=19.14894:\codetime+1] {definitionbound(\codepower, \codetime, x, 1)};
+    \path[name path=edpspace,
+      intersection segments={
+        of=edpdef and edpopt,
+        sequence=A0 -- B1,
+      }
+      ]; 
+    \addplot[blue!15] fill between[of=edpspace and basebound];
     \addlegendentry{$EDP$}
 
-    %% Energy Delay Squared Product Area ##
-    \addplot[name path=edtwop, draw=none, domain=25.83028:34.84283, forget plot] { min(definitionbound(\codepower, \codetime, x, 2),metricbound(\codepower, \codetime, x, 2))};
-    \addplot[blue!21] fill between[of=edtwop and basebound];
+    %% Energy Delay Product Squared Area %% 
+    \addplot[name path=ed2popt, forget plot, domain=19.14894:47, blue!21] {metricbound(\codepower, \codetime, x, 2)};
+    \addplot[name path=ed2pdef, forget plot, draw=none, domain=19.14894:\codetime+1] {definitionbound(\codepower, \codetime, x, 2)};
+    \path[name path=ed2pspace,
+      intersection segments={
+        of=ed2pdef and ed2popt,
+        sequence=A0 -- B1,
+      }
+      ]; 
+    \addplot[blue!21] fill between[of=ed2pspace and basebound];
     \addlegendentry{$ED^2P$}
 
-    %% Energy Delay Cubed Product Area ##
-    \addplot[name path=edthreep, draw=none, domain=26.81496:33.56336, forget plot] { min(definitionbound(\codepower, \codetime, x, 3),metricbound(\codepower, \codetime, x, 3))};
-    \addplot[blue!35] fill between[of=edthreep and basebound];
+    %% Energy Delay Product Cubed Area %% 
+    \addplot[name path=ed3popt, forget plot, domain=19.14894:47, blue!28] {metricbound(\codepower, \codetime, x, 3)};
+    \addplot[name path=ed3pdef, forget plot, draw=none, domain=19.14894:\codetime+1] {definitionbound(\codepower, \codetime, x, 3)};
+    \path[name path=ed3pspace,
+      intersection segments={
+        of=ed3pdef and ed3popt,
+        sequence=A0 -- B1,
+      }
+      ]; 
+    \addplot[blue!28] fill between[of=ed3pspace and basebound];
     \addlegendentry{$ED^3P$}
-
-
-
 
      \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};
     \node[above right] at (axis cs:\codetime,\codeenergy) {$\theta$};
