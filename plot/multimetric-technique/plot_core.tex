@@ -42,54 +42,44 @@
     \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\codeenergy});
 
     %% Energy Area %%
-    \addplot[name path=energyopt, forget plot, domain=19.14894:47, blue!6] {metricbound(\codepower, \codetime, x, 0)};
-    \addplot[name path=energydef, forget plot, draw=none, domain=19.14894:\codetime+1] {definitionbound(\codepower, \codetime, x, 0)};
+    \pgfmathsetmacro{\energyexponent}{1.0}
+    \pgfmathsetmacro{\delayexponent}{0.0}
+    \pgfmathsetmacro{\obie}{47.0}
+    \pgfmathsetmacro{\cbie}{19.148936170212767}
+    \pgfmathsetmacro{\orie}{23.5}
+    \pgfmathsetmacro{\lrie}{9.574468085106384}
+    \addplot[name path=energyopt, forget plot, domain=\orie:\obie, blue!22] {metricbound(\codepower, \codetime, x, \delayexponent)};
+    \addplot[name path=energylimit, forget plot, dashed, domain=\cbie:\lrie, blue!22]{metricbound(\baselinepower, \cbie, x, \delayexponent)};
+    \addplot[name path=energydef, forget plot, draw=none, domain=\cbie:\codetime+1] {definitionbound(\codepower, \codetime, x, \delayexponent)};
     \path[name path=energyspace,
       intersection segments={
         of=energydef and energyopt,
         sequence=A0 -- B1,
       }
-      ]; 
-    \addplot[blue!6] fill between[of=energyspace and basebound];
+    ]; 
+    \addplot[blue!22] fill between[of=energyspace and basebound];
     \addlegendentry{Energy}
 
-    %% Energy Delay Product Area %% 
-    \addplot[name path=edpopt, forget plot, domain=19.14894:47, blue!15] {metricbound(\codepower, \codetime, x, 1)};
-    \addplot[name path=edpdef, forget plot, draw=none, domain=19.14894:\codetime+1] {definitionbound(\codepower, \codetime, x, 1)};
-    \path[name path=edpspace,
+    %% ED2P Area %%
+    \pgfmathsetmacro{\energyexponent}{1.0}
+    \pgfmathsetmacro{\delayexponent}{2.0}
+    \pgfmathsetmacro{\obie}{34.842832712618545}
+    \pgfmathsetmacro{\cbie}{25.83027641360684}
+    \pgfmathsetmacro{\orie}{27.654774650781338}
+    \pgfmathsetmacro{\lrie}{20.501503975794428}
+    \addplot[name path=energyopt, forget plot, domain=\orie:\obie, blue!45] {metricbound(\codepower, \codetime, x, \delayexponent)};
+    \addplot[name path=energylimit, forget plot, dashed, domain=\cbie:\lrie, blue!45]{metricbound(\baselinepower, \cbie, x, \delayexponent)};
+    \addplot[name path=energydef, forget plot, draw=none, domain=\cbie:\codetime+1] {definitionbound(\codepower, \codetime, x, \delayexponent)};
+    \path[name path=energyspace,
       intersection segments={
-        of=edpdef and edpopt,
+        of=energydef and energyopt,
         sequence=A0 -- B1,
       }
-      ]; 
-    \addplot[blue!15] fill between[of=edpspace and basebound];
-    \addlegendentry{$EDP$}
-
-    %% Energy Delay Product Squared Area %% 
-    \addplot[name path=ed2popt, forget plot, domain=19.14894:47, blue!21] {metricbound(\codepower, \codetime, x, 2)};
-    \addplot[name path=ed2pdef, forget plot, draw=none, domain=19.14894:\codetime+1] {definitionbound(\codepower, \codetime, x, 2)};
-    \path[name path=ed2pspace,
-      intersection segments={
-        of=ed2pdef and ed2popt,
-        sequence=A0 -- B1,
-      }
-      ]; 
-    \addplot[blue!21] fill between[of=ed2pspace and basebound];
+    ]; 
+    \addplot[blue!45] fill between[of=energyspace and basebound];
     \addlegendentry{$ED^2P$}
 
-    %% Energy Delay Product Cubed Area %% 
-    \addplot[name path=ed3popt, forget plot, domain=19.14894:47, blue!28] {metricbound(\codepower, \codetime, x, 3)};
-    \addplot[name path=ed3pdef, forget plot, draw=none, domain=19.14894:\codetime+1] {definitionbound(\codepower, \codetime, x, 3)};
-    \path[name path=ed3pspace,
-      intersection segments={
-        of=ed3pdef and ed3popt,
-        sequence=A0 -- B1,
-      }
-      ]; 
-    \addplot[blue!28] fill between[of=ed3pspace and basebound];
-    \addlegendentry{$ED^3P$}
-
-     \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};
+    \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};
     \node[above right] at (axis cs:\codetime,\codeenergy) {$\theta$};
   \end{axis}
 \end{tikzpicture}

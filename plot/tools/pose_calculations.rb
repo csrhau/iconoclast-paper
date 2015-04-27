@@ -1,8 +1,8 @@
 require 'optparse'
 require 'ostruct'
 
-Mandatory = %i[base_power code_power code_time delay_exp energy_exp]
-Optional =%i[roof_power]
+Mandatory = %i[base_power code_power code_time delay_exp energy_exp roof_power]
+Optional =%i[latex]
 PoseOptions = Struct.new(*(Mandatory + Optional))
 
 class Parser
@@ -35,6 +35,9 @@ class Parser
       opts.on('--delay-exponent N', Float, 'Delay Exponent') do |n|
         options.delay_exp = n
       end
+      opts.on('--latex', 'Print latex output') do |l|
+        options.latex = l 
+      end
       # Print help message
       opts.on_tail("-h", "--help", "Show this message") do
         puts opts
@@ -57,20 +60,49 @@ def con_intercept(pt, dt, pb, m, n)
   ((dt ** (m + n) * pb ** m) / pt**m) ** (1 / (n + 1))
 end
 
+def humanize(i)
+  case i
+  when 0
+    'zero'
+  when 1
+    'one'
+  when 2
+    'two'
+  when 3
+    'three'
+  else
+    'lots'
+  end
+end
+
+    
 #Let's Do It!
 options = Parser.parse(ARGV)
 p options
 
-ri = opt_intercept(options.code_power, options.code_time, options.base_power,
+#Optimization intercept with baseline (bottom right most point)
+obi = opt_intercept(options.code_power, options.code_time, options.base_power,
                    options.energy_exp, options.delay_exp)
-puts "Baseline/Optimization Bound Intercept: #{ri}"
-li = con_intercept(options.code_power, options.code_time, options.base_power,
+# Optimization intercept with roofline (top right most intersept)
+ori = opt_intercept(options.code_power, options.code_time, options.roof_power,
                     options.energy_exp, options.delay_exp)
-puts "Baseline/Contribution Bound Intercept: #{li}"
-if options.roof_power
-  ti = opt_intercept(options.code_power, options.code_time, options.roof_power,
-                     options.energy_exp, options.delay_exp)
-puts "Roofline/Optimization Bound Intercept: #{ti}"
-end
-puts "pgfplots text: domain=%.7g:%.7g" % [li, ri]
+# Contribution intercept with baseline
+cbi = con_intercept(options.code_power, options.code_time, options.base_power,
+                    options.energy_exp, options.delay_exp)
+# Optimization Limit intercept with roofline (shares baseline intercept with contribution)
+lri = opt_intercept(options.base_power, cbi, options.roof_power,
+                    options.energy_exp, options.delay_exp)
 
+if options.latex
+  puts "\\pgfmathsetmacro{\\energyexponent}{#{options.energy_exp}}"
+  puts "\\pgfmathsetmacro{\\delayexponent}{#{options.delay_exp}}"
+  puts "\\pgfmathsetmacro{\\obie}{#{obi}}"
+  puts "\\pgfmathsetmacro{\\cbie}{#{cbi}}"
+  puts "\\pgfmathsetmacro{\\orie}{#{ori}}"
+  puts "\\pgfmathsetmacro{\\lrie}{#{lri}}"
+else
+  puts "Baseline/Optimization Bound Intercept: #{obi}"
+  puts "Baseline/Contribution Bound Intercept: #{cbi}"
+  puts "Roofline/Optimization Bound Intercept: #{ori}"
+  puts "Roofline/Optimization Limit Intercept: #{lri}"
+end
