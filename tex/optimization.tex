@@ -1,35 +1,24 @@
 \section{Power Optimization}
-\label{sec:optimization}\todo{Rethink}
+\label{sec:optimization}
 
-Two factors influence the overall cost of running a scientific code at scale, runtime and energy consumption.
-Historically, runtime has been the predominant metric in performance critical domains whilst power and energy were largely confined to embedded systems.
-That said, metrics which capture the importance of power as well as time are gaining prominence as the power requirements of scientific computing continue to rise.
+Energy is the integral of power consumed over time, or simply $E = \bar{P}t$.
+As such, reducing the energy cost of a code can be achieved either by shortening its runtime ($t$) through conventional optimizations or reducing the average power consumption ($\bar{P}$) through power optimization.
+The POSE heuristic enables performance engineers to compare the potential benefits of each approach and hence focus their efforts to whichever offers the greatest rewards.
 
-\todo{Even though the cost is associated with energy consumed rather than power directly, we still consider POSE to be a power optimization tool. This is because energy is defined as $E=PD$.
-The energy to completion of a code can reduce as a side effect of classical runtime optimizations. 
-It would be invalid to claim this side effect as a power optimization.}
-
-
-Power consumption is a seemingly obvious choice of metric for energy sensitive domains as it captures the rate at which energy is consumed.
-The ability to correlate periods of increased power draw with specific sections of code would clearly help to identify optimization candidates.
-It is rarely used in practice however as optimizations which reduce power draw can in principle lead to increases in runtime and in turn greater total energy consumption.
-
-Total energy use is a reasonable metric in cases where energy consumption is of paramount importance.
-As such it is often used in domains like mobile robotics and sensor where available energy is severely restricted.
-That said, whilst energy is becoming more important in domains like scientific computing, it is not the only limiting factor. 
-Reliance on energy as a metric leaves open the possibility of unacceptable loss of runtime performance.
-
-These issues have led to the development of metrics which combine both energy and runtime costs.
-The simplest of these is the Energy-Delay Product (EDP) metric \cite{gonzales:1995aa}, which assigns an equal weighting to both runtime and energy consumption and is defined as follows:
-
+Energy cost is a reasonable metric in cases where energy consumption is of paramount importance.
+That said, reliance on this metric leaves open the possibility of significant loss of runtime performance, limiting its usefulness in time sensitive domains.
+Metrics combining both runtime and energy costs have been developed to address this issue. 
+The simplest of these is the Energy-Delay Product (EDP) metric \cite{gonzales:1995aa}, which is defined as follows:
 \begin{align}
-  EDP = Energy \times Runtime \nonumber \\
-      \Leftrightarrow Power \times Runtime^{2} 
+  EDP &= Energy \times Runtime \nonumber \\
+      &= E \times t \nonumber \\
+      &= \bar{P} \times t^2
   \label{eq:edp}
 \end{align}
 
 Several extensions to EDP have been proposed which assign greater weight to the runtime component to better reflect the demands of high performance computing.
-Common examples include energy-delay-squared product ($ED^{2}$) and energy-delay-cubed product ($ED^{3}$).
-We refer to this as the $E^mD^n$ family of metrics, which also includes simple power ($E^1D^{-1}$), energy ($E^1D^0$) and time ($E^0D^1$) as members.
+Common examples include energy-delay-suared product ($Et^{2}$) and energy-delay-cubed product ($Et^{3}$).
+We refer to this as the $E^mt^n$ family of metrics, which also includes simple power ($E^1t^{-1}$), energy ($E^1t^0$) and time ($E^0t^1$) as members.
 
-It has been argued that that $ED^{2}P$ is the most suitable of the $E^mD^n$ metrics when considering a fixed micro-architecture \cite{brooks:2000aa}. Most of the examples within this paper use $ED^2P$ for this reason, however our work applies to all members of this group with $m > 0$ and $n \geq 0$, and indeed any metric which increases when either runtime or energy consumption increases.
+Most of the examples within this paper use $Et^2$ as it been shown to be the most suitable of the $E^mt^n$ metrics when considering a fixed micro-architecture \cite{brooks:2000aa}.
+That said, POSE is a general purpose heuristic and applies to all members of the $E^mt^n$ group with $m > 0$ and $n \geq 0$, and indeed any metric which increases in line with runtime and energy consumption.

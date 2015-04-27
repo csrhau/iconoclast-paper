@@ -4,7 +4,7 @@
 \begin{figure}
 \centering
 \input{plot/technique/plot_core}
-\caption{POSE for $ED^2P$}
+\caption{POSE for $Et^2$}
 \label{fig:technique}
 \end{figure}
 
@@ -18,12 +18,12 @@ We plot a curve passing through $\theta$ linking all points with ${M(\lambda) = 
 By definition any optimized versions of $\theta$ can only exist below this optimization bound.
 
 Naturally the equation for the optimization bound depends on the metric we are optimizing for.
-\autoref{fig:technique} shows the optimization bound for $ED^2P$.
-The general form of this bound for the $E^mD^n$ family of metrics is derived as follows:
+\autoref{fig:technique} shows the optimization bound for $Et^2$.
+The general form of this bound for the $E^mt^n$ family of metrics is derived as follows:
 \begin{align}
-E^mD^n(\lambda) &= E^mD^n(\theta) \nonumber \\
-\implies {E_\lambda}^m &= \frac{{E_\theta}^m{D_\theta}^n}{{D_\lambda}^n} \nonumber \\
-\implies E_\lambda &= (\frac{{E_\theta}^m{D_\theta}^n}{{D_\lambda}^n})^\frac{1}{m}
+E^mt^n(\lambda) &= E^mt^n(\theta) \nonumber \\
+\implies {E_\lambda}^m &= \frac{{E_\theta}^m{t_\theta}^n}{{t_\lambda}^n} \nonumber \\
+\implies E_\lambda &= (\frac{{E_\theta}^m{t_\theta}^n}{{t_\lambda}^n})^\frac{1}{m}
 \label{eq:optimization}
 \end{align}
 
@@ -31,19 +31,19 @@ Our second bound considers what it means to optimize code for reduced power draw
 An optimization $\theta \to \lambda$ with respect to metric $M$ is a power optimization if the change in power draw it delivers is responsible for the majority of the reduction in $M$. We plot a curve through $\theta$ linking all points with the same ratio of contributions to $M$ from both power and runtime factors as our original code. All valid power optimizations must lie below this contribution bound. 
 
 Again the equation for the contribution bound depends on the metric chosen. 
-\autoref{fig:technique} shows the bound for $ED^2P$ whilst the general form for $E^mD^n$ metrics is:
+\autoref{fig:technique} shows the bound for $Et^2$ whilst the general form for $E^mt^n$ metrics is:
 \begin{align}
-\frac{{P_{\lambda}}^m}{{D_{\lambda}}^{m+n}} &= \frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} \nonumber \\
-\implies {P_{\lambda}}^m &= \frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} \times {D_\lambda}^{m+n} \nonumber \\ 
-\implies {E_{\lambda}}^m &= \frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} \times {D_\lambda}^{m+n+1} \nonumber \\ 
-\implies E_{\lambda} &= (\frac{{P_{\theta}}^m}{{D_{\theta}}^{m+n}} \times {D_\lambda}^{m+n+1})^{\frac{1}{m}} 
+\frac{{P_{\lambda}}^m}{{t_{\lambda}}^{m+n}} &= \frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \nonumber \\
+\implies {P_{\lambda}}^m &= \frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n} \nonumber \\ 
+\implies {E_{\lambda}}^m &= \frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n+1} \nonumber \\ 
+\implies E_{\lambda} &= (\frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n+1})^{\frac{1}{m}} 
 \end{align}
 
 Intuitively it makes sense to use the most appropriate tools while searching for optimizations.  If an optimization yields dramatic reductions in runtime with only minor reductions in power consumption then it is reasonable to classify it as a runtime optimization and state that conventional time-based profilers and performance engineering tools are better suited to finding it. It is the contribution bound which enables our model to make this distinction.
 
 The bounds described thus far allow us to identify the area of the Energy/Runtime plane in which optimized versions of a given code exist and to subdivide this space into runtime and power optimizations. The final component of POSE is the Optimization Limit, which subdivides the runtime optimized area of the feasible performance envelope into those optimizations which may be outperformed by power optimizations, and those which strictly dominate all possible power optimizations.
 
-The optimization limit is based on \autoref{eq:optimization} and closely mirrors the the optimization bound.
+The dashed Optimization Limit is based on \autoref{eq:optimization} and closely mirrors the the optimization bound.
 This limit connects all points with the same value for $M$ as a hypothetical maximally power optimized version of $\theta$. 
 All points below this limit have lower values for $M$, and therefore any optimizations in this area strictly dominate any possible power optimizations. 
 
@@ -66,9 +66,9 @@ POSE offers a wealth of information to performance engineers.
 The difference in energy between $\theta$ and intercept $D$ places an upper limit on the absolute amount of energy which can be saved by power optimization alone.
 The value $M(C) - M(\theta)$ bounds the amount of improvement in our metric we can expect to see from power optimization.
 The difference in runtime between intersect $E$ and $\theta$ represents the maximum increase in runtime we could feasibly trade off to achieve a slower yet more energy efficient code.
-Finally, the value $D(\theta) / D(B)$ represents the smallest speed-up which would guarantee a code which outperformed $\theta$, and $D(\theta) / D(A)$ the smallest speed-up guaranteed to outperform any power optimized version of $\theta$.
+Finally, the value $t_\theta / t_B$ represents the smallest speed-up which would guarantee a code which outperformed $\theta$, and $t_\theta / t_A$ the smallest speed-up guaranteed to outperform any power optimized version of $\theta$.
 
-It is worth restating at this point that POSE is a metric-agnostic heuristic. Whilst \autoref{fig:technique} was constructed for $M=ED^2P$, \autoref{fig:multimetric-technique} shows how the POSE heuristic varies with choice of metric. POSE offers the insights discussed above regardless of the metric chosen.
+It is worth restating at this point that POSE is a metric-agnostic heuristic. \autoref{fig:multimetric-technique} shows how the POSE heuristic varies with choice of metric using $E^1t^0$ and $E^1t^2$ as examples. POSE offers the insights discussed above regardless of the metric chosen.
 
 \begin{figure}
 \centering
