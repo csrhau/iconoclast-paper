@@ -78,7 +78,6 @@ end
     
 #Let's Do It!
 options = Parser.parse(ARGV)
-p options
 
 #Optimization intercept with baseline (bottom right most point)
 obi = opt_intercept(options.code_power, options.code_time, options.base_power,
@@ -94,6 +93,8 @@ lri = opt_intercept(options.base_power, cbi, options.roof_power,
                     options.energy_exp, options.delay_exp)
 
 if options.latex
+  puts "\\pgfmathsetmacro{\\codetime}{#{options.code_time}}"
+  puts "\\pgfmathsetmacro{\\codepower}{#{options.code_power}}"
   puts "\\pgfmathsetmacro{\\energyexponent}{#{options.energy_exp}}"
   puts "\\pgfmathsetmacro{\\delayexponent}{#{options.delay_exp}}"
   puts "\\pgfmathsetmacro{\\obie}{#{obi}}"
