@@ -42,18 +42,17 @@ To paraphrase, DVFS can act to reduce the clock speed of underutilized processor
 An important feature of the equations governing power draw is that only $P_{dyn}$ is directly influenced by software, in particular due to its inclusion of the $A$ term. Software can also indirectly effect both dynamic and leakage current if it triggers changes to clock frequency and therefore supply voltage through DVFS. \todo{Ensure define dvfs} \todo{reword this bit - no equations now}
 
 The two factors a performance engineer may influence which contribute to power consumption are activity factor and P-State.
-We now consider each in turn as a potential source of optimizations.
+To construct our $P_min$ and $P_max$ we must be able to effectively control these factors.
+In order to do this, we have devised the following benchmark.
 
 
+\todo{consider each in turn as a potential source of optimizations.}
 \begin{figure}
 \centering
 \input{plot/minimd-investigation/plot_core}
-\caption{MiniMD $Et^2$ Code Optimization Space}
+\caption{MiniMD $Et^2$ POSE for Activity Factor Optimization}
 \label{fig:minimd}
 \end{figure}
-
-
-
 
 \begin{table}
 \centering
@@ -81,7 +80,7 @@ We now consider each in turn as a potential source of optimizations.
 \begin{figure}
 \centering
 \input{plot/minimd-pstates/plot_core}
-\caption{MiniMD Pstate Optimization Space}
+\caption{MiniMD $Et^2$ POSE for P-State Optimization}
 \label{fig:minimd-pstates}
 \end{figure}
 

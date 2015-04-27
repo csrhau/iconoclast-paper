@@ -10,7 +10,7 @@
   	xlabel={Runtime \emph{(s)}},
     ylabel={Energy \emph{(J)}},    
     xmin=0, xmax=60,
-    ymin=0, ymax=1400,
+    ymin=0, ymax=1500,
     width=\linewidth,
     legend style={legend pos=north west}
     ]
@@ -35,11 +35,14 @@
 
     % ALPHA BASELINE BOUND 
     \addplot[color=green, name path=basebound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
-    \addlegendentry{$P_{\alpha}$ Energy Bound} 
+    \addlegendentry{$P_{min}$ Energy Bound} 
 
-    \addplot[name path=edpdef, draw=none, domain=23.8644287:\codetime+1, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-    \addplot[name path=edpopt, draw=none, domain=\codetime-1:38.455412, forget plot] {metricbound(\codepower, \codetime, x, 2)};
 
+    %% 3.2 GHz start point
+    \pgfmathsetmacro{\obie}{38.455411521685186}
+    \pgfmathsetmacro{\cbie}{23.864427452610958}
+    \addplot[name path=edpdef, draw=none, domain=\cbie:\codetime+1, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+    \addplot[name path=edpopt, draw=none, domain=\codetime-1:\obie, forget plot] {metricbound(\codepower, \codetime, x, 2)};
 
     \path[name path=edpspace,
       intersection segments={
@@ -47,10 +50,99 @@
         sequence=A0 -- B1,
       }
       ]; 
-    \addplot[blue!6] fill between[of=edpspace and basebound];
-    
-    \addplot table[x=Runtime,y=Energy, trim cells=true] {\pstateminimdtable};
-    \addlegendentry{PState Progression}
+    \addplot[blue!20] fill between[of=edpspace and basebound]; 
+    \addlegendentry{3.2 GHz POSE}
 
+    %% PState progression
+    \addplot[mark=x, black] table[x=Runtime,y=Energy, trim cells=true] {\pstateminimdtable}
+    node[pos=0.0, pin=left:3.2 GHz]{}
+    node[pos=1.0, pin=95:1.9 GHz]{}
+    node[pos=0.5745, pin={[pin distance=0.2cm] above:2.2 GHz}]{}
+    ;
+    \addlegendentry{P-State Progression}
+
+    %% 3.1GHz
+    \pgfmathsetmacro{\codetime}{31.160996}
+    \pgfmathsetmacro{\codepower}{26.555410070974624}
+    \pgfmathsetmacro{\cbie}{24.97277184061831}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %% 3.0 GHz
+    \pgfmathsetmacro{\codetime}{32.221644}
+    \pgfmathsetmacro{\codepower}{25.19066851461707}
+    \pgfmathsetmacro{\cbie}{26.28093952280511}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %% 2.9 GHz
+    \pgfmathsetmacro{\codetime}{33.189564}
+    \pgfmathsetmacro{\codepower}{24.052689996168674}
+    \pgfmathsetmacro{\cbie}{27.49076036397044}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %% 2.7 GHz
+    \pgfmathsetmacro{\codetime}{35.548669}
+    \pgfmathsetmacro{\codepower}{21.708309894809283}
+    \pgfmathsetmacro{\cbie}{30.468735446104354}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %% 2.6 GHz
+    \pgfmathsetmacro{\codetime}{36.852917}
+    \pgfmathsetmacro{\codepower}{20.791885293639034}
+    \pgfmathsetmacro{\cbie}{32.04402055686191}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %% 2.5 GHz
+    \pgfmathsetmacro{\codetime}{38.225746}
+    \pgfmathsetmacro{\codepower}{19.926273930664426}
+    \pgfmathsetmacro{\cbie}{33.71219474535527}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %% 2.4 GHz
+    \pgfmathsetmacro{\codetime}{39.720356}
+    \pgfmathsetmacro{\codepower}{19.032817706870503}
+    \pgfmathsetmacro{\cbie}{35.57010870393062}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %% 2.3 GHz
+    \pgfmathsetmacro{\codetime}{41.430395}
+    \pgfmathsetmacro{\codepower}{18.26008617586195}
+    \pgfmathsetmacro{\cbie}{37.617611980371976}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %% 2.2 GHz
+    \pgfmathsetmacro{\codetime}{43.161913}
+    \pgfmathsetmacro{\codepower}{17.552650110758528}
+    \pgfmathsetmacro{\cbie}{39.70935893343022}
+    \addplot[name path=edpdef, red, densely dashed, domain=\cbie:\codetime] {definitionbound(\codepower, \codetime, x, 2)};
+    \addlegendentry{2.2 GHz Contribution Bound}
+    %% 2.1 GHz
+    \pgfmathsetmacro{\codetime}{45.85507}
+    \pgfmathsetmacro{\codepower}{16.61222678321067}
+    \pgfmathsetmacro{\cbie}{42.96859631054016}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %% 1.9 GHz
+    \pgfmathsetmacro{\codetime}{49.7305}
+    \pgfmathsetmacro{\codepower}{15.67846259337831}
+    \pgfmathsetmacro{\cbie}{47.50741760737948}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %% 1.8 GHz
+    \pgfmathsetmacro{\codetime}{52.358683}
+    \pgfmathsetmacro{\codepower}{15.137478343372388}
+    \pgfmathsetmacro{\cbie}{50.60700376149952}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %% 1.7 GHz
+    \pgfmathsetmacro{\codetime}{55.340763}
+    \pgfmathsetmacro{\codepower}{14.650088958838532}
+    \pgfmathsetmacro{\cbie}{54.07603138894866}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %% 1.6 GHz
+    \pgfmathsetmacro{\codetime}{58.637567}
+    \pgfmathsetmacro{\codepower}{14.09304050763225}
+    \pgfmathsetmacro{\cbie}{58.04268107595172}
+    \addplot[name path=edpdef, gray, densely dashed, domain=\cbie:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
  \end{axis}
 \end{tikzpicture}

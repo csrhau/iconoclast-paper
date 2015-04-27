@@ -48,8 +48,8 @@
     \pgfmathsetmacro{\cbie}{19.148936170212767}
     \pgfmathsetmacro{\orie}{23.5}
     \pgfmathsetmacro{\lrie}{9.574468085106384}
-    \addplot[name path=energyopt, forget plot, domain=\orie:\obie, blue!22] {metricbound(\codepower, \codetime, x, \delayexponent)};
-    \addplot[name path=energylimit, forget plot, dashed, domain=\cbie:\lrie, blue!22]{metricbound(\baselinepower, \cbie, x, \delayexponent)};
+    \addplot[name path=energyopt, forget plot, domain=\orie:\obie, blue!20] {metricbound(\codepower, \codetime, x, \delayexponent)};
+    \addplot[name path=energylimit, forget plot, dashed, domain=\cbie:\lrie, blue!20]{metricbound(\baselinepower, \cbie, x, \delayexponent)};
     \addplot[name path=energydef, forget plot, draw=none, domain=\cbie:\codetime+1] {definitionbound(\codepower, \codetime, x, \delayexponent)};
     \path[name path=energyspace,
       intersection segments={
@@ -57,7 +57,7 @@
         sequence=A0 -- B1,
       }
     ]; 
-    \addplot[blue!22] fill between[of=energyspace and basebound];
+    \addplot[blue!20] fill between[of=energyspace and basebound];
     \addlegendentry{Energy}
 
     %% ED2P Area %%
