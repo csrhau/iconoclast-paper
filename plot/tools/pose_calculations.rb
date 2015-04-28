@@ -24,7 +24,7 @@ class Parser
         options.code_power = cp
       end
       #D_{\theta}
-      opts.on('--code-time T', Float, 'Unoptimized Code Runtime (S)') do |ct|
+      opts.on('--code-time T', Float, 'Unoptimized Code Runtime (s)') do |ct|
         options.code_time = ct
       end
       #E^m m value
@@ -102,9 +102,10 @@ if options.latex
   puts "\\pgfmathsetmacro{\\lrnodex}{#{ori}}"
   puts "\\pgfmathsetmacro{\\tlnodex}{#{lri}}"
 else
-  puts "Roofline/Optimization Limit Intercept: #{lri}s #{lri * options.roof_power}J (A)"
-  puts "Roofline/Optimization Bound Intercept: #{ori}s #{ori * options.roof_power}J (B)"
-  puts "Baseline/Contribution Bound Intercept: #{cbi}s #{cbi * options.base_power}J (C)"
-  puts "Baseline/Vertical Code Time Intercept: #{options.code_time}s, #{options.code_time * options.base_power}J (D)"
-  puts "Baseline/Optimization Bound Intercept: #{obi}s #{obi * options.base_power}J (E)"
+  puts "$\\theta$ Original Code Measurements: #{options.code_time}s, #{options.code_time * options.code_power}J, #{(options.code_time * options.code_power) ** options.energy_exp * options.code_time ** options.delay_exp} ($\\theta$)"
+  puts "A Roofline/Optimization Limit Intercept: #{lri}s, #{lri * options.roof_power}J, #{(lri * options.roof_power) ** options.energy_exp * lri ** options.delay_exp} (A)"
+  puts "B Roofline/Optimization Bound Intercept: #{ori}s, #{ori * options.roof_power}J, #{(ori * options.roof_power) ** options.energy_exp * ori ** options.delay_exp} (B)"
+  puts "C Baseline/Contribution Bound Intercept: #{cbi}s, #{cbi * options.base_power}J, #{(cbi * options.base_power) ** options.energy_exp * cbi ** options.delay_exp} (C)"
+  puts "D Baseline/Vertical Code Time Intercept: #{options.code_time}s, #{options.code_time * options.base_power}J, #{(options.code_time * options.base_power) ** options.energy_exp * options.code_time ** options.delay_exp} (D)"
+  puts "E Baseline/Optimization Bound Intercept: #{obi}s, #{obi * options.base_power}J, #{(obi * options.base_power) ** options.energy_exp * obi ** options.delay_exp} (E)"
 end

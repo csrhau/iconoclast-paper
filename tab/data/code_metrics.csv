@@ -1,4 +1,4 @@
-Code,Runtime (S),Energy (J),Power (W),$ED^2P$
+Code,Runtime (s),Energy (J),Power (W),$Et^2$
 CFD,29.72,933.32,31.40,824381
 Heartwall,24.62,787.17,31.97,477139
 lavaMD,66.18,2142.65,32.38,9384362

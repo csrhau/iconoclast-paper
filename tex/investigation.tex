@@ -47,12 +47,6 @@ In order to do this, we have devised the following benchmark.
 
 
 \todo{consider each in turn as a potential source of optimizations.}
-\begin{figure}
-\centering
-\input{plot/minimd-investigation/plot_core}
-\caption{MiniMD $Et^2$ POSE for Activity Factor Optimization}
-\label{fig:minimd}
-\end{figure}
 
 \begin{table}
 \centering
@@ -61,19 +55,26 @@ In order to do this, we have devised the following benchmark.
 \end{table} 
 
 
+%TODO make sure this is explicitly Linpack table in text
 \begin{table}
 \centering
 \input{tab/tex/linpack_costs.tex}
 \caption{Roofline CPU Power (W)}
 \end{table} 
 
+\begin{figure}
+\centering
+\input{plot/minimd-investigation/plot_core}
+\caption{MiniMD $Et^2$ POSE for Activity Factor Optimization}
+\label{fig:minimd}
+\end{figure}
 
 
-%TODO Linpack table
+
 \begin{table}
 \centering
-\input{tab/tex/code_metrics}
-\caption{Benchmark Measurements, 4 cores at 3.2 GHz}
+\input{tab/tex/minimd_pose}
+\caption{miniMD POSE insights, 4 cores at 3.2 GHz}
 \end{table} 
 
 
@@ -92,6 +93,14 @@ In order to do this, we have devised the following benchmark.
 \caption{Baseline Power Micro-Benchmark}                            
 \label{fig:microbench}                                                           
 \end{figure}  
+
+
+
+\begin{table}
+\centering
+\input{tab/tex/code_metrics}
+\caption{\todo{redo}, 4 cores at 3.2 GHz}
+\end{table} 
 
 
 We first formalize the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$. \todo{Point out in other (multi-system) domains the approach is still valid, we just need a sensible max and min.}
