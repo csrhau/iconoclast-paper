@@ -99,7 +99,7 @@ if options.latex
   puts "\\pgfmathsetmacro{\\delayexponent}{#{options.delay_exp}}"
   puts "\\pgfmathsetmacro{\\brnodex}{#{obi}}"
   puts "\\pgfmathsetmacro{\\blnodex}{#{cbi}}"
-  puts "\\pgfmathsetmacro{\\lrnodex}{#{ori}}"
+  puts "\\pgfmathsetmacro{\\trnodex}{#{ori}}"
   puts "\\pgfmathsetmacro{\\tlnodex}{#{lri}}"
 else
   puts "$\\theta$ Original Code Measurements: #{options.code_time}s, #{options.code_time * options.code_power}J, #{(options.code_time * options.code_power) ** options.energy_exp * options.code_time ** options.delay_exp} ($\\theta$)"
