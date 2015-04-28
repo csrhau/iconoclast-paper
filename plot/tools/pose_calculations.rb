@@ -102,8 +102,8 @@ if options.latex
   puts "\\pgfmathsetmacro{\\lrnodex}{#{ori}}"
   puts "\\pgfmathsetmacro{\\tlnodex}{#{lri}}"
 else
-  puts "Baseline/Optimization Bound Intercept: #{obi}"
-  puts "Baseline/Contribution Bound Intercept: #{cbi}"
-  puts "Roofline/Optimization Bound Intercept: #{ori}"
-  puts "Roofline/Optimization Limit Intercept: #{lri}"
+  puts "Baseline/Optimization Bound Intercept: #{obi}s #{obi * options.base_power}J"
+  puts "Baseline/Contribution Bound Intercept: #{cbi}s #{cbi * options.base_power}J"
+  puts "Roofline/Optimization Bound Intercept: #{ori}s #{ori * options.roof_power}J"
+  puts "Roofline/Optimization Limit Intercept: #{lri}s #{lri * options.roof_power}J"
 end
