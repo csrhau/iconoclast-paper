@@ -10,7 +10,7 @@
   	xlabel={Runtime \emph{(s)}},
     ylabel={Energy \emph{(J)}},    
     xmin=0, xmax=60,
-    ymin=0, ymax=1500,
+    ymin=0, ymax=1300,
     width=\linewidth,
     legend style={legend pos=north west}
     ]
@@ -20,7 +20,7 @@
     \pgfmathsetmacro{\codetime}{\pgfplotsretval} 
     \pgfplotstablegetelem{0}{Energy}\of{\pstateminimdtable}
     \pgfmathsetmacro{\codeenergy}{\pgfplotsretval} 
-    \pgfmathsetmacro{\baselinepower}{13.66845}
+    \pgfmathsetmacro{\baselinepower}{13.510238}
 
     %% Intermezzo Values %%
     \pgfmathsetmacro{\codepower}{\codeenergy / \codetime}
@@ -39,8 +39,8 @@
 
 
     %% 3.2 GHz start point
-    \pgfmathsetmacro{\brnodex}{38.455411521685186}
-    \pgfmathsetmacro{\blnodex}{23.864427452610958}
+    \pgfmathsetmacro{\blnodex}{23.77199310523716}
+    \pgfmathsetmacro{\brnodex}{38.6049404590049}
     \addplot[name path=edpdef, draw=none, domain=\blnodex:\codetime+1, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
     \addplot[name path=edpopt, draw=none, domain=\codetime-1:\brnodex, forget plot] {metricbound(\codepower, \codetime, x, 2)};
 
@@ -55,94 +55,96 @@
 
     %% PState progression
     \addplot[mark=x, black] table[x=Runtime,y=Energy, trim cells=true] {\pstateminimdtable}
-    node[pos=0.0, pin=left:3.2 GHz]{}
-    node[pos=1.0, pin=95:1.6 GHz]{}
-    node[pos=0.5745, pin={[pin distance=0.2cm] above:2.2 GHz}]{}
+      node[pos=0.0, pin=left:3.2 GHz]{}
+      node[pos=1.0, pin=95:1.6 GHz]{}
+      node[pos=0.5745, pin={[pin distance=0.2cm] above:2.2 GHz}]{}
     ;
     \addlegendentry{P-State Progression}
 
-    %% 3.1GHz
+    %%
     \pgfmathsetmacro{\codetime}{31.160996}
     \pgfmathsetmacro{\codepower}{26.555410070974624}
-    \pgfmathsetmacro{\blnodex}{24.97277184061831}
+    \pgfmathsetmacro{\blnodex}{24.876044579784466}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
 
-    %% 3.0 GHz
+    %%
     \pgfmathsetmacro{\codetime}{32.221644}
     \pgfmathsetmacro{\codepower}{25.19066851461707}
-    \pgfmathsetmacro{\blnodex}{26.28093952280511}
+    \pgfmathsetmacro{\blnodex}{26.17914532437151}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
 
-    %% 2.9 GHz
+    %%
     \pgfmathsetmacro{\codetime}{33.189564}
     \pgfmathsetmacro{\codepower}{24.052689996168674}
-    \pgfmathsetmacro{\blnodex}{27.49076036397044}
+    \pgfmathsetmacro{\blnodex}{27.384280155637242}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
 
-    %% 2.7 GHz
+    %%
     \pgfmathsetmacro{\codetime}{35.548669}
     \pgfmathsetmacro{\codepower}{21.708309894809283}
-    \pgfmathsetmacro{\blnodex}{30.468735446104354}
+    \pgfmathsetmacro{\blnodex}{30.35072062021389}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
 
-    %% 2.6 GHz
+    %%
     \pgfmathsetmacro{\codetime}{36.852917}
     \pgfmathsetmacro{\codepower}{20.791885293639034}
-    \pgfmathsetmacro{\blnodex}{32.04402055686191}
+    \pgfmathsetmacro{\blnodex}{31.919904165043228}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
 
-    %% 2.5 GHz
+    %%
     \pgfmathsetmacro{\codetime}{38.225746}
     \pgfmathsetmacro{\codepower}{19.926273930664426}
-    \pgfmathsetmacro{\blnodex}{33.71219474535527}
+    \pgfmathsetmacro{\blnodex}{33.58161699951163}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
 
-    %% 2.4 GHz
+    %%
     \pgfmathsetmacro{\codetime}{39.720356}
     \pgfmathsetmacro{\codepower}{19.032817706870503}
-    \pgfmathsetmacro{\blnodex}{35.57010870393062}
+    \pgfmathsetmacro{\blnodex}{35.432334683311204}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
 
-    %% 2.3 GHz
+    %%
     \pgfmathsetmacro{\codetime}{41.430395}
     \pgfmathsetmacro{\codepower}{18.26008617586195}
-    \pgfmathsetmacro{\blnodex}{37.617611980371976}
+    \pgfmathsetmacro{\blnodex}{37.47190734697387}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
 
-    %% 2.2 GHz
+    %% 2.2GHz
     \pgfmathsetmacro{\codetime}{43.161913}
     \pgfmathsetmacro{\codepower}{17.552650110758528}
-    \pgfmathsetmacro{\blnodex}{39.70935893343022}
-    \addplot[name path=edpdef, red, densely dashed, domain=\blnodex:\codetime] {definitionbound(\codepower, \codetime, x, 2)};
-    \addlegendentry{2.2 GHz Contribution Bound}
-    %% 2.1 GHz
+    \pgfmathsetmacro{\blnodex}{39.55555231782452}
+    \addplot[name path=edpdef, red, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
     \pgfmathsetmacro{\codetime}{45.85507}
     \pgfmathsetmacro{\codepower}{16.61222678321067}
-    \pgfmathsetmacro{\blnodex}{42.96859631054016}
+    \pgfmathsetmacro{\blnodex}{42.802165661611}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
 
-    %% 1.9 GHz
+    %%
     \pgfmathsetmacro{\codetime}{49.7305}
     \pgfmathsetmacro{\codepower}{15.67846259337831}
-    \pgfmathsetmacro{\blnodex}{47.50741760737948}
+    \pgfmathsetmacro{\blnodex}{47.323406701270244}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
 
-    %% 1.8 GHz
+    %%
     \pgfmathsetmacro{\codetime}{52.358683}
     \pgfmathsetmacro{\codepower}{15.137478343372388}
-    \pgfmathsetmacro{\blnodex}{50.60700376149952}
+    \pgfmathsetmacro{\blnodex}{50.41098720057872}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
 
-    %% 1.7 GHz
+    %%
     \pgfmathsetmacro{\codetime}{55.340763}
     \pgfmathsetmacro{\codepower}{14.650088958838532}
-    \pgfmathsetmacro{\blnodex}{54.07603138894866}
+    \pgfmathsetmacro{\blnodex}{53.866578212248804}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
 
-    %% 1.6 GHz
+    %%
     \pgfmathsetmacro{\codetime}{58.637567}
     \pgfmathsetmacro{\codepower}{14.09304050763225}
-    \pgfmathsetmacro{\blnodex}{58.04268107595172}
+    \pgfmathsetmacro{\blnodex}{57.81786383949271}
     \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+
  \end{axis}
 \end{tikzpicture}
