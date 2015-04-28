@@ -5,8 +5,8 @@
     axis y line=left,
   	xlabel={Runtime \emph{(s)}},
     ylabel={Energy \emph{(J)}},    
-    xmin=25, xmax=31,
-    ymin=650, ymax=1650,
+    xmin=50, xmax=75,
+    ymin=1200, ymax=4000,
     width=\linewidth,
     legend style={legend pos=north west}
     ]
@@ -14,15 +14,15 @@
     %% Model Parameters %%
     \pgfmathsetmacro{\baselinepower}{26.876067}
     \pgfmathsetmacro{\rooflinepower}{43.570651}
-    \pgfmathsetmacro{\codepower}{27.959470} 
-    \pgfmathsetmacro{\codetime}{30.293834}
+    \pgfmathsetmacro{\codepower}{32.259372}
+    \pgfmathsetmacro{\codetime}{65.640072}
     % Sadly, pgfplots sucks too much to calculate cube roots
     % These values are calculated with a ruby script in tools
-    \pgfmathsetmacro{\blnodex}{29.897382525363962}
-    \pgfmathsetmacro{\brnodex}{30.695542582732617}
-    \pgfmathsetmacro{\trnodex}{26.129586468297543}
-    \pgfmathsetmacro{\tlnodex}{25.450152567484604}
-
+    \pgfmathsetmacro{\brnodex}{69.75881800188515}
+    \pgfmathsetmacro{\blnodex}{61.764507707810466}
+    \pgfmathsetmacro{\trnodex}{59.38220710689976}
+    \pgfmathsetmacro{\tlnodex}{52.57704894686994}
+    
     %% Intermezzo Values %%
     \pgfmathsetmacro{\brnodey}{\brnodex * \baselinepower}
     \pgfmathsetmacro{\blnodey}{\blnodex * \baselinepower}
