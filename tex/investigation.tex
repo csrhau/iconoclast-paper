@@ -45,6 +45,10 @@ The two factors a performance engineer may influence which contribute to power c
 To construct our $P_min$ and $P_max$ we must be able to effectively control these factors.
 In order to do this, we have devised the following benchmark.
 
+CPU energy consumption was measured using Intel's Running Average Power Limit (RAPL) technology~\cite{david:2010aa}. 
+We created an augmented version of the unix \texttt{time} binary which output energy consumption figures as well as conventional runtime figures.
+The techniques described in \cite{hackenberg:2013aa} were used to ensure measurement accuracy. 
+
 
 \todo{consider each in turn as a potential source of optimizations.}
 
@@ -69,6 +73,13 @@ In order to do this, we have devised the following benchmark.
 \label{fig:minimd}
 \end{figure}
 
+\begin{table}
+\centering
+\input{tab/tex/minimd_pose}
+\caption{MiniMD POSE points, 4 cores at 3.2 GHz}
+\label{tab:minimd_pose}
+\end{table} 
+
 
 \begin{figure}
 \centering
@@ -79,16 +90,24 @@ In order to do this, we have devised the following benchmark.
 
 \begin{table}
 \centering
-\input{tab/tex/minimd_pose}
-\caption{miniMD POSE insights, 4 cores at 3.2 GHz}
+\input{tab/tex/lavamd_pose}
+\caption{LavaMD POSE points, 4 cores at 3.2 GHz}
+\label{tab:lavamd_pose}
 \end{table} 
-
 
 \begin{figure}
 \centering
 \input{plot/minimd-pstates/plot_core}
 \caption{MiniMD $Et^2$ POSE for P-State Optimization}
 \label{fig:minimd-pstates}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\input{plot/lavamd-pstates/plot_core}
+\caption{LavaMD $Et^2$ POSE for P-State Optimization}
+\label{fig:lavamd-pstates}
 \end{figure}
 
 
@@ -119,6 +138,8 @@ Although a chip performing no work may use a very small amount of power, no amou
 \todo{for tighter bounds, proxy application could be developed}
 
 We employ the code given in \autoref{fig:microbench} to derive our baseline.  It consists of a single instruction, performs no computation and places no demand on the memory subsystems. Any non-trivial computation will have a higher activity factor than this minimal micro-benchmark. If the application to be optimized blocks on IO this can be incorporated by measuring the power consumed when the CPU is inactive and adjusting $P_\alpha$ proportionately. We defer measurement of $P_{\beta}$ for now as its precise value is not relevant to the current discussion. 
+
+
 
 
 
