@@ -1,8 +1,0 @@
-\begin{tabular}{@{}<%= 'c'*data.headers.length -%>@{}} \toprule
-<%= data.headers.join(' & ') %> \\
-\midrule
-<% data.each do |row| -%>
-  <%= row.collect{|k, v| v}.join(' & ') %> \\
-<% end -%>
-\bottomrule
-\end{tabular}
