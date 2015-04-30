@@ -1,6 +1,8 @@
 \section{Power Optimized Software Envelope}
 \label{sec:pose}
 
+POSE operates by...\todo{intro}
+
 \begin{figure}
 \centering
 \input{plot/technique/plot_core}
@@ -8,10 +10,13 @@
 \label{fig:technique}
 \end{figure}
 
-The POSE heuristic is based on the concept of a \emph{Feasible Performance Envelope}.
+\subsection{Feasible Performance Envelope}
+The POSE heuristic is based around the concept of a \emph{Feasible Performance Envelope}.
 We construct this by plotting lines of gradient $P_{max}$ and $P_{min}$ in \autoref{fig:technique}.
-These values represent the maximum and minimum rate of power consumption which can occur during normal operation of the target platform. By definition the $\langle Runtime, Energy\rangle$ costs incurred by running any given code $\theta$ on the target platform must be represented somewhere within this envelope.
+These values represent the maximum and minimum rate of power consumption which can occur during normal operation of the target platform.
+By definition the $\langle Runtime, Energy\rangle$ costs incurred by running any given code $\theta$ on the target platform must be represented somewhere within this envelope.
 
+\subsection{Optimization Bound}
 To constrain our search space further we now consider the metric we wish to reduce.
 For two logically equivalent codes $\theta$ and $\lambda$, the transformation ${\theta \to \lambda}$ is a valid optimization with respect to a cost metric $M$ if and only if ${M(\lambda) < M(\theta)}$.
 If we plot a curve passing through $\theta$ linking all points with ${M(\lambda) = M(\theta)}$, then by definition any optimized versions of $\theta$ can only exist below this optimization bound.
@@ -26,6 +31,7 @@ E^mt^n(\lambda) &= E^mt^n(\theta) \nonumber \\
 \label{eq:optimization}
 \end{align}
 
+\subsection{Contribution Bound}
 Our second bound considers what it means to optimize code for reduced power draw. 
 We define optimization $\theta \to \lambda$ with respect to metric $M$ to be a power optimization if the change in power draw it delivers is responsible for the majority of the reduction in $M$. We plot a curve through $\theta$ linking all points with the same ratio of contributions to $M$ from both power and runtime factors as our original code. All valid power optimizations must lie below this contribution bound. 
 
@@ -39,13 +45,16 @@ Again the equation for the contribution bound depends on the metric chosen.
 \end{align}
 
 Intuitively it makes sense to use the most appropriate tools while searching for optimizations.  If an optimization yields dramatic reductions in runtime with only minor reductions in power consumption then it is reasonable to classify it as a runtime optimization and state that conventional time-based profilers and performance engineering tools are better suited to finding it. It is the contribution bound which enables our model to make this distinction.
-
+\subsection{Optimization Limit}
 The bounds described thus far allow us to identify the area of the Energy/Runtime plane in which optimized versions of a given code may exist and to subdivide this space into runtime and power optimizations. The final component of POSE is the Optimization Limit, which subdivides the runtime optimized area of the feasible performance envelope into those optimizations which may be outperformed by power optimizations, and those which strictly dominate all possible power optimizations.
 
 The dashed Optimization Limit is based on \autoref{eq:optimization} and closely mirrors the the optimization bound.
 This limit connects all points with the same value for $M$ as a hypothetical maximally power optimized version of $\theta$. 
 All points below this limit have lower values for $M$, and therefore any optimizations in this area strictly dominate any possible power optimizations. 
 
+
+\section{POSE Insights}
+\label{sec:insights}
 The POSE Model partitions the feasible performance envelope from \autoref{fig:technique} into several areas.
 These areas allow us to classify possible optimizations according to which of the following labelled areas they fall in:
 
