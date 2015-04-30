@@ -14,8 +14,7 @@ These values represent the maximum and minimum rate of power consumption which c
 
 To constrain our search space further we now consider the metric we wish to reduce.
 For two logically equivalent codes $\theta$ and $\lambda$, the transformation ${\theta \to \lambda}$ is a valid optimization with respect to a cost metric $M$ if and only if ${M(\lambda) < M(\theta)}$.
-We plot a curve passing through $\theta$ linking all points with ${M(\lambda) = M(\theta)}$.
-By definition any optimized versions of $\theta$ can only exist below this optimization bound.
+If we plot a curve passing through $\theta$ linking all points with ${M(\lambda) = M(\theta)}$, then by definition any optimized versions of $\theta$ can only exist below this optimization bound.
 
 Naturally the equation for the optimization bound depends on the metric we are optimizing for.
 \autoref{fig:technique} shows the optimization bound for $Et^2$.
@@ -28,7 +27,7 @@ E^mt^n(\lambda) &= E^mt^n(\theta) \nonumber \\
 \end{align}
 
 Our second bound considers what it means to optimize code for reduced power draw. 
-An optimization $\theta \to \lambda$ with respect to metric $M$ is a power optimization if the change in power draw it delivers is responsible for the majority of the reduction in $M$. We plot a curve through $\theta$ linking all points with the same ratio of contributions to $M$ from both power and runtime factors as our original code. All valid power optimizations must lie below this contribution bound. 
+We define optimization $\theta \to \lambda$ with respect to metric $M$ to be a power optimization if the change in power draw it delivers is responsible for the majority of the reduction in $M$. We plot a curve through $\theta$ linking all points with the same ratio of contributions to $M$ from both power and runtime factors as our original code. All valid power optimizations must lie below this contribution bound. 
 
 Again the equation for the contribution bound depends on the metric chosen. 
 \autoref{fig:technique} shows the bound for $Et^2$ whilst the general form for $E^mt^n$ metrics is:
@@ -41,7 +40,7 @@ Again the equation for the contribution bound depends on the metric chosen.
 
 Intuitively it makes sense to use the most appropriate tools while searching for optimizations.  If an optimization yields dramatic reductions in runtime with only minor reductions in power consumption then it is reasonable to classify it as a runtime optimization and state that conventional time-based profilers and performance engineering tools are better suited to finding it. It is the contribution bound which enables our model to make this distinction.
 
-The bounds described thus far allow us to identify the area of the Energy/Runtime plane in which optimized versions of a given code exist and to subdivide this space into runtime and power optimizations. The final component of POSE is the Optimization Limit, which subdivides the runtime optimized area of the feasible performance envelope into those optimizations which may be outperformed by power optimizations, and those which strictly dominate all possible power optimizations.
+The bounds described thus far allow us to identify the area of the Energy/Runtime plane in which optimized versions of a given code may exist and to subdivide this space into runtime and power optimizations. The final component of POSE is the Optimization Limit, which subdivides the runtime optimized area of the feasible performance envelope into those optimizations which may be outperformed by power optimizations, and those which strictly dominate all possible power optimizations.
 
 The dashed Optimization Limit is based on \autoref{eq:optimization} and closely mirrors the the optimization bound.
 This limit connects all points with the same value for $M$ as a hypothetical maximally power optimized version of $\theta$. 
