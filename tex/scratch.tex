@@ -13,7 +13,7 @@ Only three measurements are required to build this plot; the system's baseline p
 
 \todo{} At this point it is worth stating that our heuristic is a very general one.
 It works for arbitrary metrics and is equally applicable at scales ranging from a single core to entire clusters.
-Its only prerequisites are that accurate figures for energy and time can be obtained whilst running code on the system under investigation.
+
 
 The broad applicability of POSE does raise the issue of how to find suitable maximum and minimum power boundaries for arbitrary systems. 
 One approach is to rely on manufacturer supplied limits, however these values tend to be overly conservative approximations when they are available at all.
@@ -21,3 +21,6 @@ A better approach is to measure power consumption whilst the system executes som
 The process of identifying such a workload is necessarily system specific and will be described further in \autoref{sec:investigation}.
 
 Combined with appropriate models for runtime and energy performance, POSE allows a fast exploration of the design state space.
+
+
+POSE provides an intuitive and robust understanding of the potential benefits of power optimization for a particular code. 
