@@ -1,4 +1,4 @@
-\begin{tabular}{@{}<%= 'c'*data.headers.length -%>@{}} \toprule
+\begin{tabular}{@{}<%= data.headers.map {'c'}.join('@{\hskip 4\tabcolsep}') -%>@{}} \toprule
 <%= data.headers.join(' & ') %> \\
 \midrule
 <% data.each do |row| -%>

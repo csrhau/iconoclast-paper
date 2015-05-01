@@ -8,7 +8,9 @@
     xmin=25, xmax=31,
     ymin=650, ymax=1650,
     width=\linewidth,
-    legend style={legend pos=north west}
+    legend columns=3,
+    legend to name=minimd:legend,
+    legend style={/tikz/every even column/.append style={column sep=0.2cm}} % space out columns a bit
     ]
 
     %% Model Parameters %%
@@ -41,11 +43,11 @@
 
     % BETA ROOFLINE BOUND 
     \addplot[color=red, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
-    \addlegendentry{$P_{max}$ Energy Bound}
+    \addlegendentry{$P_{max}$ Bound}
 
     % ALPHA BASELINE BOUND 
     \addplot[color=green, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
-    \addlegendentry{$P_{min}$ Energy Bound} 
+    \addlegendentry{$P_{min}$ Bound} 
 
     \addplot[color=orange, domain=\trnodex:\brnodex] { metricbound(\codepower, \codetime, x)};
     \addlegendentry{Optimization Bound}

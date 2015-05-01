@@ -12,7 +12,9 @@
     xmin=0, xmax=140,
     ymin=0, ymax=3800,
     width=\linewidth,
-    legend style={legend pos=north west}
+    legend columns=2,
+    legend to name=lavamd-pstate:legend,
+    legend style={/tikz/every even column/.append style={column sep=0.2cm}} % space out columns a bit
     ]
 
     %% Model Parameters %%
@@ -57,7 +59,7 @@
     \addplot[mark=x, black] table[x=Runtime,y=Energy, trim cells=true] {\pstatelavamdtable}
       node[pos=0.0, pin=left:3.2 GHz]{}
       node[pos=1.0, pin=95:1.6 GHz]{}
-      node[pos=0.636, pin={[pin distance=0.2cm] above:2.1 GHz}]{}
+      node[pos=0.636, pin={[pin distance=0.15cm] above:2.1 GHz}]{}
     ;
     \addlegendentry{P-State Progression}
 
@@ -121,7 +123,7 @@
     \pgfmathsetmacro{\codepower}{18.820670933416725}
     \pgfmathsetmacro{\blnodex}{89.0932975465577}
     \addplot[name path=edpdef, red, densely dashed, domain=\blnodex:\codetime] {definitionbound(\codepower, \codetime, x, 2)};
-    \addlegendentry{2.1 GHz Optimization Limit}
+    \addlegendentry{Optimization Boundary}
     %%
     \pgfmathsetmacro{\codetime}{109.970804}
     \pgfmathsetmacro{\codepower}{17.334285425429826}

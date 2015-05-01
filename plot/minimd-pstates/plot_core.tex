@@ -12,7 +12,9 @@
     xmin=0, xmax=60,
     ymin=0, ymax=1500,
     width=\linewidth,
-    legend style={legend pos=north west}
+    legend columns=2,
+    legend to name=minimd-pstate:legend,
+    legend style={/tikz/every even column/.append style={column sep=0.2cm}} % space out columns a bit
     ]
 
     %% Model Parameters %%
@@ -57,7 +59,7 @@
     \addplot[mark=x, black] table[x=Runtime,y=Energy, trim cells=true] {\pstateminimdtable}
       node[pos=0.0, pin=left:3.2 GHz]{}
       node[pos=1.0, pin=95:1.6 GHz]{}
-      node[pos=0.5745, pin={[pin distance=0.2cm] above:2.2 GHz}]{}
+      node[pos=0.5745, pin={[pin distance=0.15cm] above:2.2 GHz}]{}
     ;
     \addlegendentry{P-State Progression}
 
@@ -114,7 +116,7 @@
     \pgfmathsetmacro{\codepower}{17.552650110758528}
     \pgfmathsetmacro{\blnodex}{39.55555231782452}
     \addplot[name path=edpdef, red, densely dashed, domain=\blnodex:\codetime] {definitionbound(\codepower, \codetime, x, 2)};
-    \addlegendentry{2.2 GHz Optimization Limit}
+    \addlegendentry{Optimization Boundary}
 
     %%
     \pgfmathsetmacro{\codetime}{45.85507}

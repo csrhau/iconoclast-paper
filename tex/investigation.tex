@@ -82,12 +82,25 @@ The techniques described in \cite{hackenberg:2013aa} were used to ensure measure
 \caption{Roofline CPU Power (W)}
 \end{table} 
 
-\begin{figure}
+\begin{figure}[t]
+\begin{subfigure}[t]{.5\linewidth}
 \centering
 \input{plot/minimd-investigation/plot_core}
-\caption{MiniMD $Et^2$ POSE for Activity Factor Optimization}
+\caption{MiniMD}
+\end{subfigure}
+\begin{subfigure}[t]{.5\linewidth}
+\input{plot/lavamd-investigation/plot_core}
+\caption{LavaMD}
+\end{subfigure}
+\begin{center}
+\ref{minimd:legend}
+\end{center}
+\caption{$Et^2$ POSE for Activity Factor Optimization}
 \label{fig:minimd}
 \end{figure}
+
+
+
 
 \begin{table}
 \centering
@@ -104,21 +117,12 @@ A runtime optimization of 4.16s, or 1.16x is guaranteed to beat $\theta$ in term
 A runtime optimization of 4.84s, or 1.19x, is guaranteed to beat any power optimized version of $\theta$ in terms of $Et^2$ 
 
 
-
-\begin{figure}
-\centering
-\input{plot/lavamd-investigation/plot_core}
-\caption{LavaMD $Et^2$ POSE for Activity Factor Optimization}
-\label{fig:lavamd}
-\end{figure}
-
 \begin{table}
 \centering
 \input{tab/tex/lavamd_pose}
 \caption{LavaMD POSE points, 4 cores at 3.2 GHz}
 \label{tab:lavamd_pose}
 \end{table} 
-
 
 \autoref{tab:lavamd_pose} shows that for LavaMD The upper limit of energy to be saved from power optimization alone is 353.36J.
 The maximum improvement in $Et^2$ is 2790924.00.
@@ -127,23 +131,22 @@ This means we can trade at most 4.12s in exchange for better power performance.
 A runtime optimization of 6.26s, or 1.11x is guaranteed to beat $\theta$ in terms of $Et^2$. 
 A runtime optimization of 13.06s, or 1.25x, is guaranteed to beat any power optimized version of $\theta$ in terms of $Et^2$ 
 
-
-\begin{figure}
+\begin{figure}[t]
+\begin{subfigure}[t]{.5\linewidth}
 \centering
 \input{plot/minimd-pstates/plot_core}
-\caption{MiniMD $Et^2$ POSE for P-State Optimization}
-\label{fig:minimd-pstates}
-\end{figure}
-
-
-
-\begin{figure}
-\centering
+\caption{MiniMD}
+\end{subfigure}
+\begin{subfigure}[t]{.5\linewidth}
 \input{plot/lavamd-pstates/plot_core}
-\caption{LavaMD $Et^2$ POSE for P-State Optimization}
-\label{fig:lavamd-pstates}
+\caption{LavaMD}
+\end{subfigure}
+\begin{center}
+\ref{minimd-pstate:legend}
+\end{center}
+\caption{$Et^2$ POSE for P-State Optimization}
+\label{fig:pstates}
 \end{figure}
-
 
 \begin{figure}[ht]                                                               
 \centering                                                                      
