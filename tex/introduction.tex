@@ -1,7 +1,7 @@
 \section{Introduction}
 Advances in processor design have delivered improvements in CPU performance for decades. As physical limits are reached, however, refinements to the same basic technologies are beginning to show diminishing returns \cite{esmaeilzadeh:2011aa}. One side-effect of this is an unsustainable rise in system power use, which the US Department of Energy has identified as a primary constraint for exascale systems \cite{shalf:2011aa}.
 
-Hardware manufacturers are increasingly prioritising energy efficiency in their processor designs~\cite{kurd:2014aa}. 
+Hardware manufacturers are increasingly prioritising energy efficiency in processor designs~\cite{kurd:2014aa}. 
 Research suggests that software modifications will be required to fully exploit energy efficiency improvements in modern processors~\cite{shao:2013aa}. 
 
 In this paper we present the Power Optimized Software Envelope (POSE) heuristic.
@@ -12,7 +12,7 @@ The contributions made in this work are:
 \begin{itemize}
   \item We introduce the POSE heuristic and derive general expressions for its constituent boundaries.
   \item We detail the various insights POSE offers to performance engineers and comment on how these can inform optimization efforts.
-  \item We show how POSE, which is a general purpose metric- and platform-agnostic technique, can be targeted to specific platforms and use-cases. 
+  \item We show how POSE, which is a general technique, can be targeted to specific platforms and use-cases. 
   Specifically, we show how POSE may be used to investigate the tradeoffs between runtime and CPU power consumption.
   \item We develop a supporting toolchain which automates the process of collecting data and applying our model. 
   \item We validate POSE by undertaking a comparative study of two molecular dynamics mini-applications.
