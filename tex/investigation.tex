@@ -2,7 +2,7 @@
 \label{sec:investigation}
 In this section we demonstrate the utility of POSE with an investigation of two molecular dynamics miniapps, namely LavaMD and MiniMD.
 We chose these applications because they are from similar domains and yet show markedly different power consumption characteristics.
-Our findings allow us to identify which ocode has the most to gain from power optimization, and to quantify any potential benefits.
+Our findings allow us to identify which ocode has the most to gain from power optimisation, and to quantify any potential benefits.
 
 
 The first stage in building a POSE model is to construct a feasible performance envelope for the target platform.
@@ -76,7 +76,7 @@ The two factors a performance engineer may influence which contribute to power c
 To construct our $P_min$ and $P_max$ we must be able to effectively control these factors.
 In order to do this, we have devised the following benchmark.
 
-\todo{consider each in turn as a potential source of optimizations.}
+\todo{consider each in turn as a potential source of optimisations.}
 %TODO make sure this is explicitly Linpack table in text
 \begin{table}
 \centering
@@ -97,7 +97,7 @@ In order to do this, we have devised the following benchmark.
   \begin{center}%
     \ref{minimd:legend}%
   \end{center}%
-  \caption{$Et^2$ POSE for Activity Factor Optimization}%
+  \caption{$Et^2$ POSE for Activity Factor Optimisation}%
   \label{fig:minimd}%
 \end{figure}
 
@@ -114,7 +114,7 @@ In order to do this, we have devised the following benchmark.
 \begin{center}%
 \ref{minimd-pstate:legend}%
 \end{center}%
-\caption{$Et^2$ POSE for P-State Optimization}%
+\caption{$Et^2$ POSE for P-State Optimisation}%
 \label{fig:pstates}%
 \end{figure}%
 
@@ -129,12 +129,12 @@ In order to do this, we have devised the following benchmark.
 
 
 
-The figures in \autoref{tab:minimd_pose} allow us to state that the upper limit of energy to be saved from power optimization alone for MiniMD running on our target platform is is 32.82J.
+The figures in \autoref{tab:minimd_pose} allow us to state that the upper limit of energy to be saved from power optimisation alone for MiniMD running on our target platform is is 32.82J.
 The maximum improvement in $Et^2$ is 59072.00.
 All codes with runtime in excess of 30.695542582732617 have higher $Et^2$.
 This means we can trade at most 0.40s in exchange for better power performance.
-A runtime optimization of 4.16s, or 1.16x is guaranteed to beat $\theta$ in terms of $Et^2$. 
-A runtime optimization of 4.84s, or 1.19x, is guaranteed to beat any power optimized version of $\theta$ in terms of $Et^2$ 
+A runtime optimisation of 4.16s, or 1.16x is guaranteed to beat $\theta$ in terms of $Et^2$. 
+A runtime optimisation of 4.84s, or 1.19x, is guaranteed to beat any power optimized version of $\theta$ in terms of $Et^2$ 
 
 
 \begin{table}
@@ -144,15 +144,15 @@ A runtime optimization of 4.84s, or 1.19x, is guaranteed to beat any power optim
 \label{tab:lavamd_pose}
 \end{table} 
 
-\autoref{tab:lavamd_pose} shows that for LavaMD The upper limit of energy to be saved from power optimization alone is 353.36J.
+\autoref{tab:lavamd_pose} shows that for LavaMD The upper limit of energy to be saved from power optimisation alone is 353.36J.
 The maximum improvement in $Et^2$ is 2790924.00.
 All codes with runtime in excess of 69.75881800188515 have higher $Et^2$.
 This means we can trade at most 4.12s in exchange for better power performance.
-A runtime optimization of 6.26s, or 1.11x is guaranteed to beat $\theta$ in terms of $Et^2$. 
-A runtime optimization of 13.06s, or 1.25x, is guaranteed to beat any power optimized version of $\theta$ in terms of $Et^2$ 
+A runtime optimisation of 6.26s, or 1.11x is guaranteed to beat $\theta$ in terms of $Et^2$. 
+A runtime optimisation of 13.06s, or 1.25x, is guaranteed to beat any power optimized version of $\theta$ in terms of $Et^2$ 
 
 \subsection{Discussion}
-The figures produced by POSE are all upper bounds, and the benefits of power optimization will be more modest in practice. Even so, these figures are useful as they allow performance engineers to make informed decisions about where best to focus their efforts. If they consider a $1.03 \times$ speed up to be more achievable than up to the maximum $1.17\times$ reduction in activity factor then they can proceed to apply conventional optimizations safe in the knowledge that overall performance will improve despite any increases in activity factor.
+The figures produced by POSE are all upper bounds, and the benefits of power optimisation will be more modest in practice. Even so, these figures are useful as they allow performance engineers to make informed decisions about where best to focus their efforts. If they consider a $1.03 \times$ speed up to be more achievable than up to the maximum $1.17\times$ reduction in activity factor then they can proceed to apply conventional optimisations safe in the knowledge that overall performance will improve despite any increases in activity factor.
 
-If a performance engineer decides the benefits of power optimization are worth pursuing after applying POSE, the question still remains as to how he should go about searching for those optimizations.
+If a performance engineer decides the benefits of power optimisation are worth pursuing after applying POSE, the question still remains as to how he should go about searching for those optimisations.
 
