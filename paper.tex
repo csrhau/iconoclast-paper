@@ -1,12 +1,12 @@
-\documentclass[runningheads,a4paper,draft]{llncs}
+\documentclass[runningheads,a4paper,draft]{llncs} % TODO remove draft mode
 \usepackage{booktabs}
 \usepackage[hidelinks]{hyperref}
 \usepackage{pgfplots}
 \usepgfplotslibrary{fillbetween}
 \usetikzlibrary{patterns}
-\usepackage{caption} % To stop table captions looking crap
+\usepackage{caption} % To improve laf of captions (also imported by subcaption)
 \usepackage{mathtools} %For = aligned equations
-\usepackage{listings} %For microbenchmark code listing
+\usepackage[final]{listings} %For microbenchmark code listing TODO: final prevents draft mode hiding listings. Remove for publication.
 \usepackage{subcaption} % For putting figures 2-up
 \usepackage[T1]{fontenc} % For literal \{ and \} in author emails
 \pgfplotsset{compat=1.8}
