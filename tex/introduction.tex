@@ -4,27 +4,28 @@ Advances in processor design have delivered improvements in CPU performance for 
 Hardware manufacturers are increasingly prioritising energy efficiency in processor designs~\cite{kurd:2014aa}. 
 Research suggests that software modifications will be required to fully exploit energy efficiency improvements in modern processors~\cite{shao:2013aa}. 
 
-In this paper we present the Power Optimized Software Envelope (POSE) heuristic.
+In this paper we present the Power Optimized Software Envelope (POSE) technique.
 POSE is a visual model which provides insights into the energy consumption characteristics of a code.
 Our work helps performance engineers to determine whether power or runtime optimization is the best approach to reducing software power consumption.
 
+\medskip \noindent
 The contributions made in this work are:
 \begin{itemize}
-  \item We introduce the POSE heuristic and derive general expressions for its constituent boundaries.
+  \item We introduce POSE and derive expressions for its constituent boundaries.
   \item We detail the various insights POSE offers to performance engineers and comment on how these can inform optimization efforts.
   \item We show how POSE, which is a general technique, can be targeted to specific platforms and use-cases. 
   Specifically, we show how POSE may be used to investigate the tradeoffs between runtime and CPU power consumption.
   \item We develop a supporting toolchain which automates the process of collecting data and applying our model. 
-  \item We validate POSE by undertaking a comparative study of two molecular dynamics mini-applications.
-    \begin{itemize}
-      \item We apply the POSE heuristic to MiniMD and LavaMD to assess the potential benefits offered by power optimization in each case.
-      \item We also investigate how opportunities for power optimization vary in response to frequency scaling for both codes.
-    \end{itemize}
-  \item We show that there is more scope for power optimization with LavaMD than there is for MiniMD.
+  \item We validate POSE by undertaking a comparative study of two molecular dynamics miniapps, MiniMD and LavaMD.
+  \begin{itemize}
+    \item We apply the POSE heuristic to assess the potential benefits offered by power optimization for each code.
+    \item We also investigate how opportunities for power optimization vary in response to frequency scaling for both codes.
+    \item We show that there is more scope for power optimization with LavaMD than there is for MiniMD.
+  \end{itemize}
 \end{itemize}
 
 The remainder of this paper is structured as follows: \autoref{sec:related} introduces existing work in the area. 
-\autoref{sec:optimization} then describes the problem area and provides a summary of key concepts and metrics.
+\autoref{sec:optimization} then describes the problem domain and provides a summary of key concepts and metrics.
 \autoref{sec:pose} details the construction of our heuristic before \autoref{sec:insights} lists the various insights it provides.
 We validate our model in \autoref{sec:investigation} by using it to study the CPU power optimization opportunities presented by two molecular dynamics mini-apps. 
 We end by presenting our conclusions and future work in \autoref{sec:conclusion}.

@@ -1,27 +1,6 @@
-\clearpage
 \todo{SCRATCH - REMOVE ME}
 
-
-\todo{Clock gating, in which processor elements are isolated from the clock signal and cease to function. When this happens, their activity factor, and hence dynamic power consumption, is zero.}
+\todo{mention clock gating...?}
 
 On Frequency...
 It is reasonable to expect that different optimizations may have different effects when CPU frequency scaling is taken into effect. Slowing a processor's clock speed down may alter the balance of pressures on various CPU subsystems. With this in mind, it may be the case that some optimizations are effective at some frequencies but not at others. This motivates us to ask the question at what clock frequency does it become categorically impossible to beat the current unoptimized code.
-
-\todo{} Two key strengths of POSE are its simplicity and generality.
-Only three measurements are required to build this plot; the system's baseline power draw, $P_{min}$, and the time and energy to solution for the code to be optimized, $D_\theta$ and $E_\theta$ respectively.
-
-
-
-\todo{} At this point it is worth stating that our heuristic is a very general one.
-It works for arbitrary metrics and is equally applicable at scales ranging from a single core to entire clusters.
-
-
-The broad applicability of POSE does raise the issue of how to find suitable maximum and minimum power boundaries for arbitrary systems. 
-One approach is to rely on manufacturer supplied limits, however these values tend to be overly conservative approximations when they are available at all.
-A better approach is to measure power consumption whilst the system executes some minimally expensive workload. 
-The process of identifying such a workload is necessarily system specific and will be described further in \autoref{sec:investigation}.
-
-Combined with appropriate models for runtime and energy performance, POSE allows a fast exploration of the design state space.
-
-
-POSE provides an intuitive and robust understanding of the potential benefits of power optimization for a particular code. 

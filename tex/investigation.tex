@@ -1,23 +1,30 @@
 \section{Investigation}
 \label{sec:investigation}
+In this section we demonstrate the utility of POSE with an investigation of two molecular dynamics miniapps, namely LavaMD and MiniMD.
+We chose these applications because they are from similar domains and yet show markedly different power consumption characteristics.
+Our findings allow us to identify which ocode has the most to gain from power optimization, and to quantify any potential benefits.
 
 
-We demonstrate the utility of POSE with an investigation into the CPU power consumption characteristics of several popular benchmarks.
-Our findings allow us to identify those codes which have most to gain from power optimization, and to quantify any potential benefits.
+The first stage in building a POSE model is to construct a feasible performance envelope for the target platform.
+One way to achieve this would be to use manufacturer specified values for peak and idle power, however these value are usually estimates and tend to be overly conservative.
+As such, we avoid this approach in favour of direct measurements.
 
-The first stage to applying POSE in practice is to gain an understanding of the target platform in order to derive appropriate values for the maximum and minimum power consumption.
-While it would be valid to simply rely on manufacturer published limits, these are typically estimates and tend to be overly conservative.
-POSE works best when the maximum and minimum power bounds are as tight as possible, and so we rely on measurements rather than estimates.
+POSE works best when the maximum and minimum power bounds are as tight as possible.
+Another problem with relying on published values is that these values are not representative of normal workload.
+An idle, clock gated CPU is not representative of running HPC code.
+
+, and so we rely on measurements rather than estimates.
+\todo{System-level Max Power paper}
+\todo{Prime95 as a power benchmark}
+
+
+\todo{Say we're focussing on CPU power consumption}
 
 Current state-of-the-art processors are based on Complimentary Metal Oxide Semiconductor (CMOS) technology and multi- and many-core super-scalar architectures.
-The limits of these technologies are fast approaching and research into the next generation of power-efficient architectures and semiconductor fabrication techniques is under way \cite{esmaeilzadeh:2011aa}.
-
 The power draw of CMOS chips can be separated into components as described by \autoref{eq:totpwr}, of which dynamic and leakage power are the most significant.
 Dynamic power refers to power consumed as logic gates change state while a processor performs work. 
 Leakage power stems from the fact that at very small scales the insulating properties of silicon break down, allowing some current to leak out even when gates remain inactive.
 Other forms of power dissipation exist, however their effects are relatively minor \cite{kaxiras:2008aa}.
-
-
 
 \todo{for tighter bounds, proxy application could be developed}p
 
@@ -27,7 +34,6 @@ We employ the code given in \autoref{fig:microbench} to derive our baseline.  It
 We first formalize the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$. \todo{Point out in other (multi-system) domains the approach is still valid, we just need a sensible max and min.}
 
 \subsection{Experimental Methodology}
-
 CPU energy consumption was measured using Intel's Running Average Power Limit (RAPL) technology~\cite{david:2010aa}. 
 We created an augmented version of the unix \texttt{time} binary which output energy consumption figures as well as conventional runtime figures.
 The techniques described in \cite{hackenberg:2013aa} were used to ensure measurement accuracy. 
@@ -40,12 +46,6 @@ The techniques described in \cite{hackenberg:2013aa} were used to ensure measure
 \caption{Baseline Power Micro-Benchmark}                            
 \label{fig:microbench}                                                           
 \end{figure}  
-
-
-
-
-
-
 
 \todo{As there are two factors which control CPU power consumption we will consider each seperately. }
 
@@ -76,7 +76,6 @@ The two factors a performance engineer may influence which contribute to power c
 To construct our $P_min$ and $P_max$ we must be able to effectively control these factors.
 In order to do this, we have devised the following benchmark.
 
-
 \todo{consider each in turn as a potential source of optimizations.}
 %TODO make sure this is explicitly Linpack table in text
 \begin{table}
@@ -86,22 +85,20 @@ In order to do this, we have devised the following benchmark.
 \caption{Feasible Performance Envelope Parameters (W) (2 d.p.)}
 \end{table} 
 
-
 \begin{figure}[t]%
-\begin{subfigure}[t]{.5\linewidth}%
-\centering%
-\input{plot/minimd-investigation/plot_core}%
-\caption{MiniMD}%
-\end{subfigure}%
-\begin{subfigure}[t]{.5\linewidth}%
-\input{plot/lavamd-investigation/plot_core}%
-\caption{LavaMD}%
-\end{subfigure}%
-\begin{center}%
-\ref{minimd:legend}%
-\end{center}%
-\caption{$Et^2$ POSE for Activity Factor Optimization}%
-\label{fig:minimd}%
+  \begin{subfigure}[t]{.5\linewidth}%
+    \input{plot/minimd-investigation/plot_core}%
+    \caption{MiniMD}%
+  \end{subfigure}%
+  \begin{subfigure}[t]{.5\linewidth}%
+    \input{plot/lavamd-investigation/plot_core}%
+    \caption{LavaMD}%
+  \end{subfigure}%
+  \begin{center}%
+    \ref{minimd:legend}%
+  \end{center}%
+  \caption{$Et^2$ POSE for Activity Factor Optimization}%
+  \label{fig:minimd}%
 \end{figure}
 
 \begin{figure}[t]%

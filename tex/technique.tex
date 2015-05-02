@@ -46,9 +46,9 @@ Again the equation for the Contribution Bound depends on the metric chosen.
 
 Intuitively it makes sense to use the most appropriate tools while searching for optimizations.  If an optimization yields dramatic reductions in runtime with only minor reductions in power consumption then it is reasonable to classify it as a runtime optimization and state that conventional time-based profilers and performance engineering tools are better suited to finding it. It is the Contribution Bound which enables our model to make this distinction.
 \subsection{Optimization Limit}
-The bounds described thus far allow us to identify the area of the Energy/Runtime plane in which optimized versions of a given code may exist, and to divide this area into runtime and power optimizations. The final component of POSE is the Optimization Limit, which subdivides the runtime optimized area of the feasible performance envelope into those optimizations which may be outperformed by power optimizations, and those which strictly dominate all possible power optimizations.
+The bounds described thus far allow us to identify the area of the Energy/Runtime plane in which optimized versions of a given code may exist, and to divide this area into runtime and power optimizations. \todo{fix} The final component of POSE is the Optimization Limit, which subdivides the runtime optimized area of the feasible performance envelope into those optimizations which may be outperformed by power optimizations, and those which strictly dominate all possible power optimizations.
 
-The dashed Optimization Limit is based on \autoref{eq:optimization} and closely mirrors the the Optimization Bound.
+The dashed Optimization Limit is based on \autoref{eq:optimization} and closely mirrors the Optimization Bound.
 This limit connects all points with the same value for $M$ as a hypothetical maximally power optimized version of $\theta$. 
 All points below this limit have lower values for $M$, and therefore any optimizations in this area strictly dominate any possible power optimizations. 
 
@@ -67,21 +67,21 @@ It is worth restating at this point that POSE is a metric-agnostic heuristic. \a
 The POSE Model partitions the feasible performance envelope from \autoref{fig:technique} into several areas.
 These areas allow us to classify possible optimizations according to which one of the following labelled areas they fall in:
 
+\begin{multicols}{2}
 \begin{enumerate}
 \item Strong Runtime Optimization
 \item Weak Runtime Optimization
 \item Partial Power Optimization
 \item Pure Power Optimization
-\item Performance Degradation
+\item Performance Degradation \columnbreak
 \end{enumerate}
+\end{multicols}
 
 The Strong Runtime Optimization area \textbf{1} encompasses all points with a better $M$ score than the best case power optimization for $\theta$. The Weak Runtime Optimization area \textbf{2} encompasses all possible runtime optimizations which have a better performance than $\theta$ in terms of $M$ yet may in turn be beaten by some power optimized version of $\theta$. The Partial \textbf{3} and Pure \textbf{4} power optimization spaces correspond to optimized versionso of $\theta$ for which reductions in $M$ are due primarily or entirely to reductions in power consumption.
 Finally, Performance Degradation \textbf{5} corresponds to all codes with strictly worse performance than $\theta$.
-
 
 POSE offers a wealth of information to performance engineers.
 The difference in energy between $\theta$ and intercept $D$ places an upper limit on the amount of energy which can be saved by power optimization alone.
 The value $M(\theta) - M(C)$ bounds the amount of improvement in our metric we can expect to see from power optimization.
 The difference in runtime between intersect $E$ and $\theta$ represents the maximum increase in runtime we could feasibly trade off to achieve a slower yet more energy efficient code.
-Finally, the values $t_\theta / t_B$ represents the smallest speed-up which would guarantee a code which outperformed $\theta$, and $t_\theta / t_A$ the smallest speed-up guaranteed to outperform any power optimized version of $\theta$.
-
+Finally, the value $t_\theta / t_B$ represents the smallest speed-up which would guarantee a code which outperformed $\theta$, whilst $t_\theta / t_A$ is the smallest speed-up guaranteed to outperform any power optimized version of $\theta$.
