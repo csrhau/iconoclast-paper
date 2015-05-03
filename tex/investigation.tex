@@ -1,31 +1,41 @@
 \section{Investigation}
 \label{sec:investigation}
-In this section we demonstrate the utility of POSE with an investigation of two molecular dynamics miniapps, namely LavaMD and MiniMD.
-We chose these applications because they show markedly different power consumption characteristics whilst coming from similar domains.
+In this section we demonstrate POSE with an investigation into CPU power consumption.
+Two codes were chosen for this study, LavaMD and MiniMD.
+As miniapps, both of these applications have well understood structures and relatively compact code bases.
+They also exhibit different power consumption characteristics despite being from similar domains, making for an interesting comparison.
 
-Our findings allow us to identify which ocode has the most to gain from power optimisation, and to quantify any potential benefits.
-
-
-The first stage in building a POSE model is to construct a feasible performance envelope for the target platform.
-One way to achieve this would be to use manufacturer specified values for peak and idle power, however these value are usually estimates and tend to be overly conservative.
-As such, we avoid this approach in favour of direct measurements.
-
+The first stage in applying POSE is to construct a feasible performance envelope for the target platform.
 POSE works best when the maximum and minimum power bounds are as tight as possible.
-Another problem with relying on published values is that these values are not representative of normal workload.
-An idle, clock gated CPU is not representative of running HPC code.
+Processor manufacturers often supply values for the peak and idle power consumption of their hardware, however these estimates tend to be overly conservative and not reachable in practice.
+We chose to rely on direct measurements to build our envelope for this reason.
 
-, and so we rely on measurements rather than estimates.
-\todo{System-level Max Power paper}
-\todo{Prime95 as a power benchmark}
+\begin{equation}
+\label{eq:totpwr}
+P_{tot} = P_{dyn} + P_{leak} + P_{other}
+\end{equation}
 
-
-\todo{Say we're focussing on CPU power consumption}
-
-Current state-of-the-art processors are based on Complimentary Metal Oxide Semiconductor (CMOS) technology and multi- and many-core super-scalar architectures.
-The power draw of CMOS chips can be separated into components as described by \autoref{eq:totpwr}, of which dynamic and leakage power are the most significant.
+Current state-of-the-art processors are based on Complimentary Metal Oxide Semiconductor (CMOS) technology and multi-core superscalar architectures.
+\autoref{eq:totpwr} describes how the power draw of CMOS chips can be seperated into components, of which dynamic and leakage power are the most significant.
 Dynamic power refers to power consumed as logic gates change state while a processor performs work. 
 Leakage power stems from the fact that at very small scales the insulating properties of silicon break down, allowing some current to leak out even when gates remain inactive.
 Other forms of power dissipation exist, however their effects are relatively minor \cite{kaxiras:2008aa}.
+
+\begin{equation} 
+\label{eq:dynpwr}
+P_{dyn} \propto CV^{2}Af
+\end{equation}
+
+\autoref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency.
+Of these, only activity factor is directly related to processor workload as it captures the percentage of logic elements which change state each clock cycle.
+Conversely, capacitance is a fixed value arising from the wire lengths of on-chip structures.
+
+Processor frequency and supply voltage may also be influenced by workload through Dynamic Voltage and Frequency Scaling (DVFS).
+DVFS varies these properties in tandem, changing between a small number of fixed P-States.
+To paraphrase, DVFS acts to reduce the clock speed and voltage of underutilised processors.
+
+
+Historically, dynamic power has been the biggest contributor to $P_{tot}$, however leakage power has been on track to overtake it since the breakdown of Dennard Scaling.  Sub-threshold and gate-oxide leakage dominate total leakage current, and they both increase exponentially as transistors shrink. Process improvements like the introduction of high-k dielectric materials~\cite{jan:2009aa} have kept leakage power in check over the last decade, however there is no avoiding the fact that insulating properties will degrade as transistors get smaller.
 
 \todo{for tighter bounds, proxy application could be developed}p
 
@@ -50,26 +60,8 @@ The techniques described in \cite{hackenberg:2013aa} were used to ensure measure
 
 \todo{As there are two factors which control CPU power consumption we will consider each seperately. }
 
-\begin{equation}
-\label{eq:totpwr}
-P_{tot} = P_{dyn} + P_{leak} + P_{other}
-\end{equation}
-\begin{equation} 
-\label{eq:dynpwr}
-P_{dyn} \propto CV^{2}Af
-\end{equation}
-
-\autoref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency.
-Of these, only activity factor is directly related to processor workload as it captures the percentage of logic elements which change state each clock cycle.
-Conversely, capacitance is a fixed value arising from the wire lengths of on-chip structures.
-
-
-Historically, dynamic power has been the biggest contributor to $P_{tot}$, however leakage power has been on track to overtake it since the breakdown of Dennard Scaling.  Sub-threshold and gate-oxide leakage dominate total leakage current, and they both increase exponentially as transistors shrink. Process improvements like the introduction of high-k dielectric materials~\cite{jan:2009aa} have kept leakage power in check over the last decade, however there is no avoiding the fact that insulating properties will degrade as transistors get smaller.
 
 \todo{De-yoda, state these effect power}
-Processor frequency and supply voltage may also be influenced by workload through the actions of Dynamic Voltage and Frequency Scaling (DVFS) activity.
-These properties vary in tandem, taking on predetermined values dependent on a hardware-specific number of fixed P-States.
-To paraphrase, DVFS can act to reduce the clock speed of underutilised processors. When this happens, voltage requirements also decrease.
 
 An important feature of the equations governing power draw is that only $P_{dyn}$ is directly influenced by software, in particular due to its inclusion of the $A$ term. Software can also indirectly effect both dynamic and leakage current if it triggers changes to clock frequency and therefore supply voltage through DVFS. \todo{Ensure define dvfs} \todo{reword this bit - no equations now}
 
