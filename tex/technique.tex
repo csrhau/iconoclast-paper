@@ -45,22 +45,12 @@ Again the equation for the Contribution Bound depends on the metric chosen.
 \end{align}
 
 Intuitively it makes sense to use the most appropriate tools while searching for optimisations.  If an optimisation yields dramatic reductions in runtime with only minor reductions in power consumption then it is reasonable to classify it as a runtime optimisation and state that conventional time-based profilers and performance engineering tools are better suited to finding it. It is the Contribution Bound which enables our model to make this distinction.
-\subsection{Optimisation Limit \todo{fix}}
+\subsection{Optimisation Limit}
 The bounds described thus far delineate those areas of the Energy/Runtime plane in which runtime and power optimised versions of a given code may exist.
 The final component of POSE is the Optimisation Limit, which subdivides the runtime optimised area of the feasible performance envelope into those optimisations which may be outperformed by power optimisations, and those which strictly dominate all possible power optimisations.
 
 The dashed Optimisation Limit  mirrors the Optimisation Bound and is based on \autoref{eq:optimisation}. This limit connects all points with the same value for $M$ as a hypothetical maximally power optimised version of $\theta$. 
 All points below this limit have lower values for $M$, and therefore optimisations in this area strictly dominate any possible power optimisations. 
-
-It is worth restating at this point that POSE is a metric-agnostic heuristic. \autoref{fig:multimetric-technique} shows how the POSE heuristic varies with choice of metric using $E^1t^0$ and $E^1t^2$ as examples. POSE offers the same insights regardless of the metric chosen.
-
-\begin{figure}
-\centering
-\input{plot/multimetric-technique/plot_core}
-\caption{POSE for Different Metrics}
-\label{fig:multimetric-technique}
-\end{figure}
-
 
 \section{POSE Insights}
 \label{sec:insights}
@@ -85,3 +75,14 @@ The difference in energy between $\theta$ and intercept $D$ places an upper limi
 The value $M(\theta) - M(C)$ bounds the amount of improvement in our metric we can expect to see from power optimisation.
 The difference in runtime between intersect $E$ and $\theta$ represents the maximum increase in runtime we could feasibly trade off to achieve a slower yet more energy efficient code.
 Finally, the value $t_\theta / t_B$ represents the smallest speed-up which would guarantee a code which outperformed $\theta$, whilst $t_\theta / t_A$ is the smallest speed-up guaranteed to outperform any power optimised version of $\theta$.
+
+\begin{figure}
+\centering
+\input{plot/multimetric-technique/plot_core}
+\caption{POSE for Different Metrics}
+\label{fig:multimetric-technique}
+\end{figure}
+
+It is worth restating at this point that POSE is a metric-agnostic heuristic. \autoref{fig:multimetric-technique} shows how the POSE heuristic varies with choice of metric using $E^1t^0$ and $E^1t^2$ as examples. POSE offers the same insights regardless of the metric chosen.
+
+
