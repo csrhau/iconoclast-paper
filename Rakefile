@@ -26,7 +26,7 @@ namespace :latex do
   end
 
   desc 'Compile group presentation'
-  file 'group_presentation.pdf' => PRES_TEX do |tex|
+  file 'group_presentation.pdf' => PRES_TEX + PAPER_TEX do |tex| #todo HANDLE PLOT updates correctly
     system("pdflatex group_presentation.tex")
   end
 end

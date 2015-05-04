@@ -18,9 +18,12 @@ By definition the $\langle Runtime, Energy\rangle$ costs incurred by running any
 
 \subsection{Optimisation Bound}
 To constrain our search space further we now consider the metric we wish to reduce.
-For two logically equivalent codes $\theta$ and $\lambda$, the transformation ${\theta \to \lambda}$ is a valid optimisation with respect to a cost metric $M$ if and only if ${M(\lambda) < M(\theta)}$.
-If we plot a curve passing through $\theta$ linking all points with ${M(\lambda) = M(\theta)}$, then by definition any optimised versions of $\theta$ must exist below this bound.
 
+\begin{definition}
+For two logically equivalent codes $\theta$ and $\lambda$, the transformation ${\theta \to \lambda}$ is a valid optimisation with respect to a cost metric $M$ if and only if ${M(\lambda) < M(\theta)}$.
+\end{definition}
+
+If we plot a curve passing through $\theta$ linking all points with ${M(\lambda) = M(\theta)}$, then by definition any optimised versions of $\theta$ must exist below this bound.
 Naturally the equation for the Optimisation Bound depends on the metric we are optimizing for.
 \autoref{fig:technique} shows the Optimisation Bound for $Et^2$.
 The general form of this bound for the $E^mt^n$ family of metrics is derived as follows:
@@ -32,9 +35,14 @@ The general form of this bound for the $E^mt^n$ family of metrics is derived as 
 \end{align}
 
 \subsection{Contribution Bound}
-Our second bound considers what it means to optimise code for reduced power draw. 
-We define optimisation $\theta \to \lambda$ with respect to metric $M$ to be a power optimisation if the change in power draw it delivers is responsible for the majority of the reduction in $M$. We plot a curve through $\theta$ linking all points for which power and runtime factors contribute to $M$ in the same ratio as our original code. Any power-optimised versions of $\theta$ must lie below this Contribution Bound.
+Our second bound considers what it means to optimise code for reduced power draw.
 
+\begin{definition}
+An opimisation $\theta \to \lambda$ with respect to metric $M$ is a power optimisation if the reduction in power draw it delivers is responsible for the majority of the improvement in $M$. 
+\end{definition}
+
+We plot a curve through $\theta$ linking all points for which power and runtime factors contribute to $M$ in the same ratio as our original code.
+Any power-optimised versions of $\theta$ must lie below this Contribution Bound.
 Again the equation for the Contribution Bound depends on the metric chosen. 
 \autoref{fig:technique} shows the bound for $Et^2$ whilst the general form for $E^mt^n$ metrics is derived as follows:
 \begin{align}

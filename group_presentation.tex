@@ -1,7 +1,12 @@
 \documentclass{beamer}
+\usepackage{etex} %Needed to support enough includes. Stupid latex.
+\usepackage{booktabs}
 \usepackage{lmodern} % Allows arbitrary font sizes to prevent warnings.
 \usepackage{listings} % For code listings 
+\usepackage{mathtools} %For = aligned equations
+\usepackage{multicol} % For 2 columned bullet point list
 \usepackage{pgfplots}
+\usetikzlibrary{patterns}
 \usetheme{Warsaw}
 
 \title[POSE] % (optional, only for long titles)
@@ -32,51 +37,105 @@
         \item $\bar{P}$: Power Optimisation
         \item $t$: Runtime Optimisation
       \end{itemize}
-      \item Runtime optimisation is well established. 
-      \begin{itemize}
-        \item Can we apply the same techniques to optimise for energy? 
+      \item Runtime optimisation is well established. Can we apply the same techniques to optimise for energy? No
+       \begin{itemize}
+        \item Runtime optimizations can increase energy consumption
+        \item Power optimisations can increase runtime \textbf{and} energy consumption
       \end{itemize}
     \end{itemize}
   \end{frame}
   
   \begin{frame}
     \frametitle{Problem}
+    \begin{figure}
+    \centering
+    \input{plot/problem-space/plot_core}
+    \caption{Energy/Runtime/Power Trade off}
+    \end{figure}
   \end{frame}
-
 
   \begin{frame}
   \frametitle{Metrics}
+  \begin{itemize}
+  \item Our metric must combine both power and runtime
+  \item Energy is a candidate in energy-critical domains
+  \item Energy Delay Product (EDP) gives a greater weighting to runtime:
   \begin{align}
     EDP &= Energy \times Runtime \nonumber \\
         &= E \times t \nonumber \\
         &= \bar{P} \times t^2
-    \label{eq:edp}
   \end{align}
+  \item $ED^2P$ and $ED^3P$ are also used.
+  \item In general we refer to the $E^mt^n$ metrics 
+  \end{itemize}
   \end{frame}
 
+  \begin{frame}
+    \frametitle{Feasible Performance Envelope}
+    \begin{itemize}
+      \item Area corresponding to all feasible rates of power consumption
+      \item Depicted with lines of gradient $P_{max}$, $P_{min}$ in plot
+      \item All $\langle Runtime, Energy \rangle$ program costs lie within this envelope
+      \begin{itemize}
+        \item For an initial code $\theta$, any modified version $\lambda$ must remain within this envelope
+      \end{itemize}
+    \end{itemize}
+  \end{frame}
+  \begin{frame}
+    \frametitle{Optimisation Bound}
+    \begin{definition}
+    For two logically equivalent codes $\theta$ and $\lambda$, the transformation ${\theta \to \lambda}$ is a valid optimisation with respect to a cost metric $M$ if and only if ${M(\lambda) < M(\theta)}$. 
+    \end{definition}
+All optimized versions of $\theta$ must lie below the bound linking all points with ${M(\lambda) = M(\theta)}$.
+\begin{align}
+ {E_\lambda}^m{t_\lambda}^n &= {E_\theta}^m{t_\theta}^n \nonumber \\
+ {E_\lambda}^m &= \frac{{E_\theta}^m{t_\theta}^n}{{t_\lambda}^n} \nonumber \\
+  E_\lambda &= (\frac{{E_\theta}^m{t_\theta}^n}{{t_\lambda}^n})^\frac{1}{m}
+\end{align}
+  \end{frame}
+  \begin{frame}
+    \frametitle{Contribution Bound}
+    \begin{definition}
+      Optimisation $\theta \to \lambda$ with respect to metric $M$ to be a power optimisation if the change in power draw it delivers is responsible for the majority of the reduction in $M$. 
+      \end{definition}
+ All power-otimised versions of $\theta$ must lie below the bound linking all points for which power and runtime factors contribute to $M$ in the same ratio as $\theta$.
+\begin{align}
+\frac{{P_{\lambda}}^m}{{t_{\lambda}}^{m+n}} &= \frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \nonumber \\
+ {P_{\lambda}}^m &= \frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n} \nonumber \\ 
+ {E_{\lambda}}^m &= \frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n+1} \nonumber \\ 
+  E_{\lambda} &= (\frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n+1})^{\frac{1}{m}} 
+\end{align}
+  \end{frame}
+  \begin{frame}
+    \frametitle{Optimisation Limit}
+    \begin{itemize}
+      \item Shares same definition as Optimisation Bound, except drawn from the maximally power optimised point
+      \item Subdivides runtime optimized area of the Feasible Performance Area
+      \begin{itemize}
+        \item Optimisations dominated by best possible power optimisation
+        \item Optimisations which dominate best possible power optimisation
+      \end{itemize}
+    \end{itemize}
+
+  \end{frame}
   \begin{frame}
     \frametitle{POSE}
     \begin{figure}
     \centering
     \input{plot/technique/plot_core}
     \caption{$Et^2$ Power Optimised Software Envelope}
-    \label{fig:technique}
     \end{figure}
   \end{frame}
   \begin{frame}
-    \frametitle{Feasible Performance Envelope}
-  \end{frame}
-  \begin{frame}
-    \frametitle{Optimisation Bound}
-  \end{frame}
-  \begin{frame}
-    \frametitle{Contribution Bound}
-  \end{frame}
-  \begin{frame}
-    \frametitle{Contribution Limit}
-  \end{frame}
-  \begin{frame}
     \frametitle{Investigation}
+    \begin{itemize}
+      \item CPU power consumption of Molecular Dynamics miniapps
+      \begin{itemize}
+        \item MiniMD
+        \item LavaMD
+      \end{itemize}
+      \item Intel RAPL for power measurements
+    \end{itemize}
   \end{frame}
 
 %Fragile frames can't be indented. which sucks.
@@ -85,17 +144,88 @@
 \centering                                                                      
 \lstset{basicstyle=\ttfamily\footnotesize\bfseries, frame=tb} %small bold text, lines top and bottom 
 \lstinputlisting[caption=Baseline Power Microbenchmark]{lst/alpha_benchmark.c}              
-\label{fig:microbench}                                                           
 \end{frame}
 
   \begin{frame}
     \frametitle{Roofline Measurement}
-      TODO - prime95
+    \begin{itemize}
+      \item Avoided published TDP - overly conservative estimate
+      \item Trialled several stress-test binaries
+      \begin{itemize}
+        \item Linpack
+        \item Streams
+        \item Prime95
+      \end{itemize}
+      \item Settled on Prime95 as the most expensive
+    \end{itemize}
   \end{frame}
 
   \begin{frame}
-    \frametitle{Conclusions}
+    \frametitle{MiniMD}
+    \begin{figure}
+    \input{plot/minimd-investigation/plot_core}
+    \end{figure}
   \end{frame}
+  \begin{frame}
+    \frametitle{MiniMD}
+    \begin{table}
+    \input{tab/tex/minimd_pose}
+    \caption{MiniMD POSE, 4 cores 3.2GHz}
+    \end{table} 
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{MiniMD Report}
+    For MiniMD, the longest runtime within the Power Optimized Software Envelope is 30.70s.
+    This means that any optimization which trades increased runtime for improved power efficiency can slow LavaMD down by at most 0.41s before $Et^2$ becomes strictly worse.
+    The upper limit of energy to be saved from power optimisation alone for MiniMD running on our target platform is is 32.82J.
+
+    The lowest value of $Et^2$ within the envelope is 718232.78, an improvement of 7.60\% over the baseline code. 
+    Runtime optimization will be required to deliver any improvements above this level.
+    We also know that a speedup of, 1.16x, or 4.16s, is guaranteed to beat $\theta$ in terms of $Et^2$.
+    Finally, a speedup of 1.19x, or 4.84s, is guaranteed to beat any power optimised version of $\theta$ in terms of $Et^2$
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{LavaMD}
+    \begin{figure}
+    \input{plot/lavamd-investigation/plot_core}
+    \end{figure}
+  \end{frame}
+  \begin{frame}
+    \frametitle{LavaMD}
+    \begin{table}
+    \input{tab/tex/lavamd_pose}
+    \caption{LavaMD POSE, 4 cores 3.2GHz}
+    \end{table} 
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{MiniMD Report}
+For LavaMD, the longest runtime within the Power Optimized Software Envelope as 69.76s.
+This means that any optimization which trades increased runtime for improved power efficiency can slow LavaMD down by at most 4.12s before $Et^2$ becomes strictly worse.
+The upper limit of energy to be saved from power optimization alone is 353.36J.
+
+The lowest value of $Et^2$ within the envelope is 6332608.91, an improvement of 30.59\% over the baseline code.
+Runtime optimization will be required to deliver any improvements above this level.
+We also know that a speedup of 1.11x, or 6.26s, is guaranteed to beat $\theta$ in terms of $Et^2$.
+Finally, a runtime optimisation of 1.25x, or 13.06s, is guaranteed to beat any power optimised version of $\theta$ in terms of $Et^2$ 
+\end{frame}
+
+  \begin{frame}
+    \frametitle{Status}
+    \begin{itemize}
+    \item Writing Up
+    \item Deadlines:
+    \begin{itemize}
+      \item EPEW Abstract Submission: May 12 
+      \item UKPEW deadline: May 29
+    \end{itemize}
+    \item Proofreading welcome
+    \end{itemize}
+  \end{frame}
+
+
   \begin{frame}
     \frametitle{Questions}
   \end{frame}
