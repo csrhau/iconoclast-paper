@@ -1,8 +1,9 @@
 require 'rake/clean'
 
-CLEAN.include %w[aux log blg bbl out synctex.gz].map { |f| "**/*.#{f}" }
-CLOBBER.include %w[./paper.pdf tab/tex plot/**/*.pdf]
-TEX_FILES = Rake::FileList.new('**/*.tex')
+CLEAN.include %w[aux log blg bbl out nav toc vrb snm synctex.gz].map { |f| "**/*.#{f}" }
+CLOBBER.include %w[./paper.pdf ./group_presentation.pdf tab/tex plot/**/*.pdf]
+PAPER_TEX = Rake::FileList.new('**/*.tex').exclude('group_presentation.tex')
+PRES_TEX = Rake::FileList.new('group_presentation.tex')
 TABLES = Rake::FileList.new('tab/data/*.csv').map do |f|
   base = File.basename(f, '.csv')
   {:tex => "tab/tex/#{base}.tex",
@@ -12,7 +13,7 @@ end
 
 namespace :latex do
   desc "Compile Latex Paper"
-  file 'paper.pdf' => TEX_FILES + TABLES.map { |t| t[:tex] } do |tex|
+  file 'paper.pdf' => PAPER_TEX + TABLES.map { |t| t[:tex] } do |tex|
     system("pdflatex paper.tex")
     system("bibtex paper.aux")
     system("pdflatex paper.tex")
@@ -20,8 +21,13 @@ namespace :latex do
   end
 
   desc 'Do a single pdflatex pass for paper'
-  task 'single' => TEX_FILES + TABLES.map { |t| t[:tex] } do |tex|
+  task 'single' => PAPER_TEX + TABLES.map { |t| t[:tex] } do |tex|
     system("pdflatex paper.tex")
+  end
+
+  desc 'Compile group presentation'
+  file 'group_presentation.pdf' => PRES_TEX do |tex|
+    system("pdflatex group_presentation.tex")
   end
 end
 

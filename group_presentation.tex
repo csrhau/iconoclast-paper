@@ -1,0 +1,68 @@
+\documentclass{beamer}
+\usepackage{lmodern} % Allows arbitrary font sizes to prevent warnings.
+\usepackage{listings} % For code listings 
+
+\usetheme{Warsaw}
+
+\title[POSE] % (optional, only for long titles)
+{Power Optimised Software Envelope}
+\subtitle{A Model to Guide Energy-Aware Optimisation}
+\author[Roberts et al.] % (optional, for multiple authors)
+{Stephen~Roberts\inst{1} \and Stephen~Jarvis\inst{1} \\
+ \and Chris~January\inst{1} \and Jonathan~Byrd\inst{2}}
+\institute[Universities Here and There] % (optional)
+{
+    \inst{1}%
+      Department of Computer Science\\
+      The University of Warwick
+    \and
+      \inst{2}%
+        Allinea Software
+}
+\subject{Computer Science}
+
+\begin{document}
+  \frame{\titlepage}
+  \begin{frame}
+      \frametitle{Introduction}
+  \end{frame}
+  \begin{frame}
+    \frametitle{POSE}
+  \end{frame}
+  \begin{frame}
+    \frametitle{Feasible Performance Envelope}
+  \end{frame}
+  \begin{frame}
+    \frametitle{Optimisation Bound}
+  \end{frame}
+  \begin{frame}
+    \frametitle{Contribution Bound}
+  \end{frame}
+  \begin{frame}
+    \frametitle{Contribution Limit}
+  \end{frame}
+  \begin{frame}
+    \frametitle{Investigation}
+  \end{frame}
+
+%Fragile frames can't be indented. which sucks.
+\begin{frame}[fragile]
+\frametitle{Baseline Measurement}
+\centering                                                                      
+\lstset{basicstyle=\ttfamily\footnotesize\bfseries, frame=tb} %small bold text, lines top and bottom 
+\lstinputlisting[caption=Baseline Power Microbenchmark]{lst/alpha_benchmark.c}              
+\label{fig:microbench}                                                           
+\end{frame}
+
+  \begin{frame}
+    \frametitle{Roofline Measurement}
+      TODO - prime95
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Conclusions}
+  \end{frame}
+  \begin{frame}
+    \frametitle{Questions}
+  \end{frame}
+\end{document}
