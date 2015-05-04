@@ -5,6 +5,7 @@ Two codes were chosen for this study, LavaMD and MiniMD.
 As miniapps, both of these applications have well understood structures and relatively compact code bases.
 They also exhibit different power consumption characteristics despite being from similar domains, making for an interesting comparison.
 
+\subsection{Experimental Domain}
 The first stage in applying POSE is to construct a feasible performance envelope for the target platform.
 POSE works best when the maximum and minimum power bounds are as tight as possible.
 Processor manufacturers often supply values for the peak and idle power consumption of their hardware, however these estimates tend to be overly conservative and not reachable in practice.
@@ -37,12 +38,19 @@ To paraphrase, DVFS acts to reduce the clock speed and voltage of underutilised 
 
 Historically, dynamic power has been the biggest contributor to $P_{tot}$, however leakage power has been on track to overtake it since the breakdown of Dennard Scaling.  Sub-threshold and gate-oxide leakage dominate total leakage current, and they both increase exponentially as transistors shrink. Process improvements like the introduction of high-k dielectric materials~\cite{jan:2009aa} have kept leakage power in check over the last decade, however there is no avoiding the fact that insulating properties will degrade as transistors get smaller.
 
-\todo{for tighter bounds, proxy application could be developed}p
+An important feature of the equations governing power draw is that only $P_{dyn}$ is directly influenced by software, in particular due to its inclusion of the $A$ term. Software can also indirectly effect both dynamic and leakage current if it triggers changes to clock frequency and therefore supply voltage through DVFS. \todo{Ensure define dvfs} 
+
+The two factors a performance engineer may influence which contribute to power consumption are activity factor and P-State.
+To construct our $P_min$ and $P_max$ we must be able to effectively control these factors.
+In order to do this, we have devised the following benchmark.
+
+
+\todo{for tighter bounds, proxy application could be developed}
+
+We first formalise the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$.
 
 We employ the code given in \autoref{fig:microbench} to derive our baseline.  It consists of a single instruction, performs no computation and places no demand on the memory subsystems. Any non-trivial computation will have a higher activity factor than this minimal micro-benchmark. If the application to be optimised blocks on IO this can be incorporated by measuring the power consumed when the CPU is inactive and adjusting $P_\alpha$ proportionately. We defer measurement of $P_{\beta}$ for now as its precise value is not relevant to the current discussion. 
 
-\todo{as there are two sources of power, we'll look at them seperately}
-We first formalise the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$. \todo{Point out in other (multi-system) domains the approach is still valid, we just need a sensible max and min.}
 
 \subsection{Experimental Methodology}
 CPU energy consumption was measured using Intel's Running Average Power Limit (RAPL) technology~\cite{david:2010aa}.
@@ -58,16 +66,6 @@ The techniques described in \cite{hackenberg:2013aa} were used to ensure measure
 \label{fig:microbench}                                                           
 \end{figure}  
 
-\todo{As there are two factors which control CPU power consumption we will consider each seperately. }
-
-
-\todo{De-yoda, state these effect power}
-
-An important feature of the equations governing power draw is that only $P_{dyn}$ is directly influenced by software, in particular due to its inclusion of the $A$ term. Software can also indirectly effect both dynamic and leakage current if it triggers changes to clock frequency and therefore supply voltage through DVFS. \todo{Ensure define dvfs} \todo{reword this bit - no equations now}
-
-The two factors a performance engineer may influence which contribute to power consumption are activity factor and P-State.
-To construct our $P_min$ and $P_max$ we must be able to effectively control these factors.
-In order to do this, we have devised the following benchmark.
 
 \todo{consider each in turn as a potential source of optimisations.}
 %TODO make sure this is explicitly Linpack table in text
@@ -119,15 +117,13 @@ In order to do this, we have devised the following benchmark.
 \label{tab:minimd_pose}
 \end{table} 
 
-
-
-The figures in \autoref{tab:minimd_pose} allow us to state that the upper limit of energy to be saved from power optimisation alone for MiniMD running on our target platform is is 32.82J.
-The maximum improvement in $Et^2$ is 59072.00.
-All codes with runtime in excess of 30.695542582732617 have higher $Et^2$.
-This means we can trade at most 0.40s in exchange for better power performance.
-A runtime optimisation of 4.16s, or 1.16x is guaranteed to beat $\theta$ in terms of $Et^2$. 
-A runtime optimisation of 4.84s, or 1.19x, is guaranteed to beat any power optimised version of $\theta$ in terms of $Et^2$ 
-
+\autoref{tab:minimd_pose} shows that for MiniMD, the longest runtime within the Power Optimized Software Envelope is 30.70s.
+This means that any optimization which trades increased runtime for improved power efficiency can slow LavaMD down by at most 0.41s before $Et^2$ becomes strictly worse.
+The upper limit of energy to be saved from power optimisation alone for MiniMD running on our target platform is is 32.82J.
+The lowest value of $Et^2$ within the envelope is 718232.78, an improvement of 7.60\% over the baseline code. 
+Runtime optimization will be required to deliver any improvements above this level.
+We also know that a speedup of, 1.16x, or 4.16s, is guaranteed to beat $\theta$ in terms of $Et^2$.
+Finally, a speedup of 1.19x, or 4.84s, is guaranteed to beat any power optimised version of $\theta$ in terms of $Et^2$
 
 \begin{table}
 \centering
@@ -136,15 +132,18 @@ A runtime optimisation of 4.84s, or 1.19x, is guaranteed to beat any power optim
 \label{tab:lavamd_pose}
 \end{table} 
 
-\autoref{tab:lavamd_pose} shows that for LavaMD The upper limit of energy to be saved from power optimisation alone is 353.36J.
-The maximum improvement in $Et^2$ is 2790924.00.
-All codes with runtime in excess of 69.75881800188515 have higher $Et^2$.
-This means we can trade at most 4.12s in exchange for better power performance.
-A runtime optimisation of 6.26s, or 1.11x is guaranteed to beat $\theta$ in terms of $Et^2$. 
-A runtime optimisation of 13.06s, or 1.25x, is guaranteed to beat any power optimised version of $\theta$ in terms of $Et^2$ 
+\autoref{tab:lavamd_pose} shows that for LavaMD, the longest runtime within the Power Optimized Software Envelope as 69.76s.
+This means that any optimization which trades increased runtime for improved power efficiency can slow LavaMD down by at most 4.12s before $Et^2$ becomes strictly worse.
+The upper limit of energy to be saved from power optimization alone is 353.36J.
+The lowest value of $Et^2$ within the envelope is 6332608.91, an improvement of 30.59\% over the baseline code.
+Runtime optimization will be required to deliver any improvements above this level.
+We also know that a speedup of 1.11x, or 6.26s, is guaranteed to beat $\theta$ in terms of $Et^2$.
+Finally, a runtime optimisation of 1.25x, or 13.06s, is guaranteed to beat any power optimised version of $\theta$ in terms of $Et^2$ 
 
 \subsection{Discussion}
+
+\todo{both in absolute terms and as a percentage of the baseline}
+
 The figures produced by POSE are all upper bounds, and the benefits of power optimisation will be more modest in practice. Even so, these figures are useful as they allow performance engineers to make informed decisions about where best to focus their efforts. If they consider a $1.03 \times$ speed up to be more achievable than up to the maximum $1.17\times$ reduction in activity factor then they can proceed to apply conventional optimisations safe in the knowledge that overall performance will improve despite any increases in activity factor.
 
 If a performance engineer decides the benefits of power optimisation are worth pursuing after applying POSE, the question still remains as to how he should go about searching for those optimisations.
-
