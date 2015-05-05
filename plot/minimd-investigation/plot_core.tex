@@ -50,13 +50,13 @@
     \addlegendentry{$P_{min}$ Bound} 
 
     \addplot[color=orange, domain=\trnodex:\brnodex] { metricbound(\codepower, \codetime, x)};
-    \addlegendentry{Optimization Bound}
+    \addlegendentry{Optimisation Bound}
 
     \addplot[color=blue!80, domain=\blnodex:\codetime] { definitionbound(\codepower, \codetime, x)};
     \addlegendentry{Contribution Bound}
 
     \addplot[color=orange, dashed, domain=\tlnodex:\blnodex] {metricbound(\baselinepower, \blnodex, x)};
-    \addlegendentry{Optimization Limit}
+    \addlegendentry{Optimisation Limit}
 
     % Constant Time (Vertical) dotted line
     \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\codeenergy});

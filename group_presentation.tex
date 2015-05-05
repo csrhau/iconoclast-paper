@@ -7,6 +7,7 @@
 \usepackage{multicol} % For 2 columned bullet point list
 \usepackage{pgfplots}
 \usetikzlibrary{patterns}
+\usepgfplotslibrary{fillbetween}
 \usetheme{Warsaw}
 
 \title[POSE] % (optional, only for long titles)
@@ -46,11 +47,10 @@
   \end{frame}
   
   \begin{frame}
-    \frametitle{Problem}
+    \frametitle{Problem: Energy/Runtime/Power Trade off}
     \begin{figure}
     \centering
     \input{plot/problem-space/plot_core}
-    \caption{Energy/Runtime/Power Trade off}
     \end{figure}
   \end{frame}
 
@@ -81,6 +81,16 @@
       \end{itemize}
     \end{itemize}
   \end{frame}
+
+  \begin{frame}
+    \frametitle{Feasible Performance Envelope}
+    \begin{figure}
+    \centering
+    \input{plot/incremental-technique/plot_core}
+    \caption{Feasible Performance Envelope}
+    \end{figure}
+  \end{frame}
+
   \begin{frame}
     \frametitle{Optimisation Bound}
     \begin{definition}
@@ -93,6 +103,16 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
   E_\lambda &= (\frac{{E_\theta}^m{t_\theta}^n}{{t_\lambda}^n})^\frac{1}{m}
 \end{align}
   \end{frame}
+
+  \begin{frame}
+    \frametitle{$Et^2$ Optimisation Bound}
+    \newcommand*{\OPTBOUND}{}%
+    \begin{figure}
+    \centering
+    \input{plot/incremental-technique/plot_core}
+    \end{figure}
+  \end{frame}
+
   \begin{frame}
     \frametitle{Contribution Bound}
     \begin{definition}
@@ -106,6 +126,18 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
   E_{\lambda} &= (\frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n+1})^{\frac{1}{m}} 
 \end{align}
   \end{frame}
+
+  \begin{frame}
+    \frametitle{$Et^2$ Contribution Bound}
+    \newcommand*{\OPTBOUND}{}%
+    \newcommand*{\CONTBOUND}{}%
+    \begin{figure}
+    \centering
+    \input{plot/incremental-technique/plot_core}
+    \end{figure}
+  \end{frame}
+
+
   \begin{frame}
     \frametitle{Optimisation Limit}
     \begin{itemize}
@@ -116,16 +148,47 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
         \item Optimisations which dominate best possible power optimisation
       \end{itemize}
     \end{itemize}
-
   \end{frame}
+
   \begin{frame}
-    \frametitle{POSE}
+    \frametitle{$Et^2$ Optimisation Limit}
+    \newcommand*{\OPTBOUND}{}%
+    \newcommand*{\CONTBOUND}{}% 
+    \newcommand*{\OPTLIMIT}{}%
     \begin{figure}
     \centering
-    \input{plot/technique/plot_core}
-    \caption{$Et^2$ Power Optimised Software Envelope}
+    \input{plot/incremental-technique/plot_core}
     \end{figure}
   \end{frame}
+
+  \begin{frame}
+    \frametitle{$Et^2$ POSE}
+    \newcommand*{\OPTBOUND}{}%
+    \newcommand*{\CONTBOUND}{}% 
+    \newcommand*{\OPTLIMIT}{}%
+    \newcommand*{\POSELABELS}{}%
+    \begin{figure}
+    \centering
+    \input{plot/incremental-technique/plot_core}
+    \end{figure}
+  \end{frame}
+
+
+
+
+  \begin{frame}
+    \frametitle{Metric Agnostic POSE}
+    \begin{figure}
+    \centering
+    \input{plot/multimetric-technique/plot_core}
+    \end{figure}
+  \end{frame}
+
+
+
+
+
+
   \begin{frame}
     \frametitle{Investigation}
     \begin{itemize}
@@ -163,7 +226,9 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
   \begin{frame}
     \frametitle{MiniMD}
     \begin{figure}
+    \centering
     \input{plot/minimd-investigation/plot_core}
+    \ref{minimd:legend}
     \end{figure}
   \end{frame}
   \begin{frame}

@@ -20,7 +20,6 @@
     xmin=0, xmax=50,
     ymin=0, ymax=3800,
     width=0.9\linewidth,
-    height=7cm,
     legend style={legend pos=north west}
     ]
 
@@ -52,45 +51,43 @@
     \pgfmathdeclarefunction{definitionbound}{3}{%
       \pgfmathparse{((#1 / #2^3) * #3^4)}%
     }
-     \pgfmathdeclarefunction{optimizationlimits}{3}{%
+     \pgfmathdeclarefunction{optimisationlimits}{3}{%
       \pgfmathparse{(min(metricbound(#1, #2, #3), definitionbound(#1, #2, #3)))}
     }
 
     % BETA ROOFLINE BOUND
-    \addplot[color=red, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
-    \addlegendentry{$P_{max}$ Energy Bound}
+    \addplot[color=red, forget plot, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
 
     %const power diagonal
     \addplot[color=darkgray, densely dashed, forget plot, %forget plot prevents legend entry
-            domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\codepower * x}; 
+             domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\codepower * x}; 
 
     % ALPHA BASELINE BOUND 
-    \addplot[color=green, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
-    \addlegendentry{$P_{min}$ Energy Bound} 
+    \addplot[color=green, forget plot, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
 
-    %Runtime Optimization
+    %Runtime Optimisation
     \addplot[area legend, fill=blue, fill opacity=0.3, draw=none] coordinates { 
       (\codetime,\rooflineenergy)
       (\codetime,\baselineenergy)
     (0,0)};
-    \addlegendentry{Runtime Optimization}
+    \addlegendentry{Runtime Optimisation}
 
-    %Power Optimization
+    %Power Optimisation
     \addplot[area legend, fill=red, fill opacity=0.2, draw=none] coordinates {
                            (\codetime,\codeenergy)
                            (\pgfkeysvalueof{/pgfplots/xmax},\pgfkeysvalueof{/pgfplots/xmax}*\codepower)
                            (\pgfkeysvalueof{/pgfplots/xmax}, \pgfkeysvalueof{/pgfplots/xmax}*\baselinepower)
                            (0,0)
                          } ;
-    \addlegendentry{Power Optimization}
+    \addlegendentry{Power Optimisation}
   
-    %Energy Optimization
+    %Energy Optimisation
     \addplot[area legend, style={pattern=north west lines, pattern color=gray,
                                  draw=none}] coordinates { 
       (\rooflinetime, \codeenergy)
       (\baselinetime, \codeenergy)
       (0, 0) };
-    \addlegendentry{Energy Optimization}
+    \addlegendentry{Energy Optimisation}
 
 
 

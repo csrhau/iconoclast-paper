@@ -7,7 +7,7 @@
     ylabel={Energy \emph{(J)}},    
     xmin=0, xmax=50,
     ymin=0, ymax=3300,
-    width=0.95\linewidth,
+    width=0.9\linewidth,
     legend style={legend pos=north west}
     ]
 
@@ -48,28 +48,35 @@
     \addplot[color=green, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
     \addlegendentry{$P_{min}$ Energy Bound} 
 
+
+
+\ifdefined\OPTBOUND
     \addplot[color=orange, domain=\trnodex:\brnodex] { metricbound(\codepower, \codetime, x)};
     \addlegendentry{Optimisation Bound}
+\fi
 
+\ifdefined\CONTBOUND
     \addplot[color=blue!80, domain=\blnodex:\codetime] { definitionbound(\codepower, \codetime, x)};
     \addlegendentry{Contribution Bound}
+\fi
 
+
+\ifdefined\OPTLIMIT
     \addplot[color=orange, dashed, domain=\tlnodex:\blnodex] {metricbound(\baselinepower, \blnodex, x)};
     \addlegendentry{Optimisation Limit}
+\fi
 
+\ifdefined\POSELABELS
     % Constant Time (Vertical) dotted line
     \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\codeenergy});
 
-    \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};
-    \node[above right] at (axis cs:\codetime,\codeenergy) {$\theta$};
-    
+
     \node [above left] at ({axis cs:\tlnodex, \tlnodey}) {A};
     \node [above left] at ({axis cs:\trnodex, \trnodey}) {B};
     \node [below right] at ({axis cs:\blnodex, \blnodey}) {C};
     \node [below right] at ({axis cs:\codetime,\baselineenergy}) {D};
     \node [below right=0cm] at ({axis cs:\brnodex, \brnodey}) {E};
  
-
     \pgfmathsetmacro{\onexcoord}{15}
     \node at (axis cs: \onexcoord, 44 * \onexcoord){1.};
 
@@ -84,5 +91,9 @@
     
     \pgfmathsetmacro{\fivexcoord}{40}
     \node at (axis cs: \fivexcoord, 44 * \fivexcoord){5.};
+\fi
+
+    \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};
+    \node[above right] at (axis cs:\codetime,\codeenergy) {$\theta$};
  \end{axis}
 \end{tikzpicture}
