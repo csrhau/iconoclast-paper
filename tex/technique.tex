@@ -87,6 +87,12 @@ The value $M(\theta) - M(C)$ bounds the amount of improvement in our metric we c
 The difference in runtime between intersect $E$ and $\theta$ represents the maximum increase in runtime we could feasibly trade off to achieve a slower yet more energy efficient code.
 Finally, the value $t_\theta / t_B$ represents the smallest speed-up which would guarantee a code which outperformed $\theta$ with respect to $M$, whilst $t_\theta / t_A$ is the smallest speed-up guaranteed to outperform any power optimised version of $\theta$.
 
+\todo{reword, probably smash into the above}
+The insights listed above fall broadly into two broad categories.
+By placing a bound on optimisation gains, the first values allow a performance engineer to decide if power optimisation is worthwhile.
+Taken together, the latter values indicate how much scope there is for power optimisation.
+Between them, these factors give some indication as to the potential benefits of power optimisation and the scope there is to optimize, and therefore the likelihood an optimisation exists.
+
 \begin{figure}
 \centering
 \input{plot/multimetric-technique/plot_core}
