@@ -17,13 +17,13 @@ These values represent the maximum and minimum rates of power consumption which 
 By definition the $\langle Runtime, Energy\rangle$ costs incurred by running any given code $\theta$ under similar conditions must be represented somewhere within this envelope.
 
 \subsection{Optimisation Bound}
-To constrain our search space further we now consider the metric we wish to reduce.
+To constrain our search space further we consider the metric we wish to reduce.
 
 \begin{definition}
 For two logically equivalent codes $\theta$ and $\lambda$, the transformation ${\theta \to \lambda}$ is a valid optimisation with respect to a cost metric $M$ if and only if ${M(\lambda) < M(\theta)}$.
 \end{definition}
 
-If we plot a curve passing through $\theta$ linking all points with ${M(\lambda) = M(\theta)}$, then by definition any optimised versions of $\theta$ must exist below this bound.
+We plot a curve passing through $\theta$ linking all points with ${M(\lambda) = M(\theta)}$. By definition any optimised versions of $\theta$ must exist below this bound.
 Naturally the equation for the Optimisation Bound depends on the metric we are optimizing for.
 \autoref{fig:technique} shows the Optimisation Bound for $Et^2$.
 The general form of this bound for the $E^mt^n$ family of metrics is derived as follows:
@@ -52,12 +52,15 @@ Again the equation for the Contribution Bound depends on the metric chosen.
   E_{\lambda} &= (\frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n+1})^{\frac{1}{m}} 
 \end{align}
 
-Intuitively it makes sense to use the most appropriate tools while searching for optimisations.  If an optimisation yields dramatic reductions in runtime with only minor reductions in power consumption then it is reasonable to classify it as a runtime optimisation and state that conventional time-based profilers and performance engineering tools are better suited to finding it. It is the Contribution Bound which enables our model to make this distinction.
+Intuitively it makes sense to use the most appropriate tools while searching for optimisations.
+If an optimisation yields dramatic reductions in runtime with only minor reductions in power consumption then it is reasonable to classify it as a runtime optimisation and state that conventional time-based profilers and performance engineering tools are better suited to finding it.
+It is the Contribution Bound which enables our model to make this distinction.
 \subsection{Optimisation Limit}
 The bounds described thus far delineate those areas of the Energy/Runtime plane in which runtime and power optimised versions of a given code may exist.
 The final component of POSE is the Optimisation Limit, which subdivides the runtime optimised area of the feasible performance envelope into those optimisations which may be outperformed by power optimisations, and those which strictly dominate all possible power optimisations.
 
-The dashed Optimisation Limit  mirrors the Optimisation Bound and is based on \autoref{eq:optimisation}. This limit connects all points with the same value for $M$ as a hypothetical maximally power optimised version of $\theta$. 
+The dashed Optimisation Limit  mirrors the Optimisation Bound and is based on \autoref{eq:optimisation}.
+This limit connects all points with the same value for $M$ as the maximally power-optimised point in our envelope.
 All points below this limit have lower values for $M$, and therefore optimisations in this area strictly dominate any possible power optimisations. 
 
 \section{POSE Insights}
@@ -71,7 +74,7 @@ These areas allow us to classify optimisations according to which one of the fol
 \item Weak Runtime Optimisation
 \item Partial Power Optimisation
 \item Pure Power Optimisation
-\item Performance Degradation \columnbreak
+\item Performance Degradation \\ 
 \end{enumerate}
 \end{multicols}
 
