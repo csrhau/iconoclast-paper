@@ -35,21 +35,13 @@ Processor frequency and supply voltage may also be influenced by workload throug
 DVFS varies these properties in tandem, changing between a small number of fixed P-States.
 To paraphrase, DVFS acts to reduce the clock speed and voltage of underutilised processors.
 
-
 Historically, dynamic power has been the biggest contributor to $P_{tot}$, however leakage power has been on track to overtake it since the breakdown of Dennard Scaling.  Sub-threshold and gate-oxide leakage dominate total leakage current, and they both increase exponentially as transistors shrink. Process improvements like the introduction of high-k dielectric materials~\cite{jan:2009aa} have kept leakage power in check over the last decade, however there is no avoiding the fact that insulating properties will degrade as transistors get smaller.
 
-An important feature of the equations governing power draw is that only $P_{dyn}$ is directly influenced by software, in particular due to its inclusion of the $A$ term. Software can also indirectly effect both dynamic and leakage current if it triggers changes to clock frequency and therefore supply voltage through DVFS. \todo{Ensure define dvfs} 
-
 The two factors a performance engineer may influence which contribute to power consumption are activity factor and P-State.
-To construct our $P_min$ and $P_max$ we must be able to effectively control these factors.
-In order to do this, we have devised the following benchmark.
+To construct our $P_min$ and $P_max$ we must take into account both of these factors.
+We formalise the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$.
 
-
-\todo{for tighter bounds, proxy application could be developed}
-
-We first formalise the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$.
-
-We employ the code given in \autoref{fig:microbench} to derive our baseline.  It consists of a single instruction, performs no computation and places no demand on the memory subsystems. Any non-trivial computation will have a higher activity factor than this minimal micro-benchmark. If the application to be optimised blocks on IO this can be incorporated by measuring the power consumed when the CPU is inactive and adjusting $P_\alpha$ proportionately. We defer measurement of $P_{\beta}$ for now as its precise value is not relevant to the current discussion. 
+We employ the code given in \autoref{fig:microbench} to derive our baseline.  It consists of a single instruction, performs no computation and places no demand on the memory subsystems. Any non-trivial computation will have a higher activity factor than this minimal micro-benchmark. If the application to be optimised blocks on IO this can be incorporated by measuring the power consumed when the CPU is inactive and adjusting $P_\alpha$ proportionately. We rely on the \texttt{cpufrequtils} package to override DVFS and manually set the desired P-States.
 
 
 \subsection{Experimental Methodology}
