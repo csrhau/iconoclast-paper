@@ -1,4 +1,5 @@
 \begin{tikzpicture}
+  \providecommand{\plotwidth}{\linewidth}
   \begin{axis}[
     axis on top,
     axis x line=bottom,
@@ -7,7 +8,7 @@
     ylabel={Energy \emph{(J)}},    
     xmin=25, xmax=31,
     ymin=650, ymax=1650,
-    width=\linewidth,
+    width=\plotwidth,
     legend columns=3,
     legend to name=minimd:legend,
     legend style={/tikz/every even column/.append style={column sep=0.2cm}} % space out columns a bit

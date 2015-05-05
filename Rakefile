@@ -1,9 +1,9 @@
 require 'rake/clean'
 
 CLEAN.include %w[aux log blg bbl out nav toc vrb snm synctex.gz].map { |f| "**/*.#{f}" }
-CLOBBER.include %w[./paper.pdf ./group_presentation.pdf tab/tex plot/**/*.pdf]
-PAPER_TEX = Rake::FileList.new('**/*.tex').exclude('group_presentation.tex')
-PRES_TEX = Rake::FileList.new('group_presentation.tex')
+CLOBBER.include %w[./paper.pdf ./presentation.pdf tab/tex plot/**/*.pdf]
+PAPER_TEX = Rake::FileList.new('**/*.tex').exclude('presentation.tex')
+PRES_TEX = Rake::FileList.new('presentation.tex')
 TABLES = Rake::FileList.new('tab/data/*.csv').map do |f|
   base = File.basename(f, '.csv')
   {:tex => "tab/tex/#{base}.tex",
@@ -25,9 +25,9 @@ namespace :latex do
     system("pdflatex paper.tex")
   end
 
-  desc 'Compile group presentation'
-  file 'group_presentation.pdf' => PRES_TEX + PAPER_TEX do |tex| #todo HANDLE PLOT updates correctly
-    system("pdflatex group_presentation.tex")
+  desc 'Compile presentation'
+  file 'presentation.pdf' => PRES_TEX + PAPER_TEX +  TABLES.map { |t| t[:tex] } do |tex| #todo HANDLE PLOT updates correctly
+    system("pdflatex presentation.tex")
   end
 end
 
