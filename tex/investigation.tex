@@ -5,11 +5,8 @@ Two codes were chosen for this study, LavaMD and MiniMD.
 As miniapps both applications have well understood structures and relatively compact code bases.
 They also exhibit markedly different power consumption characteristics despite both being molecular dynamics codes, making for an interesting comparison.
 
-\subsection{Experimental Domain}
-The first stage in applying POSE is to construct a feasible performance envelope for the target platform.
-POSE works best when the maximum and minimum power bounds are as tight as possible.
-Processor manufacturers often supply values for the peak and idle power consumption of their hardware, however these estimates tend to be overly conservative and not reachable in practice.
-We chose to rely on direct measurements to build our envelope for this reason.
+\subsection{CPU Power Consumption}
+
 
 \begin{equation}
 \label{eq:totpwr}
@@ -43,6 +40,13 @@ To construct our $P_min$ and $P_max$ we must take into account both of these fac
 We formalise the notion of maximum and minimum power by defining the range of values that activity factor can take whilst running a code in a given P-state as $[\alpha  .. \beta]$ where $0 < \alpha < \beta < 1$, and their associated power draws as $P_{\alpha}$ and $P_{\beta}$ respectively, with $P_{\alpha} < P_{\beta}$.
 
 We employ the code given in \autoref{fig:microbench} to derive our baseline.  It consists of a single instruction, performs no computation and places no demand on the memory subsystems. Any non-trivial computation will have a higher activity factor than this minimal micro-benchmark. If the application to be optimised blocks on IO this can be incorporated by measuring the power consumed when the CPU is inactive and adjusting $P_\alpha$ proportionately. We rely on the \texttt{cpufrequtils} package to override DVFS and manually set the desired P-States.
+
+\subsection{Feasible Performance Envelope}
+The first stage in applying POSE is to construct a feasible performance envelope for the target platform.
+POSE works best when the maximum and minimum power bounds are as tight as possible.
+Processor manufacturers often supply values for the peak and idle power consumption of their hardware, however these estimates tend to be overly conservative and not reachable in practice.
+We chose to rely on direct measurements to build our envelope for this reason.
+
 
 
 \subsection{Experimental Methodology}
