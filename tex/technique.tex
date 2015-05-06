@@ -77,25 +77,22 @@ These areas allow us to classify optimisations according to which one of the fol
 \item Performance Degradation  
 \end{enumerate}
 \end{multicols}
-
 Area \textbf{1} encompasses all points with a better $M$ value than the best case power optimisation for $\theta$.
 Area \textbf{2} encompasses all possible runtime optimisations which have a better performance than $\theta$ in terms of $M$ yet may in turn be beaten by some power optimised version of $\theta$.
 Area \textbf{3} contains all optimised versions of $\theta$ for which reductions in $M$ are due primarily or entirely to reductions in power consumption.
 Finally, area \textbf{4} corresponds to all codes with strictly worse performance than $\theta$.
 
-POSE offers a wealth of information to performance engineers.
-The difference in energy between $\theta$ and intercept $D$ places an upper limit on the amount of energy which can be saved by power optimisation alone.
-The value $M(\theta) - M(C)$ bounds the amount of improvement in our metric we can expect to see from power optimisation.
+A key strength of POSE is that it produces quantitative and actionable insights which relate directly to properties of the code.
+These insights fall into one of two broad categories, which taken together allow a performance engineer to decide if power optimisation is likely to prove worthwhile.
+
+The first of these categories relates to how much benefit may be offered by power optimisation.
+Taking the difference in energy beween point $\theta$ and $D$ gives us an upper limit on the amount of energy which can be safed by power optimisation. 
+Similarly, the value $M(\theta) - M(C)$ bounds the amount of improvement in our metric we can expect to see from power optimisation.
+
+The second category indicates how much scope a code has for power optimisation.
 The difference in runtime between intersect $E$ and $\theta$ represents the maximum increase in runtime we could feasibly trade off to achieve a slower yet more energy efficient code.
-Finally, the value $t_\theta / t_B$ represents the smallest speed-up which would guarantee a code which outperformed $\theta$ with respect to $M$, whilst $t_\theta / t_A$ is the smallest speed-up guaranteed to outperform any power optimised version of $\theta$.
-
-\todo{reword, probably smash into the above}
-The insights listed above fall broadly into two broad categories.
-By placing a bound on optimisation gains, the first values allow a performance engineer to decide if power optimisation is worthwhile.
-Taken together, the latter values indicate how much scope there is for power optimisation.
-Between them, these factors give some indication as to the potential benefits of power optimisation and the scope there is to optimize, and therefore the likelihood an optimisation exists.
-By giving developers a sense of how much scope there is for power optimisation, and how much they are likely to benefit from it, they can make an informed decision as to whether power optimisation is worth pursuing.
-
+The value $t_\theta / t_B$ represents the smallest speed-up which would guarantee a code which outperformed $\theta$ with respect to $M$.
+Finally, $t_\theta / t_A$ is the smallest speed-up guaranteed to outperform any power optimised version of $\theta$.
 \begin{figure}
 \centering
 \input{plot/multimetric-technique/plot_core}
