@@ -69,20 +69,16 @@
     \node [below right] at ({axis cs:\codetime,\baselineenergy}) {D};
     \node [below right=0cm] at ({axis cs:\brnodex, \brnodey}) {E};
  
-
     \pgfmathsetmacro{\onexcoord}{15}
     \node at (axis cs: \onexcoord, 44 * \onexcoord){1.};
 
     \pgfmathsetmacro{\twoxcoord}{25.8}
     \node at (axis cs: \twoxcoord, 44 * \twoxcoord){2.};
 
-    \pgfmathsetmacro{\threexcoord}{29}
-    \node at (axis cs: \threexcoord, 34.5 * \threexcoord){3.};
-
-    \pgfmathsetmacro{\fourxcoord}{32}
-    \node at (axis cs: \fourxcoord, 34.5 * \fourxcoord){4.};
+    \pgfmathsetmacro{\threexcoord}{\codetime+0.3}
+    \node[fill=white] at (axis cs: \threexcoord, 36 * \codetime){3.};
     
-    \pgfmathsetmacro{\fivexcoord}{40}
-    \node at (axis cs: \fivexcoord, 44 * \fivexcoord){5.};
+    \pgfmathsetmacro{\fourxcoord}{40}
+    \node at (axis cs: \fourxcoord, 44 * \fourxcoord){4.};
  \end{axis}
 \end{tikzpicture}
