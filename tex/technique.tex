@@ -1,7 +1,7 @@
 \section{Power Optimised Software Envelope}
 \label{sec:pose}
+The POSE heuristic partitions the Energy/Runtime plane into areas with different performance characteristics relative to some initial unoptimised code with respect to a given metric.
 In this section we explain the various bounds which make up POSE and provide their derivations for the $E^mt^n$ family of metrics.
-The POSE heuristic partitions the Energy/Runtime plane into areas with different performance characteristics relative to some initial unoptimised code $\theta$ for metric $M$.
 The only prerequisites of our model are that time and energy consumption can be accurately measured for the target platform.
 
 \begin{figure}
@@ -62,7 +62,7 @@ The final component of POSE is the Optimisation Limit, which subdivides the runt
 
 The dashed Optimisation Limit  mirrors the Optimisation Bound and is also based on \autoref{eq:optimisation}.
 This limit connects all points with the same value for $M$ as the maximally power-optimised point in our envelope.
-All points below this limit have lower values for $M$, and therefore optimisations in this area strictly dominate any possible power optimisations. 
+All optimisations in the area below this limit strictly dominate any possible power optimisation.
 
 \section{POSE Insights}
 \label{sec:insights}
