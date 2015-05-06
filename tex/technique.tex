@@ -1,7 +1,8 @@
 \section{Power Optimised Software Envelope}
 \label{sec:pose}
-The POSE heuristic partitions the Energy/Runtime plane into areas with different performance characteristics relative to some initial unoptimised code $\theta$. The only prerequisites of our model are that time and energy consumption can be accurately measured for the target platform.
 In this section we explain the various bounds which make up POSE and provide their derivations for the $E^mt^n$ family of metrics.
+The POSE heuristic partitions the Energy/Runtime plane into areas with different performance characteristics relative to some initial unoptimised code $\theta$.
+The only prerequisites of our model are that time and energy consumption can be accurately measured for the target platform.
 
 \begin{figure}
 \centering
@@ -59,7 +60,7 @@ It is the Contribution Bound which enables our model to make this distinction.
 The bounds described thus far delineate those areas of the Energy/Runtime plane in which runtime and power optimised versions of a given code may exist.
 The final component of POSE is the Optimisation Limit, which subdivides the runtime optimised area of the feasible performance envelope into those optimisations which may be outperformed by power optimisations, and those which strictly dominate all possible power optimisations.
 
-The dashed Optimisation Limit  mirrors the Optimisation Bound and is based on \autoref{eq:optimisation}.
+The dashed Optimisation Limit  mirrors the Optimisation Bound and is also based on \autoref{eq:optimisation}.
 This limit connects all points with the same value for $M$ as the maximally power-optimised point in our envelope.
 All points below this limit have lower values for $M$, and therefore optimisations in this area strictly dominate any possible power optimisations. 
 
@@ -78,7 +79,7 @@ These areas allow us to classify optimisations according to which one of the fol
 \end{enumerate}
 \end{multicols}
 
-The Strong Runtime Optimisation area \textbf{1} encompasses all points with a better $M$ score than the best case power optimisation for $\theta$. The Weak Runtime Optimisation area \textbf{2} encompasses all possible runtime optimisations which have a better performance than $\theta$ in terms of $M$ yet may in turn be beaten by some power optimised version of $\theta$. The Partial \textbf{3} and Pure \textbf{4} power optimisation spaces correspond to optimised versions of $\theta$ for which reductions in $M$ are due primarily or entirely to reductions in power consumption.
+The Strong Runtime Optimisation area \textbf{1} encompasses all points with a better $M$ value than the best case power optimisation for $\theta$. The Weak Runtime Optimisation area \textbf{2} encompasses all possible runtime optimisations which have a better performance than $\theta$ in terms of $M$ yet may in turn be beaten by some power optimised version of $\theta$. The Partial \textbf{3} and Pure \textbf{4} power optimisation spaces correspond to optimised versions of $\theta$ for which reductions in $M$ are due primarily or entirely to reductions in power consumption.
 Finally, Performance Degradation \textbf{5} corresponds to all codes with strictly worse performance than $\theta$.
 
 POSE offers a wealth of information to performance engineers.
