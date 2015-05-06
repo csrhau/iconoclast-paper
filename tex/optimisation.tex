@@ -16,10 +16,9 @@ The simplest of these is the Energy-Delay Product (EDP) metric \cite{gonzales:19
   \label{eq:edp}
 \end{align}
 
-Several extensions to EDP have been proposed which assign greater weight to the runtime component to better reflect the demands of high performance computing.
-Common examples include energy-delay-squared product ($Et^{2}$) and energy-delay-cubed product ($Et^{3}$).
-We refer to this as the $E^mt^n$ family of metrics, which also includes simple power ($E^1t^{-1}$), energy ($E^1t^0$) and time ($E^0t^1$) as members.
+Several extensions to EDP have been proposed which assign different weights to each components in order to better reflect the demands of specific domains.
+Common examples include Energy Delay Squared Product ($Et^{2}$) and Energy Delay Cubed Product ($Et^{3}$).
+We refer to this as the $E^mt^n$ family of metrics, which also includes power ($E^1t^{-1}$), energy ($E^1t^0$) and time ($E^0t^1$) as members.
 
-\todo{Make more of the fact developers may not want to optimise just for energy}
-Most of the examples within this paper use $Et^2$ as it has been shown to be the most suitable of the $E^mt^n$ metrics when considering a fixed micro-architecture \cite{brooks:2000aa}.
-That said, POSE is a general purpose heuristic and applies to all members of the $E^mt^n$ group with $m > 0$ and $n \geq 0$, and indeed any metric which increases in line with runtime and energy consumption.
+POSE is a general purpose heuristic which applies to all members of the $E^mt^n$ group with $m > 0$ and $n \geq 0$, and indeed any metric which increases in line with runtime and energy consumption.
+That said, most of the examples within this paper use $Et^2$ as this has been shown to be the most suitable of the $E^mt^n$ metrics when considering a fixed micro-architecture \cite{brooks:2000aa}.
