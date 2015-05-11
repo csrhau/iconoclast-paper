@@ -29,13 +29,14 @@
     \pgfmathdeclarefunction{definitionbound}{4}{%
       \pgfmathparse{((#1 / #2^(#4 + 1)) * #3^(#4 + 2))}%
     }
- 
-    % BETA ROOFLINE BOUND
-    \addplot[color=red, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
+
+
+   % BETA ROOFLINE BOUND 
+    \addplot[color=printred, very thick, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
     \addlegendentry{$P_{max}$ Energy Bound}
 
     % ALPHA BASELINE BOUND 
-    \addplot[color=green, name path=basebound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
+    \addplot[name path=basebound, color=printgreen, very thick, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
     \addlegendentry{$P_{min}$ Energy Bound} 
 
     % Constant Time vertical dots
