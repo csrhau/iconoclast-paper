@@ -1,11 +1,7 @@
 \begin{abstract}
-Performance engineers are beginning to explore software-level optimisation as a means to reduce the energy consumed by their codes.
+Performance engineers are beginning to explore software-level optimisation as a means to reduce the energy consumed when running their codes.
 This paper presents POSE, an intuitive visual model which captures the relationship between runtime and power consumption for a particular code and architecture.
 Our technique allows developers to assess how much improvement they can expect from power optimisation and hence whether it is worth pursuing.
 
-We use POSE to study the potential for Energy Delay Squared Product optimisation of two codes.
-For MiniMD we find that optimising CPU power consumption can reduce this metric by at most 7.60\%.
-This indicates that a speedup of 1.19x or more will have a greater effect than all possible power optimisations.
-The corresponding figures for LavaMD are 30.59\% and 1.25x respectively.
-We conclude that MiniMD offers little scope for CPU power optimisation, whilst LavaMD shows more promise.
+Runtime and CPU power consumption were measured for a number of proxy applications taken from the Mantevo and Rodinia suites. We build POSE models for each application in order to identify the pair which are most and least amenable to power optimisation. We show that MiniMD offers little scope for CPU power optimisation, whilst LavaMD shows the most promise. Finally, we provide quantitative metrics detailing the scope for power optimisation each code has as well as how much benefit this may offer.
 \end{abstract}
