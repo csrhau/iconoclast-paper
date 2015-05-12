@@ -1,19 +1,15 @@
 \section{Investigation}
 \label{sec:investigation}
 In this section we validate POSE with an investigation into CPU power consumption.
-Applications for this study were selected from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} suites.
-As miniapps, applications from both suites have well understood structures and relatively compact code bases.
-They also exhibit a range of power consumption characteristics making for interesting comparisons.
-
-POSE is platform agnostic, applying equally well from the single CPU level to large systems.
-For our first study with POSE we have decided to focus on 
-CPU power consumption.
+Although we study power consumption at the level of an individual CPU, POSE is platform agnostic and is applicable at any scale.
+Our choice of platform was motivated by hardware availability and the relative ease of obtaining accurate figures for CPU power consumption. 
 \todo{Some citation re: How big a deal / factor is CPU vs total?}
 
+Applications for this study were selected from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} suites.
+Both suites comprise simplified versions of production codes intended for research purposes.
+As such they have relatively compact code bases and well understood behaviours whilst still providing representative workloads.
 
 \subsection{CPU Power Consumption}
-
-
 \begin{equation}
 \label{eq:totpwr}
 P_{tot} = P_{dyn} + P_{leak} + P_{other}
