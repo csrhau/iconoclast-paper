@@ -1,13 +1,13 @@
 \section{Investigation}
 \label{sec:investigation}
-In this section we validate POSE with an investigation into CPU power consumption.
-Although we study power consumption at the level of an individual CPU, POSE is platform agnostic and is applicable at any scale.
-Our choice of platform was motivated by hardware availability and the relative ease of obtaining accurate figures for CPU power consumption. 
-\todo{Some citation re: How big a deal / factor is CPU vs total?}
+In this section we use POSE to investigate the CPU power consumption of applications taken from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} suites.
+Both comprise simplified versions of production codes intended for research purposes.
+As such these codes have relatively compact code bases and well understood behaviours whilst still providing representative workloads.
 
-Applications for this study were selected from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} suites.
-Both suites comprise simplified versions of production codes intended for research purposes.
-As such they have relatively compact code bases and well understood behaviours whilst still providing representative workloads.
+We target this study at the level of the individual CPU for various reasons.
+The first is that there is perhaps the most direct link between application code and processor. 
+Hardware availability and the relative ease of obtaining accurate figures for CPU power consumption. 
+\todo{Some citation re: How big a deal / factor is CPU vs total?}
 
 \subsection{CPU Power Consumption}
 \begin{equation}
