@@ -1,48 +1,65 @@
-\section{Related Work}
+\section{Approaches to Modelling}
 \label{sec:related}
+Performance modelling techniques allow the rapid exploration of ever expanding hardware and software design spaces.
+They enable engineers to reason about the performance of their code without the need to aquire measurements for all possible optimisations and configurations.
+In this section we present a breakdown of modelling approaches and show where our technique fits in.
 
 \begin{table}
-\centering
-\footnotesize
-\setlength{\tabcolsep}{10pt}
-\begin{tabular}{lll}
-\toprule
-  & \multicolumn{2}{c}{Optimisation Factors}\\ \cmidrule(r){2-3}
-Model Type  & Runtime & Runtime, Energy \\
-  \midrule
-Simulation  & SST~\cite{rodrigues:2011aa} & Wattch~\cite{brooks:2000aa}  \\
-Analytical  &  & Karkhanis \\
-  Insightful  & Roofline~\cite{williams:2009aa} & \textbf{This Work} \\
-\bottomrule
-\end{tabular}
+  \centering
+  \caption{Modelling Granularity}
+  \setlength{\tabcolsep}{10pt}
+  \begin{tabular}{lll}
+  \toprule
+    & \multicolumn{2}{l}{Domain}\\ \cmidrule(){2-3}
+  Model Type  & Runtime & Energy \\
+    \midrule
+  Simulation & SST~\cite{rodrigues:2011aa} & McPAT~\cite{li:2009aa}  \\
+  Analytical & Bunt~\cite{bunt:2013aa} & Karkhanis~\cite{karkhanis:2007aa} \\
+  Heuristic & Roofline~\cite{williams:2009aa} & \textbf{This Work} \\
+  \bottomrule
+  \end{tabular}
+  \label{tab:approaches}
 \end{table}
 
-\todo{Something more like the taxonomy from Phi? Say there are two styles of model}
-\todo{Do a grid..}
-\todo{Performance Model vs Roofline}
-\todo{Power/Runtime models mcpat}
-\todo{This Paper}
+We divide the performance modelling ecosystem into categories based on their granularity; namely simulations, analytical models and heuristic models.
+These approaches have been applied to energy as well as runtime modelling.
+\autoref{tab:approaches} lists these categories and provides examples for each. 
 
-% NOTE - also mention 3 c's maybe.
+\subsubsection{Simulators:} 
+Tools like SST~\cite{rodrigues:2011aa} and McPAT~\cite{li:2009aa} operate by executing a simplified representation of the original code whilst gathering data.
+This allows them to produce insights which would not be available on a real system.
+Although these appraoches are extremely insightful it is often challenging to construct and validate representative simulations.
+They also tend to be expensive to run, sometimes even more so than the original code.
+
+
+\subsubsection{Analytical Models:}  These techniques seek to distil the structure of a program into a parameterised equation.
+Analytical performance modelling seeks to 
+These models tend to be much faster than 
+parameterized 
+\subsubsection{Heuristic Models:}
+This is the most abstract approach to performance modelling.
+Heuristic models do not attempt to faithfully represent every component of a system.
+Heuristic models try to
+
+
+Developer time is a finite resource.
+
+This is the most abstract of the three p
+These approaches differ from the o not seek to directly model a system.
+Rather, they try to provide insight into some globe
+These models do not xxx. Rather, they  capture the essence of a system 
 The idea that a conceptually simple visual heuristic can deliver worthwhile insights is exemplified by the popular Roofline model \cite{williams:2009aa}. The Roofline model has itself been extended to consider power consumption \cite{choi:2013aa} 
 
 
-\todo{Work to investigate system max power ..sypo and automate this process.. whatever the other one is}
-\todo{System-level Max Power paper}
-
-Models which combine power and timing information exist for codes \todo{Cite McPat, Orion}
+% NOTE - also mention 3 c's maybe.
+aodels which combine power and timing information exist for codes \todo{Cite McPat, Orion}
 
 System-level Max Power ati
 
+POSE is Asymptotic analysis.
 
 
 \todo{Analyzing the Energy-Time Trade-Off in High-Performance Computing Applications}
-
-\begin{itemize}
-  \item There are models for power/timing
-  \item There are analogy models for time
-  \item POSE serves to extend this to analogy for power/timing
-\end{itemize}
 
 %
 %%Relevant bits from Roofline
@@ -58,5 +75,9 @@ System-level Max Power ati
 
 % Relevant bits from energy roofline
 
+Each of these categories have their uses and are often used in a complementary fashion.
+Heuristic models are easy to construct and guide a developer as to where to look for optimisations.
+Analytical models and simulators can then help speed the search for these optimisations.
 
-
+In summary, POSE represents a preliminary `first cut' modelling technique that identifies inadequate approaches in the early stages of optimisation.i
+In so doing it allows developers to focus their efforts where they will be most beneficial. 
