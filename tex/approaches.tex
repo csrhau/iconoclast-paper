@@ -35,17 +35,16 @@ These models run much faster than simulations, making them particularly useful w
 Constructing an analytical model requires a thorough understanding of the target application to ensure the model expressive enough to capture all possible program behaviours.
 
 \subsubsection{Heuristic Models:}
-This is the most abstract category of performance models and the one to which our work belongs.
-Heuristic models do not attempt to faithfully represent every component of a system but instead provide a simplified analogy which helps developers to reason about certain properties.
-The Roofline model \cite{williams:2009aa} is a good example of this ...
-A further similarity between the roofline model and our own is that they both two dimensional graphical representation.
-%Other well-known examples include the 3Cs cache model~\cite{hill:1989aa} and Amdahl's law~\cite{amdahl:1967aa}.
-
-Developer time is a finite resource. These models find most use at the outset of an optimisation effort, helping guide optimisation efforts to make the best use of the finite resource which is developer time.
-Each of these categories have their uses and are often used in a complementary fashion.
-The POSE heuristic is intended for use in the early stages of an optimisation attempt preliminary 
-It provides an .
+This is the most abstract approach to performance modelling and the one to which our work belongs.
+Rather than attempting to faithfully represent a system, heuristic models provide a simplified analogy which helps developers to reason about particular properties of a code.
+A good example of this is the Roofline model~\cite{williams:2009aa}, which reduces system performance to two bottlenecks; off-chip memory bandwidth and floating point performance; and the operational intensity of a code.
 
 The POSE heuristic serves as a preliminary `first cut' modelling technique intended to guide energy-aware optimisation efforts.
 It provides an asymptotic analysis of the scope for optimisation in the power or time domain.
 This allows developers to focus their efforts where they will be most beneficial.
+
+POSE takes after the Roofline model in that they both express their insights in the form of a two-dimensional graphical representation.
+Developer time is a finite and valuable resource, and there is considerable merit to these easy to understand and intuitive presentations of meaningful insights.
+Like Roofline, The POSE heuristic is intended for use in the early stages of an optimisation attempt preliminary 
+
+
