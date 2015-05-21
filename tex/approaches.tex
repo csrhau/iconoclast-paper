@@ -1,0 +1,51 @@
+\section{Approaches to Modelling}
+\label{sec:approaches}
+Performance modelling techniques enable the rapid exploration of large hardware and software design spaces.
+They allow engineers to reason about the performance of their code without the need to aquire measurements for all possible optimisations and configurations.
+In this section we present a breakdown of modelling approaches and show where our technique fits in.
+
+\begin{table}
+  \centering
+  \caption{Performance Model Classifications}
+  \setlength{\tabcolsep}{10pt}
+  \begin{tabular}{lll}
+  \toprule
+    & \multicolumn{2}{l}{Domain}\\ \cmidrule(){2-3}
+  Model Type  & Runtime & Energy \\
+    \midrule
+  Simulation & SST~\cite{rodrigues:2011aa} & McPAT~\cite{li:2009aa}  \\
+  Analytical & Bunt~\cite{bunt:2013aa} & Karkhanis~\cite{karkhanis:2007aa} \\
+  Heuristic & Roofline~\cite{williams:2009aa} & \textbf{This Work} \\
+  \bottomrule
+  \end{tabular}
+  \label{tab:approaches}
+\end{table}
+
+\autoref{tab:approaches} divides the performance modelling ecosystem into categories based on model domain and granularity.
+We now describe these categories and provide examples for each.
+
+\subsubsection{Simulators:} 
+Tools like SST~\cite{rodrigues:2011aa} and McPAT~\cite{li:2009aa} execute a simplified representation of the original code whilst gathering data.
+These approaches are often extremely insightful, however constructing and validating representative simulations can be challenging.
+They also tend to be expensive to run, sometimes even more so than the original code.
+
+\subsubsection{Analytical Models:} This approach attempts to distil the structure and performance of a program into a parameterised expression.
+Examples of this technique can be found in the work of Bunt~et~al.~\cite{bunt:2013aa} and Karkhanis~et~al.~\cite{karkhanis:2007aa}.
+These models run much faster than simulations, making them particularly useful when performing parameter sweeps or answering speculative questions.
+Constructing an analytical model requires a thorough understanding of the target application to ensure the model expressive enough to capture all possible program behaviours.
+
+\subsubsection{Heuristic Models:}
+This is the most abstract category of performance models and the one to which our work belongs.
+Heuristic models do not attempt to faithfully represent every component of a system but instead provide a simplified analogy which helps developers to reason about certain properties.
+The Roofline model \cite{williams:2009aa} is a good example of this ...
+A further similarity between the roofline model and our own is that they both two dimensional graphical representation.
+%Other well-known examples include the 3Cs cache model~\cite{hill:1989aa} and Amdahl's law~\cite{amdahl:1967aa}.
+
+Developer time is a finite resource. These models find most use at the outset of an optimisation effort, helping guide optimisation efforts to make the best use of the finite resource which is developer time.
+Each of these categories have their uses and are often used in a complementary fashion.
+The POSE heuristic is intended for use in the early stages of an optimisation attempt preliminary 
+It provides an .
+
+The POSE heuristic serves as a preliminary `first cut' modelling technique intended to guide energy-aware optimisation efforts.
+It provides an asymptotic analysis of the scope for optimisation in the power or time domain.
+This allows developers to focus their efforts where they will be most beneficial.
