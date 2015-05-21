@@ -1,8 +1,8 @@
 \section{Approaches to Modelling}
 \label{sec:approaches}
 Performance modelling techniques enable the rapid exploration of large hardware and software design spaces.
-They allow engineers to reason about the performance of their code without the need to aquire measurements for all possible optimisations and configurations.
 In this section we present a breakdown of modelling approaches and show where our technique fits in.
+\autoref{tab:approaches} divides the performance modelling ecosystem into categories based on model domain and granularity and provides examples for each.
 
 \begin{table}
   \centering
@@ -21,12 +21,9 @@ In this section we present a breakdown of modelling approaches and show where ou
   \label{tab:approaches}
 \end{table}
 
-\autoref{tab:approaches} divides the performance modelling ecosystem into categories based on model domain and granularity.
-We now describe these categories and provide examples for each.
-
 \subsubsection{Simulators:} 
 Tools like SST~\cite{rodrigues:2011aa} and McPAT~\cite{li:2009aa} execute a simplified representation of the original code whilst gathering data.
-These approaches are often extremely insightful, however constructing and validating representative simulations can be challenging.
+These approaches can be extremely insightful, however constructing and validating representative simulations is often challenging.
 They also tend to be expensive to run, sometimes even more so than the original code.
 
 \subsubsection{Analytical Models:} This approach attempts to distil the structure and performance of a program into a parameterised expression.
@@ -36,15 +33,14 @@ Constructing an analytical model requires a thorough understanding of the target
 
 \subsubsection{Heuristic Models:}
 This is the most abstract approach to performance modelling and the one to which our work belongs.
-Rather than attempting to faithfully represent a system, heuristic models provide a simplified analogy which helps developers to reason about particular properties of a code.
-A good example of this is the Roofline model~\cite{williams:2009aa}, which reduces system performance to two bottlenecks; off-chip memory bandwidth and floating point performance; and the operational intensity of a code.
+Rather than attempting to faithfully represent an entire system, heuristic models provide a simplified analogy which helps developers to reason about particular properties of a code.
+Typically these models are easy to construct and see most use in the early, exploratory stages of code optimisation. 
+
+A popular example of this class is the Roofline~\cite{williams:2009aa} model.
+Roofline frames the performance of an application in terms of its operational intensity and two system bottlenecks; off-chip memory bandwidth and floating point performance.
+This simplification limits Roofline's use as a predictive model but it also means a developer can easily understand the limiting factor for the performance of their code and target their efforts accordingly.
+Developer time is a finite and valuable resource, and as such there is considerable merit to the kind of easy to understand and actionable insights offered by heuristic models.
 
 The POSE heuristic serves as a preliminary `first cut' modelling technique intended to guide energy-aware optimisation efforts.
-It provides an asymptotic analysis of the scope for optimisation in the power or time domain.
-This allows developers to focus their efforts where they will be most beneficial.
-
-POSE takes after the Roofline model in that they both express their insights in the form of a two-dimensional graphical representation.
-Developer time is a finite and valuable resource, and there is considerable merit to these easy to understand and intuitive presentations of meaningful insights.
-Like Roofline, The POSE heuristic is intended for use in the early stages of an optimisation attempt preliminary 
-
-
+Our model takes after the Roofline model in that they both express their insights in the form of a two-dimensional graphical representation.
+POSE provides an asymptotic analysis of the scope for optimisation in the power and runtime domains, allowing performance engineers to focus their efforts where they will be most beneficial.
