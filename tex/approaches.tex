@@ -22,11 +22,11 @@ In this section we describe various approaches to performance modelling and show
 \end{table}
 
 \subsubsection{Simulators:} 
-Tools like SST~\cite{rodrigues:2011aa} and McPAT~\cite{li:2009aa} execute a simplified representation of the original code whilst gathering data.
+Tools like SST~\cite{rodrigues:2011aa} and McPAT~\cite{li:2009aa} gather data whilst executing a simplified representation of the original code.
 These approaches can be extremely insightful, however constructing and validating representative simulations is often challenging.
 They also tend to be expensive to run, sometimes even more so than the original code.
 
-\subsubsection{Analytical Models:} This approach distils the structure and performance of a program into a parameterised expression.
+\subsubsection{Analytical Models:} This approach distils the structure and performance of a program into parameterised expressions.
 Examples of this technique are found in the work of Bunt~et~al.~\cite{bunt:2013aa} and Karkhanis~et~al.~\cite{karkhanis:2007aa}.
 These models run much faster than simulations, making them particularly useful when performing parameter sweeps.
 Ensuring the model is expressive enough to capture all possible program behaviours is the biggest obstacle to this approach as it requires a deep understanding of the target application.
@@ -34,13 +34,12 @@ Ensuring the model is expressive enough to capture all possible program behaviou
 \subsubsection{Heuristic Models:}
 This is the most abstract category of performance models and the one in which our work belongs.
 Rather than attempting to faithfully represent an entire system, heuristic models provide a simplified analogy which helps developers to reason about particular properties of a code.
-These models are easy to construct and see most use in the early, exploratory stages of code optimisation. 
+Developer time is a valuable and finite resource, and as such there is considerable merit to the intuitive and actionable insights which heuristic models can offer in the early stages of optimisation.
 
 A popular example from this class is the Roofline~\cite{williams:2009aa} model.
 Roofline frames the performance of an application in terms of its operational intensity and two system bottlenecks; off-chip memory bandwidth and floating point performance.
-This simplification limits Roofline's use as a predictive model but it also means a developer can easily identify the factor limiting the performance of their code and target their efforts accordingly.
-Developer time is a finite and valuable resource, and as such there is considerable merit to the kind of easy to understand and actionable insights offered by heuristic models.
+This simplification limits Roofline's use as a predictive model but it also means a developer can easily isolate the limiting factor of code performance and target their optimisation efforts accordingly.
 
 The POSE heuristic serves as a preliminary `first cut' modelling technique intended to guide energy-aware optimisation efforts.
 Our model provides an asymptotic analysis of the scope for optimisation in the power and runtime domains, allowing performance engineers to focus their efforts where they will be most beneficial.
-POSE takes after the Roofline model in that they both express their insights in the form of a two-dimensional graphical representation.
+POSE also takes after the Roofline model in that they both express their insights in the form of a two-dimensional graphical representation.

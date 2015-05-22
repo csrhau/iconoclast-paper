@@ -1,9 +1,9 @@
 \section{Power Optimised Software Envelope}
 \label{sec:pose}
-In this section we introduce the various bounds which make up POSE and provide their derivations for the $E^mt^n$ family of metrics.
-The only prerequisites of our model are that time and energy consumption can be accurately measured for the target platform.
 
 The POSE heuristic partitions the Energy/Runtime plane into areas with differing performance characteristics relative to some initial unoptimised code.
+In this section we introduce the various bounds which make up POSE and provide their derivations for the $E^mt^n$ family of metrics.
+The only prerequisites of our model are that time and energy consumption can be accurately measured for the target platform.
 
 \begin{figure}
 \centering
@@ -13,7 +13,7 @@ The POSE heuristic partitions the Energy/Runtime plane into areas with differing
 \end{figure}
 
 \subsection{Feasible Performance Envelope}
-The POSE heuristic is based around the concept of a \emph{Feasible Performance Envelope}.
+POSE is built around the concept of a \emph{Feasible Performance Envelope}.
 We construct this by plotting lines of gradient $P_{max}$ and $P_{min}$ in \autoref{fig:technique}.
 These values represent the maximum and minimum rates of power consumption which can occur during normal operation of the target platform.
 The $\langle Runtime, Energy\rangle$ costs incurred by running any given code $\theta$ under similar conditions must be represented somewhere within this envelope.
@@ -26,7 +26,7 @@ For logically equivalent codes $\theta$ and $\lambda$, the transformation ${\the
 \label{def:optimisation}
 \end{definition}
 
-We plot a curve passing through $\theta$ linking all points with ${M(\lambda) = M(\theta)}$. By definition~\ref{def:optimisation} any optimised versions of $\theta$ must exist below this bound.
+We plot a curve passing through $\theta$ linking all points where ${M(\lambda) = M(\theta)}$. By \autoref{def:optimisation} any optimised versions of $\theta$ must exist below this bound.
 Naturally the equation for the Optimisation Bound depends on the metric we are optimizing for.
 \autoref{fig:technique} shows the Optimisation Bound for $E^1t^2$.
 The general form of this bound for the $E^mt^n$ family of metrics is derived as follows:
@@ -46,7 +46,7 @@ An opimisation $\theta \to \lambda$ with respect to metric $M$ is a power optimi
 \end{definition}
 
 We plot a curve through $\theta$ linking all points for which power and runtime factors contribute to $M$ in the same ratio as our original code.
-By definition~\ref{def:poweropt} any power-optimised versions of $\theta$ must lie below this Contribution Bound.
+By \autoref{def:poweropt} any power-optimised versions of $\theta$ must lie below this Contribution Bound.
 Again the equation for the Contribution Bound depends on the metric chosen. 
 \autoref{fig:technique} shows the bound for $E^1t^2$ whilst the general form for $E^mt^n$ metrics is derived as follows:
 \begin{align}
