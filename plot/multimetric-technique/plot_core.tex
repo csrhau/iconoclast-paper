@@ -1,5 +1,6 @@
 \begin{tikzpicture}
-  \begin{axis}[ticks = none, 
+  \begin{axis}[ticks = none,
+    reverse legend,
     axis on top,
     axis x line=bottom,
     axis y line=left,
@@ -29,19 +30,6 @@
     \pgfmathdeclarefunction{definitionbound}{4}{%
       \pgfmathparse{((#1 / #2^(#4 + 1)) * #3^(#4 + 2))}%
     }
-
-
-   % BETA ROOFLINE BOUND 
-    \addplot[color=printred, very thick, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
-    \addlegendentry{$P_{max}$ Energy Bound}
-
-    % ALPHA BASELINE BOUND 
-    \addplot[name path=basebound, color=printgreen, very thick, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
-    \addlegendentry{$P_{min}$ Energy Bound} 
-
-    % Constant Time vertical dots
-    \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\codeenergy});
-
     %% Energy Area %%
     \pgfmathsetmacro{\energyexponent}{1.0}
     \pgfmathsetmacro{\delayexponent}{0.0}
@@ -49,17 +37,10 @@
     \pgfmathsetmacro{\cbie}{19.148936170212767}
     \pgfmathsetmacro{\orie}{23.5}
     \pgfmathsetmacro{\lrie}{9.574468085106384}
-    \addplot[name path=energyopt, forget plot, domain=\orie:\obie, blue!20] {metricbound(\codepower, \codetime, x, \delayexponent)};
-    \addplot[name path=energylimit, forget plot, dashed, domain=\cbie:\lrie, blue!20]{metricbound(\baselinepower, \cbie, x, \delayexponent)};
-    \addplot[name path=energydef, forget plot, draw=none, domain=\cbie:\codetime+1] {definitionbound(\codepower, \codetime, x, \delayexponent)};
-    \path[name path=energyspace,
-      intersection segments={
-        of=energydef and energyopt,
-        sequence=A0 -- B1,
-      }
-    ]; 
-    \addplot[blue!20] fill between[of=energyspace and basebound];
-    \addlegendentry{Energy}
+    \addplot[name path=energyopt, forget plot, domain=\orie:\obie, lightgray] {metricbound(\codepower, \codetime, x, \delayexponent)};
+    \addplot[name path=energylimit, forget plot, domain=\cbie:\lrie, lightgray]{metricbound(\baselinepower, \cbie, x, \delayexponent)};
+    \addplot[name path=energydef, domain=\cbie:\codetime, lightgray] {definitionbound(\codepower, \codetime, x, \delayexponent)};
+    \addlegendentry{$E^1t^0$ POSE}
 
     %% ED2P Area %%
     \pgfmathsetmacro{\energyexponent}{1.0}
@@ -68,17 +49,19 @@
     \pgfmathsetmacro{\cbie}{25.83027641360684}
     \pgfmathsetmacro{\orie}{27.654774650781338}
     \pgfmathsetmacro{\lrie}{20.501503975794428}
-    \addplot[name path=energyopt, forget plot, domain=\orie:\obie, blue!45] {metricbound(\codepower, \codetime, x, \delayexponent)};
-    \addplot[name path=energylimit, forget plot, dashed, domain=\cbie:\lrie, blue!45]{metricbound(\baselinepower, \cbie, x, \delayexponent)};
-    \addplot[name path=energydef, forget plot, draw=none, domain=\cbie:\codetime+1] {definitionbound(\codepower, \codetime, x, \delayexponent)};
-    \path[name path=energyspace,
-      intersection segments={
-        of=energydef and energyopt,
-        sequence=A0 -- B1,
-      }
-    ]; 
-    \addplot[blue!45] fill between[of=energyspace and basebound];
-    \addlegendentry{$Et^2$}
+    \addplot[name path=energyopt, forget plot, domain=\orie:\obie, darkgray] {metricbound(\codepower, \codetime, x, \delayexponent)};
+    \addplot[name path=energylimit, forget plot, domain=\cbie:\lrie, darkgray]{metricbound(\baselinepower, \cbie, x, \delayexponent)};
+    \addplot[name path=energydef, domain=\cbie:\codetime, darkgray] {definitionbound(\codepower, \codetime, x, \delayexponent)};
+    \addlegendentry{$E^1t^2$ POSE}
+
+
+    % ALPHA BASELINE BOUND 
+    \addplot[name path=basebound, color=printgreen, very thick, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
+    \addlegendentry{$P_{min}$ Energy Bound} 
+    
+    % BETA ROOFLINE BOUND 
+    \addplot[color=printred, very thick, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
+    \addlegendentry{$P_{max}$ Energy Bound}
 
     \node[circle,fill,inner sep=2pt] at (axis cs:\codetime,\codeenergy) {};
     \node[above right] at (axis cs:\codetime,\codeenergy) {$\theta$};

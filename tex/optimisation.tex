@@ -8,16 +8,16 @@ The POSE heuristic enables performance engineers to compare the potential benefi
 Energy cost is a reasonable metric in cases where energy consumption is of paramount importance.
 That said, relying on this metric leaves open the possibility of significant loss of runtime performance, limiting its usefulness in time-sensitive domains.
 Metrics combining both runtime and energy costs have been developed to address this issue. 
-The simplest of these is the Energy-Delay Product (EDP) metric \cite{gonzales:1995aa}, which is defined as follows:
+The simplest of these is the Energy Delay Product (EDP) metric \cite{gonzales:1995aa}, which is defined as follows:
 \begin{align}
   EDP &= Energy \times Runtime \nonumber \\
-      &= E \times t \nonumber \\
-      &= \bar{P} \times t^2
+      &= E^1 \times t^1 \nonumber \\
+      &= \bar{P}^1 \times t^2
   \label{eq:edp}
 \end{align}
 
 Several extensions to EDP have been proposed which assign different weights to each components in order to better reflect the demands of specific domains.
-Common examples include Energy Delay Squared Product ($Et^{2}$) and Energy Delay Cubed Product ($Et^{3}$).
+Common examples include Energy Delay Squared Product ($E^1t^{2}$) and Energy Delay Cubed Product ($E^1t^{3}$).
 We refer to this as the $E^mt^n$ family of metrics, which also includes power ($E^1t^{-1}$), energy ($E^1t^0$) and time ($E^0t^1$) as members.
 
 POSE is a general purpose heuristic which applies to all members of the $E^mt^n$ group with $m > 0$ and $n \geq 0$, and indeed any metric which increases in line with runtime and energy consumption.
