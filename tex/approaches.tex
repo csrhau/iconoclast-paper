@@ -1,7 +1,7 @@
 \section{Approaches to Modelling}
 \label{sec:approaches}
 Performance modelling techniques enable the rapid exploration of large hardware and software design spaces.
-In this section we describe various approaches to performance modelling and show where POSE fits into this picture.
+In this section we describe various approaches to performance modelling and show where POSE fits into the picture.
 \autoref{tab:approaches} divides the performance modelling ecosystem into categories based on model domain and granularity and provides examples for each.
 
 \begin{table}
@@ -34,9 +34,8 @@ Ensuring the model is expressive enough to capture all possible program behaviou
 \subsubsection{Heuristic Models:}
 This is the most abstract category of performance models and the one in which our work belongs.
 Rather than attempting to faithfully represent an entire system, heuristic models provide a simplified analogy which helps developers to reason about particular properties of a code.
-Developer time is a valuable and finite resource, and as such there is considerable merit to the intuitive and actionable insights which heuristic models can offer in the early stages of optimisation.
 
-A popular example from this class is the Roofline~\cite{williams:2009aa} model.
+A popular example of this class is the Roofline~\cite{williams:2009aa} model.
 Roofline frames the performance of an application in terms of its operational intensity and two system bottlenecks; off-chip memory bandwidth and floating point performance.
 This simplification limits Roofline's use as a predictive model but it also means a developer can easily isolate the limiting factor of code performance and target their optimisation efforts accordingly.
 

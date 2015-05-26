@@ -2,16 +2,16 @@
 Advances in processor design have delivered improvements in CPU performance for decades. As physical limits are reached, however, refinements to the same basic technologies are beginning to show diminishing returns \cite{esmaeilzadeh:2011aa}. One side-effect of this is an unsustainable rise in system power use, which the US Department of Energy has identified as a primary constraint for exascale systems \cite{shalf:2011aa}.
 
 Hardware manufacturers are increasingly prioritising energy efficiency in processor designs~\cite{kurd:2014aa}. 
-Research suggests that software modifications will be required to fully exploit the energy efficiency improvements in modern processors~\cite{shao:2013aa}.
+Research suggests that software modifications will be required to fully exploit the resulting improvements in modern processors~\cite{shao:2013aa}.
 
 In this paper we present the Power Optimised Software Envelope (POSE) technique.
 POSE is a visual model which provides insights into the energy consumption characteristics of a code.
-Our work helps performance engineers decide whether to pursue power or runtime optimisations when attempting to improve the energy efficiency of their code.
+Our work helps performance engineers understand whether power or runtime optimisation is the best strategy when improving the energy efficiency of their code.
 
 \medskip \noindent
 The contributions made in this work are:
 \begin{itemize}
-  \item We introduce the POSE model with derivations for its constituent boundaries and an overview of the various insights it offers.
+  \item We introduce the POSE model, providing derivations for its constituent boundaries and an overview of the various insights it offers.
   \item We show how POSE, which is a general technique, can be targeted to specific platforms and use-cases. 
   \begin{itemize}
     \item Specifically, we develop a process and supporting toolchain to investigate the tradeoffs between runtime and CPU power consumption.
@@ -24,7 +24,7 @@ The contributions made in this work are:
   \end{itemize}
 \end{itemize}
 
-The remainder of this paper is structured as follows: \autoref{sec:approaches} discusses the different approaches to performance modelling and where POSE fits in this landscape.
+The remainder of this paper is structured as follows: \autoref{sec:approaches} discusses the different approaches to performance modelling and explains where POSE fits in this landscape.
 \autoref{sec:optimisation} then provides a summary of key concepts and metrics.
 \autoref{sec:pose} details the construction of POSE before \autoref{sec:insights} lists the various insights it provides.
 We validate our model in \autoref{sec:investigation} by using it to study the CPU power optimisation opportunities presented by a range of proxy applications. 
