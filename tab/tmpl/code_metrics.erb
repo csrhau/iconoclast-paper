@@ -1,8 +1,8 @@
-\begin{tabular}{@{}<%= 'c'*data.headers.length -%>@{}} \toprule
-<%= data.headers.join(' & ') %> \\
+\begin{tabular}{@{}<%= 'c'*data.headers.length -%>c@{}} \toprule
+<%= data.headers.join(' & ') %> & $E^1t^2$ \\
 \midrule
 <% data.each do |row| -%>
-  <%= row.collect{|k, v| v}.join(' & ') %> \\
+  <%= row.map{|k, v| Integer(v) rescue sprintf('%.2f', v) rescue v}.join(' & ') %> & <%= (Float(row['Energy (J)']) * Float(row['Runtime (s)'])**2).round(0) %> \\
 <% end -%>
 \bottomrule
 \end{tabular}

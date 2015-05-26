@@ -52,9 +52,27 @@ We chose to rely on direct measurements to build our envelope for this reason.
 
 \begin{table}
 \centering
-\caption{Early Investigation (2 d.p.)}
+\caption{Early Investigation}
 \input{tab/tex/code_metrics.tex}
 \end{table} 
+
+
+
+  \begin{table}
+    \setlength{\tabcolsep}{.5em}
+    \caption{Code POSE Values}
+    \begin{subtable}{\textwidth}
+    \centering
+    \caption{Time (s)}
+    \input{tab/tex/code_pose_time.tex}
+    \end{subtable} 
+    \begin{subtable}{\textwidth}
+    \centering
+    \caption{Energy (J)}
+    \input{tab/tex/code_pose_energy.tex}
+    \end{subtable}
+    \label{tab:pose_params}
+  \end{table} 
 
 
 
@@ -78,7 +96,7 @@ The techniques described in \cite{hackenberg:2013aa} were used to ensure measure
 %TODO make sure this is explicitly Linpack table in text
 \begin{table}
 \centering
-\caption{Feasible Performance Envelope Parameters (W) (2 d.p.)}
+\caption{Feasible Performance Envelope Parameters (W)}
 \input{tab/tex/fpe_params.tex}
 \end{table} 
 
@@ -118,14 +136,8 @@ The techniques described in \cite{hackenberg:2013aa} were used to ensure measure
 
 \subsection{Results}
 
-\begin{table}
-\centering
-\caption{MiniMD POSE, 4 cores at 3.2 GHz (2 d.p.)}
-\input{tab/tex/minimd_pose}
-\label{tab:minimd_pose}
-\end{table} 
 
-\autoref{tab:minimd_pose} shows that for MiniMD, the longest runtime within the Power Optimized Software Envelope is 30.70s.
+\autoref{tab:pose_params} \todo{reword given central table} shows that for MiniMD, the longest runtime within the Power Optimized Software Envelope is 30.70s.
 This means that any optimization which trades increased runtime for improved power efficiency can slow MiniMD down by at most 0.41s before $E^1t^2$ becomes strictly worse.
 The upper limit of energy to be saved from power optimisation alone for MiniMD running on our target platform is is 32.82J.
 The lowest value of $E^1t^2$ within the envelope is 718232.78, an improvement of 7.60\% over the baseline code. 
@@ -133,14 +145,7 @@ Runtime optimization will be required to deliver any improvements above this lev
 We also know that a speedup of, 1.16x, or 4.16s, is guaranteed to beat $\theta$ in terms of $E^1t^2$.
 Finally, a speedup of 1.19x, or 4.84s, is guaranteed to beat any power optimised version of $\theta$ in terms of $E^1t^2$
 
-\begin{table}
-\centering
-\caption{LavaMD POSE, 4 cores at 3.2 GHz (2 d.p.)}
-\input{tab/tex/lavamd_pose}
-\label{tab:lavamd_pose}
-\end{table} 
-
-\autoref{tab:lavamd_pose} shows that for LavaMD, the longest runtime within the Power Optimized Software Envelope as 69.76s.
+\autoref{tab:pose_params} \todo{reword given central} shows that for LavaMD, the longest runtime within the Power Optimized Software Envelope as 69.76s.
 This means that any optimization which trades increased runtime for improved power efficiency can slow LavaMD down by at most 4.12s before $E^1t^2$ becomes strictly worse.
 The upper limit of energy to be saved from power optimization alone is 353.36J.
 The lowest value of $E^1t^2$ within the envelope is 6332608.91, an improvement of 30.59\% over the baseline code.

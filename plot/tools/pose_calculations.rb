@@ -2,9 +2,8 @@ require 'optparse'
 require 'ostruct'
 
 Mandatory = %i[base_power code_power code_time delay_exp energy_exp roof_power]
-Optional =%i[latex]
+Optional =%i[format]
 PoseOptions = Struct.new(*(Mandatory + Optional))
-
 class Parser
   def self.parse(args) 
     options = PoseOptions.new
@@ -35,8 +34,11 @@ class Parser
       opts.on('--delay-exponent N', Float, 'Delay Exponent') do |n|
         options.delay_exp = n
       end
-      opts.on('--latex', 'Print latex output') do |l|
-        options.latex = l 
+
+      # Optional argument with keyword completion.
+      opts.on("--format [FORMAT]", [:text, :latex, :table],
+              "Select output format (text, latex, table)") do |f|
+        options.format=f
       end
       # Print help message
       opts.on_tail("-h", "--help", "Show this message") do
@@ -59,22 +61,6 @@ end
 def con_intercept(pt, dt, pb, m, n)
   ((dt ** (m + n) * pb ** m) / pt**m) ** (1 / (n + 1))
 end
-
-def humanize(i)
-  case i
-  when 0
-    'zero'
-  when 1
-    'one'
-  when 2
-    'two'
-  when 3
-    'three'
-  else
-    'lots'
-  end
-end
-
     
 #Let's Do It!
 options = Parser.parse(ARGV)
@@ -92,7 +78,8 @@ cbi = con_intercept(options.code_power, options.code_time, options.base_power,
 lri = opt_intercept(options.base_power, cbi, options.roof_power,
                     options.energy_exp, options.delay_exp)
 
-if options.latex
+case options.format
+when :latex
   puts "\\pgfmathsetmacro{\\codetime}{#{options.code_time}}"
   puts "\\pgfmathsetmacro{\\codepower}{#{options.code_power}}"
   puts "\\pgfmathsetmacro{\\energyexponent}{#{options.energy_exp}}"
@@ -101,7 +88,13 @@ if options.latex
   puts "\\pgfmathsetmacro{\\blnodex}{#{cbi}}"
   puts "\\pgfmathsetmacro{\\trnodex}{#{ori}}"
   puts "\\pgfmathsetmacro{\\tlnodex}{#{lri}}"
-else
+when :table
+  puts "Axis,$\\theta$,A,B,C,D,E"
+  puts "Runtime (S),#{options.code_time},#{lri},#{ori},#{cbi},#{options.code_time},#{obi}"
+  puts "Energy (J),#{options.code_time * options.code_power},#{lri * options.roof_power},#{ori * options.roof_power},"\
+       "#{cbi * options.base_power},#{options.code_time * options.base_power},"\
+       "#{obi * options.base_power}"
+else # default (:text)
   puts "$\\theta$ Original Code Measurements: #{options.code_time}s, #{options.code_time * options.code_power}J, #{(options.code_time * options.code_power) ** options.energy_exp * options.code_time ** options.delay_exp} ($\\theta$)"
   puts "A Roofline/Optimization Limit Intercept: #{lri}s, #{lri * options.roof_power}J, #{(lri * options.roof_power) ** options.energy_exp * lri ** options.delay_exp} (A)"
   puts "B Roofline/Optimization Bound Intercept: #{ori}s, #{ori * options.roof_power}J, #{(ori * options.roof_power) ** options.energy_exp * ori ** options.delay_exp} (B)"

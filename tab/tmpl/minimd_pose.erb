@@ -1,8 +1,0 @@
-\begin{tabular}{@{}<%= data.headers.map {'c'}.join('@{\hskip 4\tabcolsep}') -%>@{}} \toprule
-<%= data.headers.join(' & ') %> \\
-\midrule
-<% data.each do |row| -%>
-  <%= row.collect{|k, v| Integer(v) rescue sprintf('%.2f', v) rescue v}.join(' & ') %> \\
-<% end -%>
-\bottomrule
-\end{tabular}
