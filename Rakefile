@@ -34,10 +34,27 @@ end
 namespace :tables do
   desc 'creates an output directory for latex tables'
   directory 'tab/tex'
+
   TABLES.each do |t|
     desc "Build table output file #{t[:tex]}"
     file t[:tex] => ['tab/tools/ruler.rb', t[:csv], t[:erb], 'tab/tex'] do |t|
       ruby "#{t.prerequisites[0]} -d#{t.prerequisites[1]} -t#{t.prerequisites[2]} -o#{t.name}"
+    end
+  end
+
+  desc 'Create POSE energy data file'
+  file 'tab/data/code_pose_energy.csv' => 'tab/data/code_metrics.csv' do |t|
+    Dir.chdir('tab/tools') do
+      system('./posifier.sh')
+      mv(Dir.glob('code_pose_*.csv'), '../data')
+    end
+  end
+
+  desc 'Create POSE runtime data file'
+  file 'tab/data/code_pose_time.csv' => 'tab/data/code_metrics.csv' do |t|
+    Dir.chdir('tab/tools') do
+      system('./posifier.sh')
+      mv(Dir.glob('code_pose_*.csv'), '../data')
     end
   end
 end
