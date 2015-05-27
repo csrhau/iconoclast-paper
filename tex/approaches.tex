@@ -34,11 +34,12 @@ Ensuring the model is expressive enough to capture all possible program behaviou
 \subsubsection{Heuristic Models:}
 This is the most abstract category of performance models and the one in which our work belongs.
 Rather than attempting to faithfully represent an entire system, heuristic models provide a simplified analogy which helps developers to reason about particular properties of a code.
+Ease of construction and the clarity of their insights mean heuristic hodels are well suited to guiding the early stages of optimisation.
 
 A popular example of this class is the Roofline~\cite{williams:2009aa} model.
 Roofline frames the performance of an application in terms of its operational intensity and two system bottlenecks; off-chip memory bandwidth and floating point performance.
 This simplification limits Roofline's use as a predictive model but it also means a developer can easily isolate the limiting factor of code performance and target their optimisation efforts accordingly.
 
 The POSE heuristic serves as a preliminary `first cut' modelling technique intended to guide energy-aware optimisation efforts.
-Our model provides an asymptotic analysis of the scope for optimisation in the power and runtime domains, allowing performance engineers to focus their efforts where they will be most beneficial.
-POSE also takes after the Roofline model in that its insights can be presented in the form of a two-dimensional graphical representation.
+Our model provides an asymptotic analysis of the scope for optimisation in the power and runtime domains, allowing performance engineers to focus their efforts wherever they will be most beneficial.
+POSE also takes after the Roofline model in that its insights can be presented in an intuitive graphical format.
