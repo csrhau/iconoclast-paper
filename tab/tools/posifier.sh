@@ -2,7 +2,7 @@
 
 
 BASE_POWER=$(grep 'Empty Loop' ../data/code_metrics.csv | cut -f 4 -d,)
-ROOF_POWER=$(grep 'el Linpack' ../data/code_metrics.csv | cut -f 4 -d,)
+ROOF_POWER=$(grep 'FIRESTARTER' ../data/code_metrics.csv | cut -f 4 -d,)
 
 tail -n +2 ../data/code_metrics.csv > LOCAL_METRICS
 
@@ -16,12 +16,12 @@ grep Runtime ALL_OUT > RUNTIME_OUT
 (
   head -n 1 ALL_OUT | sed 's/Axis/Code/'
   paste LOCAL_METRICS ENERGY_OUT | cut -f 1,5- -d,
-) | egrep -v 'Empty Loop|Linpack' > code_pose_energy.csv
+) | egrep -v 'Empty Loop|Linpack|FIRESTARTER' > code_pose_energy.csv
 
 (
   head -n 1 ALL_OUT | sed 's/Axis/Code/'
   paste LOCAL_METRICS RUNTIME_OUT | cut -f 1,5- -d,
-) | egrep -v 'Empty Loop|Linpack' > code_pose_time.csv
+) | egrep -v 'Empty Loop|Linpack|FIRESTARTER' > code_pose_time.csv
 
 rm ALL_OUT RUNTIME_OUT ENERGY_OUT LOCAL_METRICS
 
