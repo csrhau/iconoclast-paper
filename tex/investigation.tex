@@ -1,39 +1,59 @@
 \section{Investigation}
 \label{sec:investigation}
-In this section we use POSE to investigate the CPU power consumption of applications taken from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} suites.
-Both comprise simplified versions of production codes intended for research purposes.
+We now use POSE to investigate the CPU power consumption of various codes from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} application suites.
+Both contain simplified versions of production codes intended for research purposes.
 As such these codes have relatively compact code bases and well understood behaviours whilst still providing representative workloads.
 
-We target this study at the level of the individual CPU for various reasons.
-The first is that there is perhaps the most direct link between application code and processor. 
-Hardware availability and the relative ease of obtaining accurate figures for CPU power consumption. 
-\todo{Some citation re: How big a deal / factor is CPU vs total?}
+CPU power consumption accounts for a significant portion of energy used by high performance systems~\cite{rong:2010aa}, making it a prime candidate for optimisation.
+Crucially for POSE, this level of power consumption can be measured on hardware available to us using techniques the described in ~\cite{hackenberg:2013aa}.
 
+%CPU Power Consumption
 \subsection{CPU Power Consumption}
+Current state-of-the-art processors are based on Complimentary Metal Oxide Semiconductor (CMOS) technology.
+\autoref{eq:totpwr} describes how the power draw of CMOS chips can be separated into components, of which dynamic and leakage power are the most significant.
+
+
 \begin{equation}
 \label{eq:totpwr}
 P_{tot} = P_{dyn} + P_{leak} + P_{other}
 \end{equation}
 
-Current state-of-the-art processors are based on Complimentary Metal Oxide Semiconductor (CMOS) technology and multi-core superscalar architectures.
-\autoref{eq:totpwr} describes how the power draw of CMOS chips can be seperated into components, of which dynamic and leakage power are the most significant.
 
-Dynamic power encompasses the power consumed as logic gates change state while a processor performs work. 
-Leakage power stems from the fact that at very small scales the insulating properties of silicon break down, allowing some current to leak out even when gates remain inactive.
+Dynamic power is consumed by logic gates changing state whilst a processor performs work. 
+Leakage power stems from the fact that at microscopic scales the insulating properties of silicon break down, allowing some current to leak out even when gates remain inactive.
 Other forms of power dissipation exist, however their effects are relatively minor \cite{kaxiras:2008aa}.
 
-\begin{equation} 
-\label{eq:dynpwr}
-P_{dyn} \propto CV^{2}Af
-\end{equation}
+\begin{gather}
+P_{dyn} \propto CV^{2}Af \label{eq:dynpwr} \\
+P_{leak} = V \times I_{leak} \label{eq:staticpwr} \\
+P_{tot} \propto CV^{2}Af + VI_{leak} \label{eq:totpwr2}
+\end{gather}
 
-\autoref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency.
-Of these, only activity factor is directly related to processor workload as it captures the percentage of logic elements which change state each clock cycle.
-Conversely, capacitance is a fixed value arising from the wire lengths of on-chip structures.
 
-Processor frequency and supply voltage may also be influenced by workload through Dynamic Voltage and Frequency Scaling (DVFS).
-DVFS varies these properties in tandem, changing between a small number of fixed P-States.
-To paraphrase, DVFS acts to reduce the clock speed and voltage of underutilised processors.
+\autoref{eq:dynpwr} is a common approximation for dynamic power in which C denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency. \autoref{eq:staticpwr} is a simplified expression for leakage power that exploits the fact that leakage current $I_{leak}$ is invariant to processor workload~\cite{kim:2003aa}. Substituting these into \autoref{eq:totpwr} yields the parametrised expression for total power consumption in \autoref{eq:totpwr2}.
+
+Of the parameters in \autoref{eq:totpwr2}, only activity factor is directly related to processor workload as it captures the percentage of logic elements which change state each clock cycle.
+ Processor workload can also influence frequency and supply voltage indirectly through the actions of Dynamic Voltage and Frequency Scaling (DVFS). 
+DVFS varies these properties in tandem, choosing pairs of values from a small number of fixed P-States.
+Finally, capacitance and leakage current are constants  dictated by processor design.
+
+\subsection{Feasible Performance Envelope}
+The first step in applying POSE is the construction of an appropriate feasible performance envelope.
+Processor manufacturers often supply values for the peak and idle power consumption of their hardware, however these estimates tend to be overly conservative and not reachable in practice. \todo{cite hackenberg}
+
+
+
+POSE works best when the maximum and minimum power bounds are as tight as possible.
+
+
+
+There are two factors a software developer may influence which can effect CPU power consumption, namely activity factor and P-state.
+
+\todo{WORKING POINT}
+
+Linpack is characterised by its extremely high code intensity. 
+\todo{false baselines etc}
+This highlights the fact that effective use of POSE depends largely on the choice of roofline and 
 
 Historically, dynamic power has been the biggest contributor to $P_{tot}$, however leakage power has been on track to overtake it since the breakdown of Dennard Scaling.  Sub-threshold and gate-oxide leakage dominate total leakage current, and they both increase exponentially as transistors shrink. Process improvements like the introduction of high-k dielectric materials~\cite{jan:2009aa} have kept leakage power in check over the last decade, however there is no avoiding the fact that insulating properties will degrade as transistors get smaller.
 
@@ -44,9 +64,7 @@ We formalise the notion of maximum and minimum power by defining the range of va
 We employ the code given in \autoref{fig:microbench} to derive our baseline.  It consists of a single instruction, performs no computation and places no demand on the memory subsystems. Any non-trivial computation will have a higher activity factor than this minimal micro-benchmark. If the application to be optimised blocks on IO this can be incorporated by measuring the power consumed when the CPU is inactive and adjusting $P_\alpha$ proportionately. We rely on the \texttt{cpufrequtils} package to override DVFS and manually set the desired P-States.
 
 \subsection{Feasible Performance Envelope}
-The first stage in applying POSE is to construct a feasible performance envelope for the target platform.
-POSE works best when the maximum and minimum power bounds are as tight as possible.
-Processor manufacturers often supply values for the peak and idle power consumption of their hardware, however these estimates tend to be overly conservative and not reachable in practice.
+
 We chose to rely on direct measurements to build our envelope for this reason.
 
 
@@ -79,7 +97,7 @@ We chose to rely on direct measurements to build our envelope for this reason.
 \subsection{Experimental Methodology}
 CPU energy consumption was measured using Intel's Running Average Power Limit (RAPL) technology~\cite{david:2010aa}.
 We created a simple tool babsed on the Unix \texttt{time} which output energy consumption figures as well as conventional runtime figures.
-The techniques described in \cite{hackenberg:2013aa} were used to ensure measurement accuracy. 
+The techniques described in \cite{hahnel:2012aa} were used to ensure measurement accuracy. 
 
 \todo{Detail app arguments etc.}
 
@@ -133,6 +151,11 @@ The techniques described in \cite{hackenberg:2013aa} were used to ensure measure
 \caption{$E^1t^2$ POSE for P-State Optimisation}%
 \label{fig:pstates}%
 \end{figure}%
+
+Changes in processor P-State do not effect code performance linearly due to system bottlenecks. Critical path? \todo{is there a smart term for this? Bound and bottleneck analysis.} A modern super-scalar CPU contains many specialized functional units. A code which is bottlenecked by Memory accesses may when slowed dow.
+
+A code with low operational intensity 
+
 
 \subsection{Results}
 
