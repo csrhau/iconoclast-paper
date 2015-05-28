@@ -6,24 +6,29 @@
     axis y line=left,
   	xlabel={Runtime \emph{(s)}},
     ylabel={Energy \emph{(J)}},    
-    xmin=50, xmax=75,
+    xmin=48, xmax=75,
     ymin=1200, ymax=4000,
     width=\plotwidth,
     legend to name=lavamd:legend
     ]
 
+
     %% Model Parameters %%
     \pgfmathsetmacro{\baselinepower}{26.876067}
-    \pgfmathsetmacro{\rooflinepower}{43.570651}
-    \pgfmathsetmacro{\codepower}{32.259372}
+    \pgfmathsetmacro{\rooflinepower}{49.60612}
+    \pgfmathsetmacro{\codepower}{32.25937199992712} 
     \pgfmathsetmacro{\codetime}{65.640072}
+    \pgfmathsetmacro{\codeenergy}{2117.50750075}
+    \pgfmathsetmacro{\energyexp}{1.0}
+    \pgfmathsetmacro{\timeexp}{2.0}
+
     % Sadly, pgfplots sucks too much to calculate cube roots
     % These values are calculated with a ruby script in tools
-    \pgfmathsetmacro{\brnodex}{69.75881800188515}
-    \pgfmathsetmacro{\blnodex}{61.764507707810466}
-    \pgfmathsetmacro{\trnodex}{59.38220710689976}
-    \pgfmathsetmacro{\tlnodex}{52.57704894686994}
-    
+    \pgfmathsetmacro{\blnodex}{61.76450770785698}
+    \pgfmathsetmacro{\brnodex}{69.75881800183261}
+    \pgfmathsetmacro{\trnodex}{56.869044551106185}
+    \pgfmathsetmacro{\tlnodex}{50.35189300975517}
+   
     %% Intermezzo Values %%
     \pgfmathsetmacro{\brnodey}{\brnodex * \baselinepower}
     \pgfmathsetmacro{\blnodey}{\blnodex * \baselinepower}
