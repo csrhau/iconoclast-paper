@@ -1,57 +1,58 @@
 \section{Investigation}
 \label{sec:investigation}
-We now use POSE to investigate the CPU power consumption of codes from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} application suites.
-These contain simplified versions of production codes intended for research purposes.
-As such these codes have relatively compact code bases and well understood behaviours whilst still providing representative workloads.
+We now use POSE to investigate the CPU power consumption of codes taken from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} application suites.
+The applications we study are all simplified versions of production codes intended for research purposes.
+As such they exhibit relatively compact code bases and well understood behaviours while still providing represantative workloads.
 
-CPU power consumption accounts for a significant portion of energy used by high performance systems~\cite{rong:2010aa}, making it a prime candidate for optimisation.
-Crucially for POSE, this level of power consumption can be measured on hardware available to us using techniques described in~\cite{hackenberg:2013aa}.
+CPU power consumption accounts for a significant portion of the energy used by high performance systems~\cite{rong:2010aa}, making it a prime candidate for optimisation.
+Crucially for POSE, this variety of power consumption can be accurately measured on unmodified comodity hardware~\cite{hackenberg:2013aa}.
 
-%CPU Power Consumption
 \subsection{CPU Power Consumption}
 \label{ssec:cpupower}
-Current state-of-the-art processors are based on Complimentary Metal Oxide Semiconductor (CMOS) technology.
-\autoref{eq:totpwr} describes how the power draw of CMOS chips can be separated into components, of which dynamic and leakage power are the most significant.
-
-
+Modern processors rely on Complimentary Metal Oxide Semiconductor (CMOS) technology.
+\autoref{eq:totpwr} separates the power draw of CMOS chips into its component parts, of which dynamic power and leakage power are most significant.
 \begin{equation}
 \label{eq:totpwr}
 P_{tot} = P_{dyn} + P_{leak} + P_{other}
 \end{equation}
-
-
 Dynamic power is consumed when logic gates change state as a processor performs work. 
-Leakage power stems from the fact that at microscopic scales the insulating properties of silicon break down, allowing some current to escape even when gates remain inactive.
+Leakage power exists because at microscopic scales the insulating properties of silicon break down, allowing some current to escape even when gates remain inactive.
 Other forms of power dissipation exist, however their effects are relatively minor \cite{kaxiras:2008aa}.
-
 \begin{gather}
 P_{dyn} \propto CV^{2}Af \label{eq:dynpwr} \\
 P_{leak} = V \times I_{leak} \label{eq:staticpwr} \\
-P_{tot} \propto CV^{2}Af + VI_{leak} \label{eq:totpwr2}
+P_{tot} \propto CV^{2}Af + VI_{leak} \label{eq:totpwr2} 
 \end{gather}
-
-
 \autoref{eq:dynpwr} is a common approximation for dynamic power in which $C$ denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency. 
 \autoref{eq:staticpwr} is a simplified expression for leakage power that exploits the fact that leakage current $I_{leak}$ is invariant to processor workload~\cite{kim:2003aa}.
-Substituting these into \autoref{eq:totpwr} yields the parametrised expression for total power consumption in \autoref{eq:totpwr2}.
+Substituting these into \autoref{eq:totpwr} yields the parametrised expression for total power consumption given in \autoref{eq:totpwr2} in which all terms except frequency, voltage and activity factor are constants.
 
 Activity factor captures the fraction of logic elements which change state each clock cycle.
-We define the range of values that activity factor can take whilst running a code as $[\alpha,~\beta]$ where $0 < \alpha < \beta < 1$. These values are a function of hardware design and for multi-core systems the number of cores active.
-
 Frequency and supply voltage vary in tandem, taking values from a fixed set of $(frequency, voltage)$ pairs known as P-States.
 Dynamic Voltage and Frequency Scaling (DVFS) selects the most appropriate P-State for the current workload.
 Finally, capacitance and leakage current are constants dictated by processor design.
 
+Processor architecture also plays a significant roll in determining total power consumption.
+Each core in a multicore architecture operates independantly with its own activity factor and P-State.
+As a result, \autoref{eq:totpwr2} should be summed across all cores to arrive at a value for the entire processor.
+
 \subsection{Feasible Performance Envelope}
-The first step in applying POSE is the construction of an appropriate feasible performance envelope.
-POSE works best when the maximum and minimum power bounds are as tight as possible.
-Processor manufacturers typically supply power consumption envelopes for their hardware, however these tend to be conservative estimates which cannot be reached in practice.
-We therefore rely on benchmarks to gather accurate figures for $P_{max}$ and $P_{min}$.
+When applying POSE the first step is to construct an appropriate feasible performance envelope.
+Processor manufacturers usually supply power consumption envelopes for their hardware, however these tend to be conservative estimates.
+POSE works best when the maximum and minimum power bounds are as tight as possible, so instead we determine $P_{\alpha}$ and $P_{\beta}$ empirically. 
+
+The properties we must account for when developing benchmarks for $P_{\alpha}$ and $P_{\beta}$ are P-State, activity factor and the number of cores active.
+Of these, P-State is the easiest 
+
+\clearpage
+
+
+We define the range of values that activity factor can take while running a code as $[\alpha,~\beta]$ where $0 < \alpha < \beta < 1$. These values are a function of hardware design and for multi-core systems the number of cores active.
 
 
 \todo{Flesh this out into some sort of abstract methodology.}
 As previously discussed, activity factor and P-state are the only properties through which code (and hence performance engineers) can influence power consumption.
-We use the \texttt{cpufrequtils} package to override DVFS and manually set the desired P-States, leaving only activity factor to consider.
+We use the \texttt{cpufrequtils} package to override DVFS and manually set the desired P-states, leaving only activity factor to consider.
 
 \begin{figure}[ht]                                                               
 \centering                                                                      
@@ -80,7 +81,7 @@ FIRESTARTER~\cite{hackenberg:2013ab}, a tool designed to trigger near-peak power
 compute nodes.
 
 FIRESTARTER, `a simple yet versatile tool that generates near-peak power consumption of compute nodes'.
-We evaluated several stress test tools in order to benchmark $P\_{\beta}$ before we settled on
+We evaluated several stress test tools in order to benchmark $P_{\beta}$ before we settled on
 FIRESTARTER, which is 
 We use FIRESTARTER, a benchmark
 
@@ -101,16 +102,6 @@ We use FIRESTARTER, a benchmark
 Linpack is characterised by its extremely high code intensity. 
 \todo{false baselines etc}
 This highlights the fact that effective use of POSE depends largely on the choice of roofline and 
-
-
-
-
-
-We employ the code given in \autoref{fig:microbench} to derive our baseline.  
-
-\subsection{Feasible Performance Envelope}
-
-We chose to rely on direct measurements to build our envelope for this reason.
 
 
 \begin{table}
