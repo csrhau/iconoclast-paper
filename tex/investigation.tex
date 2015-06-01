@@ -48,6 +48,8 @@ POSE works best when the maximum and minimum power bounds are as tight as possib
 Processor manufacturers typically supply power consumption envelopes for their hardware, however these tend to be conservative estimates which cannot be reached in practice.
 We therefore rely on benchmarks to gather accurate figures for $P_{max}$ and $P_{min}$.
 
+
+\todo{Flesh this out into some sort of abstract methodology.}
 As previously discussed, activity factor and P-state are the only properties through which code (and hence performance engineers) can influence power consumption.
 We use the \texttt{cpufrequtils} package to override DVFS and manually set the desired P-States, leaving only activity factor to consider.
 
@@ -59,15 +61,32 @@ We use the \texttt{cpufrequtils} package to override DVFS and manually set the d
 \label{fig:microbench}                                                           
 \end{figure}  
 
-Our benchmark for activity factor $\alpha$ is shown in \autoref{fig:microbench}.
+Our benchmark for activity factor $\alpha$ is given in \autoref{fig:microbench}.
 It repeatedly executes a single \texttt{jmp} instruction, performing no computation or memory accesses in the process.
 We assert that non-trivial computational workloads exhibit strictly higher activity factors than this minimal micro-benchmark.
 The only exceptions are applications which spend so long blocked waiting for resources they allow the processor to enter idle states.
 If necessary this behaviour can be captured by adding corresponding delays to the benchmark.
 
+We evaluated three codes
+Prime95 and Linpack are two codes frequently used to stress-test CPU power consumption.
+
+We also evaluated Prime95 and Linpack as  potential $P_\{beta}$ benchmarks
+
+
+before settling on FIRESTARTER.
+
+FIRESTARTER~\cite{hackenberg:2013ab}, a tool designed to trigger near-peak power consumption in a range of x86_64 processors.
+
+compute nodes.
+
+FIRESTARTER, `a simple yet versatile tool that generates near-peak power consumption of compute nodes'.
+We evaluated several stress test tools in order to benchmark $P_\{beta}$ before we settled on
+FIRESTARTER, which is 
+We use FIRESTARTER, a benchmark
+
 \begin{enumerate}
-	\item \todo{FIRESTARTER $\beta$ paragraph}
 	\item \todo{(Abstract) Methodology - say we just measure for $\{freq\} \times \{cores\}$}
+  \item \todo{FIRESTARTER $\beta$ paragraph}
 	\item \todo{Experimental Setup}
 	\begin{enumerate}
 		\item \todo{Get hardware deets from camelot}
