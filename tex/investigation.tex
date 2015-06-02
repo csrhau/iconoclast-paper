@@ -31,7 +31,7 @@ Dynamic Voltage and Frequency Scaling (DVFS) selects the most appropriate P-Stat
 Finally, capacitance and leakage current are constants dictated by processor design.
 
 Processor architecture also plays a significant roll in determining total power consumption.
-Each core in a multicore architecture operates independantly with its own activity factor and P-State.
+Each core in a multicore architecture operates independantly with its own activity factor and in some cases P-State.
 As a result, \autoref{eq:totpwr} should be summed across all cores to arrive at a value for the entire processor.
 
 \subsection{Feasible Performance Envelope}
@@ -40,59 +40,45 @@ Manufacturers publish the power dissipation figures of their hardware in the for
 POSE works best when the maximum and minimum power bounds are as tight as possible.
 Benchmarks were therefore used to determine $P_{\max}$ and $P_{\min}$ empirically.
 
-We define a benchmark configuration as a tuple $(s,a,c)$ with P-State s, activity factor $a$ and $c$ active cores.
+We define a benchmark configuration as a tuple $(S,A,C)$ with P-State $S$, activity factor $A$ and $C$ active cores.
 Which configuration to use depends on the code and the nature of the optimisations being considered.
-POSE models for inherently serial codes should be constructed from benchmark measurements with $c = 1$, for example.
+POSE models for inherently serial codes should be constructed from benchmark measurements with $C = 1$, for example.
+Fortunately, the benchmark configuration space is small enough to measure every point within it in a reasonable amount of time.
 
 The \texttt{cpufrequtils} package allows us to override DVFS and manually set the desired P-state.
-We control the cores active by specifying the number of threads a benchmark should spawn and pinning each thread to its own core to prevent migration.
-The only remaining property is activity factor, which must be targeted by our benchmark code.
-
-\clearpage
-
-We  define the range of values that activity factor a can take as $[\alpha,~\beta]$ where $0 < \alpha < \beta < 1$.
-
-The benchmark configuration space is small enough to measure every point within it in a reasonable amount of time.
-
-Our benchmark code targeting activity factor $\alpha$ is given in \autoref{fig:microbench}.
-
-\todo{say cores X freq}
-
-
+We control the number of active cores by specifying the number of threads which should run the benchmarking routine.
+Each thread is pinned to its own core to prevent migration.
+The only remaining property is activity factor, which is influenced by benchmark code.
 
 \begin{figure}[ht]
 \centering
 \lstset{basicstyle=\ttfamily\footnotesize\bfseries, frame=tb} %small bold text, lines top and bottom
 \lstinputlisting[]{lst/alpha_benchmark.c}
-\caption{Baseline Power Micro-Benchmark}
+\caption{Activity Factor $\alpha$ Benchmark Code}
 \label{fig:microbench}
 \end{figure}
 
-It repeatedly executes a single \texttt{jmp} instruction, performing no computation or memory accesses in the process.
-We assert that non-trivial computational workloads exhibit strictly higher activity factors than this minimal micro-benchmark.
-The only exceptions are applications which spend so long blocked waiting for resources they allow the processor to enter idle states.
-If necessary this behaviour can be captured by adding corresponding delays to the benchmark.
+We define the range of values that $A$ can take for some fixed $S$ and $C$ as $[\alpha,~\beta]$ where $0 < \alpha < \beta < 1$.
+Our code for targeting activity factor $\alpha$ is given in \autoref{fig:microbench}.
+It repeatedly executes a single \texttt{jmp} instruction per clock cycle, performing no floating point or integer calculations, no memory accesses and keeping control logic to the bare minimum.
 
-We evaluated three codes
-Prime95 and Linpack are two codes frequently used to stress-test CPU power consumption.
+Our measurements in \autoref{tab:code_metrics} support the notion that this code has a lower activity factor than any non-trivial workload.
+The only exceptions are applications which block for long periods, allowing the processor to enter an idle state. 
+This can be addressed by adding delays to the benchmark if necessary.
 
-We also evaluated Prime95 and Linpack as potential $P_{\beta}$ benchmarks
+We use FIRESTARTER~\cite{hackenberg:2013ab} to reach activity factor $\beta$ and hence measure our value for $P_{max}$.
+This tool is designed to trigger near-peak power consumption across a range of x86\_64 processors.
+Prime95 and Linpack were also evaluated in this roll, however FIRESTARTER consistently delivered higher power consumption figures.
+
+We measured the performance of each benchmark for every combination of core count and P-state.
+The benchmarks runs lasted for 120 seconds to allow sufficient 
+RAPL was used to measure CPU power consumption.
 
 
-before settling on FIRESTARTER.
-
-FIRESTARTER~\cite{hackenberg:2013ab}, a tool designed to trigger near-peak power consumption in a range of x86\_64 processors.
-
-compute nodes.
-
-FIRESTARTER, `a simple yet versatile tool that generates near-peak power consumption of compute nodes'.
-We evaluated several stress test tools in order to benchmark $P_{\beta}$ before we settled on
-FIRESTARTER, which is
-We use FIRESTARTER, a benchmark
+\clearpage
 
 \begin{enumerate}
   \item \todo{(Abstract) Methodology - say we just measure for $\{freq\} \times \{cores\}$}
-  \item \todo{FIRESTARTER $\beta$ paragraph}
   \item \todo{Experimental Setup}
   \begin{enumerate}
     \item \todo{Get hardware deets from camelot}
@@ -111,27 +97,26 @@ This highlights the fact that effective use of POSE depends largely on the choic
 
 \begin{table}
 \centering
-\caption{Early Investigation}
+\caption{Code Energy Measurements}
+\label{tab:code_metrics}
 \input{tab/tex/code_metrics.tex}
 \end{table}
 
-
-
-  \begin{table}
-    \setlength{\tabcolsep}{.5em}
-    \caption{Code POSE Values}
-    \begin{subtable}{\textwidth}
-    \centering
-    \caption{Time (s)}
-    \input{tab/tex/code_pose_time.tex}
-    \end{subtable}
-    \begin{subtable}{\textwidth}
-    \centering
-    \caption{Energy (J)}
-    \input{tab/tex/code_pose_energy.tex}
-    \end{subtable}
-    \label{tab:pose_params}
-  \end{table}
+\begin{table}
+  \setlength{\tabcolsep}{.5em}
+  \caption{Code POSE Values}
+  \begin{subtable}{\textwidth}
+  \centering
+  \caption{Time (s)}
+  \input{tab/tex/code_pose_time.tex}
+  \end{subtable}
+  \begin{subtable}{\textwidth}
+  \centering
+  \caption{Energy (J)}
+  \input{tab/tex/code_pose_energy.tex}
+  \end{subtable}
+  \label{tab:pose_params}
+\end{table}
 
 
 

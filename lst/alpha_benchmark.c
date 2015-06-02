@@ -3,9 +3,3 @@ static void * alpha_benchmark(void * args) {
                 jmp top ");
   return NULL;
 }
-/* ... */
-for (thread = 0; thread < cores; ++thread) {
-  pthread_create(&thread_handles[thread], NULL,
-                 &alpha_benchmark,
-                 (void *) NULL);
-}

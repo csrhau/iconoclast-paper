@@ -61,16 +61,17 @@ If an optimisation yields dramatic reductions in runtime with only minor reducti
 It is the Contribution Bound which enables our model to make this distinction.
 \subsection{Optimisation Limit}
 The bounds described thus far delineate those areas of the Energy/Runtime plane in which runtime and power optimised versions of a given code may exist.
-The final component of POSE is the Optimisation Limit, which subdivides the runtime optimised area of the feasible performance envelope into those optimisations which may be outperformed by power optimisations, and those which strictly dominate all possible power optimisations.
+The final component of POSE is the Optimisation Limit.
+This partitions runtime optimisations into those which strictly dominate all power optimisations and those which could potentially be outperformed by them.
 
-The dashed Optimisation Limit  mirrors the Optimisation Bound and is also based on \autoref{eq:optimisation}.
-This limit connects all points with the same value for $M$ as the maximally power-optimised point in our envelope.
-All optimisations in the area below this limit strictly dominate any possible power optimisation.
+This limit is related to the Optimisation Bound and is likewise based on \autoref{eq:optimisation}.
+It connects all points with the same value for $M$ as the maximally power-optimised point in our envelope.
+All optimisations below this limit strictly dominate any possible power optimisation.
 
 \section{POSE Insights}
 \label{sec:insights}
 The POSE Model partitions the feasible performance envelope from \autoref{fig:technique} into several areas.
-These areas allow us to classify optimisations according to which one of the following labelled areas they fall in:
+This allows us to classify optimisations according to which one of the following labelled areas they fall in:
 
 \begin{multicols}{2}
 \begin{enumerate}
