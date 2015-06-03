@@ -4,12 +4,12 @@ We now use POSE to investigate the CPU power consumption of codes from the Mante
 The applications we study are simplified versions of production codes intended for research purposes.
 As such they exhibit relatively compact code bases and well understood behaviours while still providing represantative workloads.
 
-CPU energy consumption accounts for a significant portion of the energy used by high performance systems~\cite{rong:2010aa}, making this a prime candidate for optimisation.
-Crucially for POSE, this variety of power consumption can be accurately measured on unmodified comodity hardware~\cite{hackenberg:2013aa}.
 
-CPU energy consumption was measured using Intel's Running Average Power Limit (RAPL) technology~\cite{david:2010aa}.
-We created a tool based on the Unix \texttt{time} to output energy consumption figures as well as conventional runtime figures.
-The techniques described in \cite{hahnel:2012aa} were used to ensure measurement accuracy.
+CPU energy consumption accounts for a significant portion of the energy used by high performance systems~\cite{rong:2010aa} and is therefore a prime candidate for optimisation.
+Crucially it can also be measured accurately on comodity hardware~\cite{hackenberg:2013aa}.
+We extended the Unix \texttt{time} binary to gather power consumption figures using Intel's Running Average Power Limit (RAPL) technology~\cite{david:2010aa}.
+The techniques described in \cite{hahnel:2012aa} were used to promote measurement accuracy.
+
 
 
 \subsection{CPU Power Consumption}
@@ -31,27 +31,35 @@ P_{leak} = V \times I_{leak} \label{eq:staticpwr}
 \autoref{eq:staticpwr} is a simplified expression for leakage power that exploits the fact that leakage current $I_{leak}$ is invariant to processor workload~\cite{kim:2003aa}.
 
 Activity factor captures the fraction of logic elements which change state each clock cycle.
-Frequency and supply voltage vary in tandem, taking values from a fixed set of $(frequency, voltage)$ pairs known as P-states.
-Dynamic Voltage and Frequency Scaling (DVFS) selects the most appropriate P-state for the current workload.
-Finally, capacitance and leakage current are constants dictated by processor design.
+Frequency and supply voltage vary in tandem, taking values from a set of $(frequency, voltage)$ pairs known as P-states.
+Dynamic Voltage and Frequency Scaling (DVFS) selects a P-state based on workload, or places the CPU into an energy saving mode if no work is available.
+Finally, capacitance and leakage current are constants dictated by hardware design.
 
 Processor architecture also plays a significant roll in determining total power consumption.
 Each core in a multicore architecture operates independantly with its own activity factor and in some cases P-state.
 As a result, \autoref{eq:totpwr} should be summed across all cores to arrive at a value for the entire processor.
 
 \subsection{Feasible Performance Envelope}
-The first step in applying POSE is to construct an appropriate feasible performance envelope.
-Manufacturers publish the power dissipation figures of their hardware in the form of a thermal envelope, however these values are usually conservative for safety reasons.
+The first step in applying POSE is to construct a feasible performance envelope.
+Manufacturers publish the power dissipation figures of their hardware, however these values are usually conservative for safety reasons.
 POSE works best when the maximum and minimum power bounds are as tight as possible.
-Benchmarks were therefore used to determine $P_{\max}$ and $P_{\min}$ empirically.
+We therefore determine $P_{\max}$ and $P_{\min}$ empirically.
 
-We define a benchmark configuration as a tuple $(S,A,C)$ with P-state $S$, activity factor $A$ and $C$ active cores.
-Which configuration to use depends on the code and the nature of the optimisations being considered.
-POSE models for inherently serial codes should be constructed from benchmark measurements with $C = 1$, for example.
-Fortunately, the benchmark configuration space is small enough to measure every point within it in a reasonable amount of time.
+We describe benchmarks using $(S,A,C)$ tuples with P-state $S$, activity factor $A$ and active core count $C$.
+Our $P_{min}$ and $P_{max}$ benchmarks should reflect the range of values these properties can take for a given code $\theta$.
+We formalise this notion in \autoref{eq:pbench}.
+\begin{align}
+  \label{eq:pbench}
+  \begin{split}
+    P_{min} &= (S_{min}, A_{min}, C_{min}~\vert~\theta), \\
+    P_{max} &= (S_{max}, A_{max}, C_{max}~\vert~\theta) 
+  \end{split}
+\end{align}
+The values of $S$, $A$, and $C$ depend on the code and the nature of the optimisations being considered.
+POSE models for inherently serial codes should be constructed using single threaded benchmarks with $C_{min} = C_{max} = 1$, for example.
 
-The \texttt{cpufrequtils} package allows us to override DVFS and manually set the desired P-state.
-We control the number of active cores by specifying the number of threads which should run the benchmarking routine.
+The \texttt{cpufrequtils} package allows us to override DVFS and manually set the desired P-state $S$.
+We control the number of active cores $C$ by specifying the number of threads used by the benchmarking routines.
 Each thread is pinned to its own core to prevent migration.
 The only remaining property is activity factor, which is influenced by benchmark code.
 
@@ -65,15 +73,21 @@ The only remaining property is activity factor, which is influenced by benchmark
 
 We define the range of values that $A$ can take for some fixed $S$ and $C$ as $[\alpha,~\beta]$ where $0 < \alpha < \beta < 1$.
 Our code for targeting activity factor $\alpha$ is given in \autoref{fig:microbench}.
-It repeatedly executes a single \texttt{jmp} instruction per clock cycle, performing no floating point or integer calculations, no memory accesses and keeping control logic to the bare minimum.
+This benchmark executes a single \texttt{jmp} instruction each clock cycle, preventing instruction pipelining.
+It performs no floating point or integer calculations and no memory accesses whilst keeping control logic to a minimum.
 
-Our measurements in \autoref{tab:code_metrics} support the notion that this code has a lower activity factor than any non-trivial workload.
-The only exceptions are applications which block for long periods, allowing the processor to enter an idle state. 
+Any non-trivial code will perform more work than our benchmark and will therefore have a higher activity factor.
+The only exception occurs when applications are blocked for long periods, allowing the processor to enter an idle state.
 This can be addressed by adding delays to the benchmark if necessary.
 
-We use FIRESTARTER~\cite{hackenberg:2013ab} to reach activity factor $\beta$ and hence measure our value for $P_{max}$.
+FIRESTARTER~\cite{hackenberg:2013ab} serves as our benchmark for activity factor $\beta$.
 This tool is designed to trigger near-peak power consumption across a range of x86\_64 processors.
-Prime95 and Linpack were also evaluated in this roll, however FIRESTARTER consistently delivered higher power consumption figures.
+It consists of hand optimised assembly routines which raise activity factor above the level achievable with high level languages.
+Prime95 and Linpack were also evaluated as potential $\beta$ benchmarks however they were consistently outperformed by FIRESTARTER.
+
+The benchmark parameter space is small enough for us to completely characterize a system by measuirng all supported configurations.
+Benchmarking runs lasted for 120 seconds to allow enough time for power readings to stabilize.
+The results are presented in \autoref{tab:fpe_params}.
 
 \begin{table}
 \centering
@@ -82,16 +96,33 @@ Prime95 and Linpack were also evaluated in this roll, however FIRESTARTER consis
 \input{tab/tex/fpe_params.tex}
 \end{table}
 
-We measured the performance of each benchmark for every combination of core count and P-state.
-Benchmarks runs lasted for 120 seconds to allow enough time for CPU temperature to stabilize.
-The results of this are presented in \autoref{tab:fpe_params}.
-
 \subsection{POSE Models}
 
+Having characterised our system we now proceed to build POSE models for applications in the Mantevo and Rodinia suites.
+These codes codes were compiled with ICC version \todo{find out}.
+We ran the codes with the default configuration provided in their documentation when available.
+The energy and runtime costs associated with each code is given in \autoref{tab:code_metrics}.
+
+All codes evaluated ran in parallel across four cores.
+They also spent a negligible amount of time waiting for resources. 
+This allowed the CPU to run at its maximum supported frequency of $3.2GHz$.
+
+
+
+All codes evaluated run on all four coures 
+
+
+Having obtained these values we constructed POSE models for each code which are presented in \autoref{tab:pose_params}.
+\begin{table}
+\centering
+\caption{Code Energy Measurements}
+\label{tab:code_metrics}
+\input{tab/tex/code_metrics.tex}
+\end{table}
 
 \begin{table}
   \setlength{\tabcolsep}{.5em}
-  \caption{Code POSE Values}
+  \caption{$E^1t^2$ POSE Points}
   \begin{subtable}{\textwidth}
   \centering
   \caption{Time (s)}
@@ -118,13 +149,6 @@ The results of this are presented in \autoref{tab:fpe_params}.
   \item \todo{Bosh out freq comparison waffle}
 \end{enumerate}
 
-
-\begin{table}
-\centering
-\caption{Code Energy Measurements}
-\label{tab:code_metrics}
-\input{tab/tex/code_metrics.tex}
-\end{table}
 
 
 \begin{figure}[t]%
@@ -166,6 +190,35 @@ Changes in processor P-state do not effect code performance linearly due to syst
 A code with low operational intensity
 
 \subsection{Results}
+
+
+LavaMD shows the most promise for power optimisation.
+\begin{itemize}
+  \item At most 353.36J can be saved by reducing power consumption.
+  \item Maximum slowdown from energy optimisation is 4.12s
+  \item Lowest $E^1t^2$ value within POSE:  6332609
+  \begin{itemize}
+  \item Corresponds to a 30.59\% reduction
+  \end{itemize}
+  
+  \item A speedup of 8.77s, or 1.15x, strictly outperforms $\theta$
+  \item A speedup of 15.29s, or 1.30x, strictly outperform any power-optimized version of $\theta$
+\end{itemize}
+
+MiniMD shows the least promise for optimisation.
+\begin{itemize}
+  \item At most 32.82J can be saved by reducing power consumption.
+  \item Maximum slowdown from energy optimisation is 0.40s
+  \item Lowest $E^1t^2$ value within POSE:  718233
+  \begin{itemize}
+  \item Corresponds to a 7.60\% reduction
+  \end{itemize}
+  \item A speedup of 5.27s, or 1.21x, strictly outperforms $\theta$
+  \item A speedup of 5.92s, or 1.24x, strictly outperform any power-optimized version of $\theta$
+\end{itemize}
+
+
+
 
 \autoref{tab:pose_params} \todo{reword given central table} shows that for MiniMD, the longest runtime within the Power Optimized Software Envelope is 30.70s.
 This means that any optimization which trades increased runtime for improved power efficiency can slow MiniMD down by at most 0.41s before $E^1t^2$ becomes strictly worse.
