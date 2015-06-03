@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-BASE_POWER=$(grep 'Empty Loop' ../data/code_metrics.csv | cut -f 4 -d,)
-ROOF_POWER=$(grep 'FIRESTARTER' ../data/code_metrics.csv | cut -f 4 -d,)
+BASE_POWER=$(grep 'Empty Loop' ./posifier_data/benchmark_metrics.csv | cut -f 4 -d,)
+ROOF_POWER=$(grep 'FIRESTARTER' ./posifier_data/benchmark_metrics.csv | cut -f 4 -d,)
 
 tail -n +2 ../data/code_metrics.csv > LOCAL_METRICS
 
