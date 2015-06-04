@@ -71,8 +71,7 @@ All optimisations below this limit strictly dominate any possible power optimisa
 \section{POSE Insights}
 \label{sec:insights}
 The POSE Model partitions the feasible performance envelope from \autoref{fig:technique} into several areas.
-This allows us to classify optimisations according to which one of the following labelled areas they fall in:
-
+Potential optimisations can be classified according to which of the following labelled areas they appear in:
 \begin{multicols}{2}
 \begin{enumerate}
 \item Strong Runtime Optimisation
@@ -86,7 +85,7 @@ Area \textbf{2} encompasses all possible runtime optimisations which have a bett
 Area \textbf{3} contains all optimised versions of $\theta$ for which reductions in $M$ are due primarily or entirely to reductions in power consumption.
 Finally, area \textbf{4} corresponds to all codes with strictly worse performance than $\theta$.
 
-A key strength of POSE is that it produces quantitative and actionable insights which relate directly to properties of the code.
+A key strength of POSE is that it produces quantitative and actionable insights relating directly to properties of the code.
 These insights fall into one of two broad categories, which taken together allow a performance engineer to decide if power optimisation is likely to prove worthwhile.
 
 The first of these categories relates to how much benefit may be offered by power optimisation.
