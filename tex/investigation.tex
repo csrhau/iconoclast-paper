@@ -162,9 +162,6 @@ POSE provides the following insights for LavaMD:
   \label{fig:comparrison}%
 \end{figure}
 
-
-
-
 \begin{figure}[t]%
 \begin{subfigure}[t]{.5\linewidth}%
 \centering%
@@ -184,8 +181,53 @@ POSE provides the following insights for LavaMD:
 
 
 \subsection{POSE Models for Frequency Scaling}
+DVFS impacts performance in a non-linear fashion. \todo{cite critical power slope}
+Codes prone to external bottlenecks like memory bandwidth or I/O latency typically leave the CPU underutilized.
+In these cases reducing the clock frequency can deliver energy savings without significant performance degradation. \todo{cite 
 
-Changes in processor P-state do not effect code performance linearly, and as such.
+
+
+
+Research has shown that in these cases energy can be saved with 
+
+be made 
+
+http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.60.8266&rep=rep1&type=pdf
+
+In these cases
+
+
+
+DVFS attempts to select the most appropriate P-state for the current workflow.
+That said, its reactive and coarse grained nature mean that its decisions can be sub-optimal decisions.
+Optimal frequency schedule, so that the processor only works as fast as 
+
+In this case CPU frequency can be reduced without adversely affecting performance.
+Conversely, if the CPU itself is a performance bottleneck, the maximum frequency possible should be selected.
+
+
+
+e the balance of pressures on external bottlenecks.
+
+
+If instruction throughput is a limiting factor then reducing clock frequency will adversely affect performance.
+
+
+If a CPU is often idle because of external bottlenecks
+like memory bandwidth then reducing its 
+
+
+This is most obvious when factors
+
+
+
+
+
+When the limiting factor is external to the CPU then reducing the clock frequency may not adversely impact performance.
+
+
+
+Code performance is not linear in terms of rocessor P-state do not linffect code performance linearly, and as such.
 
 In the presence of optimisation..
 
