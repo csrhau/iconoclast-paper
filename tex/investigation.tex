@@ -100,15 +100,15 @@ The energy and runtime costs associated with each code is given in \autoref{tab:
 
 \begin{table}
 \centering
-\caption{Code Energy Measurements}
+\caption{Code Metrics for $S = 3.2\text{ GHz}$, $C = 4$}
 \label{tab:code_metrics}
 \input{tab/tex/code_metrics.tex}
 \end{table}
 
-All codes evaluated ran in parallel across four cores.
+All codes ran in parallel across four cores.
 They also spent a negligible amount of time waiting for resources. 
 This allowed the CPU to run at its maximum supported frequency of 3.2 GHz.
-For the first stage of this investigation we disregard any optimisations which reduce parallelism ($C < 4$) or reduce processor throughput ($S < 3.2GHz$).
+For the first stage of this investigation we disregard optimisations which reduce parallelism ($C < 4$) or processor throughput ($S < 3.2GHz$).
 The benchmark configurations used were $(\text{3.2 GHz}, \alpha, 4)$ for $P_{min}$ and $(\text{3.2 GHz}, \beta, 4)$ for $P_{max}$, yielding power draws of 26.88W and 49.61W respectively.
 
 \begin{table}
@@ -128,17 +128,14 @@ The benchmark configurations used were $(\text{3.2 GHz}, \alpha, 4)$ for $P_{min
 \end{table}
 
 \autoref{tab:pose_params} summarises the POSE models constructed for each code.
-The remainder of this section focusses on MiniMD and LavaMD as the two codes which represent the extremes of power consumption.
+The remainder of this section focusses on MiniMD and LavaMD as the two codes representing the extremes of power consumption.
 POSE models for these two codes are reproduced graphically in \autoref{fig:minimd_pose} and \autoref{fig:lavamd_pose}.
 When comparing these diagrams it is readily apparent that LavaMD offers far more scope for power optimisation than MiniMD, which offers virtually none. 
 POSE provides the following insights for LavaMD:
 \begin{itemize}
   \item At most 353.36J can be saved by reducing power consumption
   \item The maximum slowdown from energy optimisation is 4.12s
-  \item The lowest $E^1t^2$ value from power optimisation is 6332609
-  \begin{itemize}
-  \item Corresponding to a 30.59\% improvement
-  \end{itemize}
+  \item The most power optimised value of $E^1t^2$ is 6332609, a 30.59\% reduction
   \item A speedup of 8.77s, or 1.15x, strictly outperforms $\theta$
   \item A speedup of 15.29s, or 1.30x, strictly outperforms any power optimisation
 \end{itemize}
@@ -162,6 +159,26 @@ POSE provides the following insights for LavaMD:
   \label{fig:comparrison}%
 \end{figure}
 
+
+\subsection{POSE Models for Frequency Scaling}
+DVFS selects the P-state which offers the best energy/runtime tradeoff for the current workload.
+This reactive approach is sub-optimal for dynamic workloads.
+Proactive, application-aware scaling can save energy in these cases~\cite{choi:2004aa}.
+We show how POSE can be used to reason about this class of optimisation.
+
+For this demonstration we suppose that optimisations can arbitrarily impact P-state as well as activity factor.
+This corresponds to the feasible performance envelope given in \autoref{eq:pbfreq}.
+
+\begin{align}
+  \label{eq:pbfreq}
+  \begin{split}
+    P_{min} &= (1.6\text{ GHz}, \alpha, 4) = 13.51W, \\
+    P_{max} &= (3.2\text{ GHz}, \beta, 4) = 49.61W
+  \end{split}
+\end{align}
+
+We begin by plotting the POSE models for our unmodified code running under the control of DVFS. 
+
 \begin{figure}[t]%
 \begin{subfigure}[t]{.5\linewidth}%
 \centering%
@@ -179,66 +196,7 @@ POSE provides the following insights for LavaMD:
 \label{fig:pstates}%
 \end{figure}%
 
+It is trivial to perform the same kind of investigation for optimisations which impact core counts.
 
-\subsection{POSE Models for Frequency Scaling}
-DVFS impacts performance in a non-linear fashion. \todo{cite critical power slope}
-Codes prone to external bottlenecks like memory bandwidth or I/O latency typically leave the CPU underutilized.
-In these cases reducing the clock frequency can deliver energy savings without significant performance degradation. \todo{cite}
+\todo{Not actually scaling individual kernels}
 
-Research has shown that in these cases energy can be saved with 
-
-be made 
-
-% Check this out: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.60.8266&rep=rep1&type=pdf
-
-In these cases
-
-
-
-DVFS attempts to select the most appropriate P-state for the current workflow.
-That said, its reactive and coarse grained nature mean that its decisions can be sub-optimal decisions.
-Optimal frequency schedule, so that the processor only works as fast as 
-
-In this case CPU frequency can be reduced without adversely affecting performance.
-Conversely, if the CPU itself is a performance bottleneck, the maximum frequency possible should be selected.
-
-
-
-e the balance of pressures on external bottlenecks.
-
-
-If instruction throughput is a limiting factor then reducing clock frequency will adversely affect performance.
-
-
-If a CPU is often idle because of external bottlenecks
-like memory bandwidth then reducing its 
-
-
-This is most obvious when factors
-
-
-
-
-
-When the limiting factor is external to the CPU then reducing the clock frequency may not adversely impact performance.
-
-
-
-Code performance is not linear in terms of rocessor P-state do not linffect code performance linearly, and as such.
-
-In the presence of optimisation..
-
-The flexibility of POSE allows it to evaluate the potential for optimisations at different P-states.
-We can use POSE to evaluate these
-
-Critical path? \todo{is there a smart term for this? Bound and bottleneck analysis.} A modern super-scalar CPU contains many specialized functional units. A code which is bottlenecked by Memory accesses may when slowed dow.
-
-A code with low operational intensity
-
-\subsection{Discussion}
-
-\todo{The graphs and tables of results within this section were produced automatically.}
-
-The figures produced by POSE are all upper bounds, and the benefits of power optimisation will be more modest in practice. Even so, these figures are useful as they allow performance engineers to make informed decisions about where best to focus their efforts. If they consider a $1.03 \times$ speed up to be more achievable than up to the maximum $1.17\times$ reduction in activity factor then they can proceed to apply conventional optimisations safe in the knowledge that overall performance will improve despite any increases in activity factor.
-
-If a performance engineer decides the benefits of power optimisation are worth pursuing after applying POSE, the question still remains as to how he should go about searching for those optimisations.

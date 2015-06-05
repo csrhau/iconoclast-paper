@@ -10,12 +10,99 @@
     axis y line=left,
   	xlabel={Runtime \emph{(s)}},
     ylabel={Energy \emph{(J)}},    
-    xmin=0, xmax=60,
-    ymin=0, ymax=1500,
+    xmin=20, xmax=65,
+    ymin=200, ymax=1200,
     legend columns=2,
     legend to name=minimd-pstate:legend,
     legend style={/tikz/every even column/.append style={column sep=0.2cm}} % space out columns a bit
     ]
+
+    % arguments: code power, code time, x, n 
+    \pgfmathdeclarefunction{metricbound}{4}{%
+      \pgfmathparse{((#1 * #2^(#4 + 1)) / #3^#4)}%
+    }
+    \pgfmathdeclarefunction{definitionbound}{4}{%
+      \pgfmathparse{((#1 / #2^(#4 + 1)) * #3^(#4 + 2))}%
+    }
+
+    %%
+    \pgfmathsetmacro{\codetime}{31.160996}
+    \pgfmathsetmacro{\codepower}{26.555410070974624}
+    \pgfmathsetmacro{\blnodex}{24.876044579784466}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
+    \pgfmathsetmacro{\codetime}{32.221644}
+    \pgfmathsetmacro{\codepower}{25.19066851461707}
+    \pgfmathsetmacro{\blnodex}{26.17914532437151}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
+    \pgfmathsetmacro{\codetime}{33.189564}
+    \pgfmathsetmacro{\codepower}{24.052689996168674}
+    \pgfmathsetmacro{\blnodex}{27.384280155637242}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
+    \pgfmathsetmacro{\codetime}{35.548669}
+    \pgfmathsetmacro{\codepower}{21.708309894809283}
+    \pgfmathsetmacro{\blnodex}{30.35072062021389}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
+    \pgfmathsetmacro{\codetime}{36.852917}
+    \pgfmathsetmacro{\codepower}{20.791885293639034}
+    \pgfmathsetmacro{\blnodex}{31.919904165043228}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
+    \pgfmathsetmacro{\codetime}{38.225746}
+    \pgfmathsetmacro{\codepower}{19.926273930664426}
+    \pgfmathsetmacro{\blnodex}{33.58161699951163}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
+    \pgfmathsetmacro{\codetime}{39.720356}
+    \pgfmathsetmacro{\codepower}{19.032817706870503}
+    \pgfmathsetmacro{\blnodex}{35.432334683311204}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
+    \pgfmathsetmacro{\codetime}{41.430395}
+    \pgfmathsetmacro{\codepower}{18.26008617586195}
+    \pgfmathsetmacro{\blnodex}{37.47190734697387}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
+    \pgfmathsetmacro{\codetime}{45.85507}
+    \pgfmathsetmacro{\codepower}{16.61222678321067}
+    \pgfmathsetmacro{\blnodex}{42.802165661611}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
+    \pgfmathsetmacro{\codetime}{49.7305}
+    \pgfmathsetmacro{\codepower}{15.67846259337831}
+    \pgfmathsetmacro{\blnodex}{47.323406701270244}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
+    \pgfmathsetmacro{\codetime}{52.358683}
+    \pgfmathsetmacro{\codepower}{15.137478343372388}
+    \pgfmathsetmacro{\blnodex}{50.41098720057872}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
+    \pgfmathsetmacro{\codetime}{55.340763}
+    \pgfmathsetmacro{\codepower}{14.650088958838532}
+    \pgfmathsetmacro{\blnodex}{53.866578212248804}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
+    %%
+    \pgfmathsetmacro{\codetime}{58.637567}
+    \pgfmathsetmacro{\codepower}{14.09304050763225}
+    \pgfmathsetmacro{\blnodex}{57.81786383949271}
+    \addplot[darkgray, densely dotted, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+
 
     %% Model Parameters %%
     \pgfplotstablegetelem{0}{Runtime}\of{\pstateminimdtable}
@@ -27,13 +114,7 @@
     %% Intermezzo Values %%
     \pgfmathsetmacro{\codepower}{\codeenergy / \codetime}
 
-    % arguments: code power, code time, x, n 
-    \pgfmathdeclarefunction{metricbound}{4}{%
-      \pgfmathparse{((#1 * #2^(#4 + 1)) / #3^#4)}%
-    }
-    \pgfmathdeclarefunction{definitionbound}{4}{%
-      \pgfmathparse{((#1 / #2^(#4 + 1)) * #3^(#4 + 2))}%
-    }
+
 
     % ALPHA BASELINE BOUND 
     \addplot[color=printgreen, very thick, name path=basebound, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
@@ -45,109 +126,39 @@
     \pgfmathsetmacro{\brnodex}{38.6049404590049}
     \addplot[name path=edpdef, draw=none, domain=\blnodex:\codetime+1, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
     \addplot[name path=edpopt, draw=none, domain=\codetime-1:\brnodex, forget plot] {metricbound(\codepower, \codetime, x, 2)};
-
     \path[name path=edpspace,
       intersection segments={
         of=edpdef and edpopt,
         sequence=A0 -- B1,
       }
       ]; 
-    \addplot[blue!20] fill between[of=edpspace and basebound]; 
+    \addplot[printblue!50] fill between[of=edpspace and basebound]; 
     \addlegendentry{3.2 GHz POSE}
 
-    %% PState progression
-    \addplot[mark=x, black] table[x=Runtime,y=Energy, trim cells=true] {\pstateminimdtable}
-      node[pos=0.0, pin=left:3.2 GHz]{}
-      node[pos=1.0, pin=95:1.6 GHz]{}
-      node[pos=0.5745, pin={[pin distance=0.15cm] above:2.2 GHz}]{}
-    ;
-    \addlegendentry{P-state Progression}
-
-    %%
-    \pgfmathsetmacro{\codetime}{31.160996}
-    \pgfmathsetmacro{\codepower}{26.555410070974624}
-    \pgfmathsetmacro{\blnodex}{24.876044579784466}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-    %%
-    \pgfmathsetmacro{\codetime}{32.221644}
-    \pgfmathsetmacro{\codepower}{25.19066851461707}
-    \pgfmathsetmacro{\blnodex}{26.17914532437151}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-    %%
-    \pgfmathsetmacro{\codetime}{33.189564}
-    \pgfmathsetmacro{\codepower}{24.052689996168674}
-    \pgfmathsetmacro{\blnodex}{27.384280155637242}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-    %%
-    \pgfmathsetmacro{\codetime}{35.548669}
-    \pgfmathsetmacro{\codepower}{21.708309894809283}
-    \pgfmathsetmacro{\blnodex}{30.35072062021389}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-    %%
-    \pgfmathsetmacro{\codetime}{36.852917}
-    \pgfmathsetmacro{\codepower}{20.791885293639034}
-    \pgfmathsetmacro{\blnodex}{31.919904165043228}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-    %%
-    \pgfmathsetmacro{\codetime}{38.225746}
-    \pgfmathsetmacro{\codepower}{19.926273930664426}
-    \pgfmathsetmacro{\blnodex}{33.58161699951163}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-    %%
-    \pgfmathsetmacro{\codetime}{39.720356}
-    \pgfmathsetmacro{\codepower}{19.032817706870503}
-    \pgfmathsetmacro{\blnodex}{35.432334683311204}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-    %%
-    \pgfmathsetmacro{\codetime}{41.430395}
-    \pgfmathsetmacro{\codepower}{18.26008617586195}
-    \pgfmathsetmacro{\blnodex}{37.47190734697387}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-    %% 2.2GHz
+    % 2.2 GHz non-overlapping pose
     \pgfmathsetmacro{\codetime}{43.161913}
     \pgfmathsetmacro{\codepower}{17.552650110758528}
     \pgfmathsetmacro{\blnodex}{39.55555231782452}
-    \addplot[name path=edpdef, red, densely dashed, domain=\blnodex:\codetime] {definitionbound(\codepower, \codetime, x, 2)};
-    \addlegendentry{Optimisation Cutoff}
-
-    %%
-    \pgfmathsetmacro{\codetime}{45.85507}
-    \pgfmathsetmacro{\codepower}{16.61222678321067}
-    \pgfmathsetmacro{\blnodex}{42.802165661611}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-    %%
-    \pgfmathsetmacro{\codetime}{49.7305}
-    \pgfmathsetmacro{\codepower}{15.67846259337831}
-    \pgfmathsetmacro{\blnodex}{47.323406701270244}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-    %%
-    \pgfmathsetmacro{\codetime}{52.358683}
-    \pgfmathsetmacro{\codepower}{15.137478343372388}
-    \pgfmathsetmacro{\blnodex}{50.41098720057872}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-    %%
-    \pgfmathsetmacro{\codetime}{55.340763}
-    \pgfmathsetmacro{\codepower}{14.650088958838532}
-    \pgfmathsetmacro{\blnodex}{53.866578212248804}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-    %%
-    \pgfmathsetmacro{\codetime}{58.637567}
-    \pgfmathsetmacro{\codepower}{14.09304050763225}
-    \pgfmathsetmacro{\blnodex}{57.81786383949271}
-    \addplot[name path=edpdef, gray, densely dashed, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-
-
+    \pgfmathsetmacro{\brnodex}{47.097072968441026}
+    \addplot[name path=edpdef, draw=none, domain=\blnodex:\codetime+1, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+    \addplot[name path=edpopt, draw=none, domain=\codetime:\brnodex, forget plot] {metricbound(\codepower, \codetime, x, 2)};
+    \path[name path=edpspace,
+      intersection segments={
+        of=edpdef and edpopt,
+        sequence=A0 -- B1,
+      }
+      ]; 
+    \addplot[printblue!25] fill between[of=edpspace and basebound]; 
+    \addlegendentry{First Non-intersecting POSE}
+    
+    %% PState progression
+    \addplot[mark=x, black, only marks] table[x=Runtime,y=Energy, trim cells=true] {\pstateminimdtable}
+      node[pos=0.0, pin=above:3.2 GHz]{}
+      node[pos=1.0, pin=above:1.6 GHz]{}
+      node[pos=0.64285714285, pin=above:2.2 GHz]{} % pos is elem index / rows - 1 (zero indexed)
+      % How to specify pin length (.15cm) and angle (120)
+      %node[pos=0.5745, pin={[pin distance=0.15cm] 120:2.2 GHz}]{}
+    ;
+    \addlegendentry{P-state Contribution Bounds}
  \end{axis}
 \end{tikzpicture}
