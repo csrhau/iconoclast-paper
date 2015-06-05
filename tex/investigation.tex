@@ -161,6 +161,13 @@ POSE provides the following insights for LavaMD:
 
 
 \subsection{POSE Models for Frequency Scaling}
+The relationship between P-state and performance is non-linear and dependent on workload.
+Operating at a lower P-state will reduce power draw but can also increase runtime and in some cases energy consumption.
+In general, applications for which external bottlenecks like 
+
+In general, P-states with unning a processor 
+
+
 DVFS selects the P-state which offers the best energy/runtime tradeoff for the current workload.
 This reactive approach is sub-optimal for dynamic workloads.
 Proactive, application-aware scaling can save energy in these cases~\cite{choi:2004aa}.
