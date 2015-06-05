@@ -15,7 +15,7 @@ class Parser
         options.base_power = bp 
       end
       #P_{\beta}
-      opts.on('--roof-power RP', Float, 'System Roofline Power (W) [Optional]') do |rp|
+      opts.on('--roof-power RP', Float, 'System Roofline Power (W)') do |rp|
         options.roof_power = rp
       end
       #P_{\theta}
@@ -37,7 +37,7 @@ class Parser
 
       # Optional argument with keyword completion.
       opts.on("--format [FORMAT]", [:text, :latex, :table],
-              "Select output format (text, latex, table)") do |f|
+              "OPTIONAL: Select output format (text, latex, table)") do |f|
         options.format=f
       end
       # Print help message
