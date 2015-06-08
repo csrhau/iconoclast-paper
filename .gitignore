@@ -2,6 +2,9 @@
 paper.pdf
 presentation.pdf
 
+## Local crap directory
+
+local/
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
