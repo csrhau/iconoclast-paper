@@ -1,8 +1,8 @@
 \section{Investigation}
 \label{sec:investigation}
-We now use POSE to investigate the CPU power consumption of codes from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} suites.
+We now use POSE to investigate the CPU power consumption of codes from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} benchmark suites.
 The applications we study are simplified versions of production codes intended for research purposes.
-As such they exhibit relatively compact code bases and well understood behaviours while still providing represantative workloads.
+As such they have relatively compact code bases and well understood behaviours while still providing represantative workloads.
 
 CPU energy consumption accounts for a significant portion of the energy used by high performance systems~\cite{rong:2010aa} and is therefore a prime target for optimisation.
 It can also be measured accurately on comodity hardware~\cite{hackenberg:2013aa} making it a suitable candidate for POSE modelling.
@@ -20,10 +20,10 @@ Leakage power exists because at microscopic scales the insulating properties of 
 Other forms of power dissipation exist, however their effects are relatively minor \cite{kaxiras:2008aa}.
 \begin{gather}
 P_{dyn} \propto CV^{2}Af \label{eq:dynpwr} \\
-P_{leak} = V \times I_{leak} \label{eq:staticpwr}
+P_{leak} = V\times I_{leak} \label{eq:staticpwr}
 \end{gather}
 \autoref{eq:dynpwr} is a common approximation for dynamic power in which $C$ denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency.
-\autoref{eq:staticpwr} is a simplified expression for leakage power which exploits the fact that leakage current $I_{leak}$ is invariant to processor workload~\cite{kim:2003aa}.
+\autoref{eq:staticpwr} is a simplified expression for leakage power which exploits the fact that leakage current ($I_{leak}$) is invariant to processor workload~\cite{kim:2003aa}.
 
 Activity factor captures the fraction of logic elements which change state each clock cycle.
 Frequency and supply voltage vary in tandem, taking values from a set of $(frequency, voltage)$ pairs known as P-states.
@@ -37,8 +37,7 @@ As a result, \autoref{eq:totpwr} should be summed across all cores to arrive at 
 \subsection{Feasible Performance Envelope}
 The first step in applying POSE is to construct a feasible performance envelope.
 Manufacturers publish the power dissipation figures of their hardware, however these values are usually conservative for safety reasons.
-POSE works best when the maximum and minimum power bounds are as tight as possible.
-We therefore determine $P_{\max}$ and $P_{\min}$ empirically.
+POSE works best when the maximum and minimum power bounds are as tight as possible, therefore we determine $P_{\max}$ and $P_{\min}$ empirically.
 
 We describe power benchmarks using $(S,A,C)$ tuples with P-state $S$, activity factor $A$ and active core count $C$; the three properties which link software to CPU power draw.
 Our $P_{min}$ and $P_{max}$ benchmarks should reflect the range of values these properties can take for a given code $\theta$.
