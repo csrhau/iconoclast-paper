@@ -71,6 +71,7 @@
     \addlegendentry{First Non-intersecting POSE}
 
     %% PState progression
+    \tikzset{ every pin edge/.append style={thick} }
     \addplot[mark=x, only marks, black] table[x=Runtime,y=Energy, trim cells=true] {\pstatelavamdtable}
       node[pos=0.0, pin=above:3.2 GHz]{}
       node[pos=1.0, pin=above:1.6 GHz]{}
