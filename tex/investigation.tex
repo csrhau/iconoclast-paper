@@ -1,7 +1,7 @@
 \section{Investigation}
 \label{sec:investigation}
 We now use POSE to investigate the CPU power consumption of codes from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} benchmark suites.
-The applications we study are simplified versions of production codes intended for research purposes.
+The applications studied are simplified versions of production codes intended for research purposes.
 As such they have relatively compact code bases and well understood behaviours while still providing represantative workloads.
 
 CPU energy consumption accounts for a significant portion of the energy used by high performance systems~\cite{rong:2010aa} and is therefore a prime target for optimisation.
@@ -36,12 +36,12 @@ As a result, \autoref{eq:totpwr} should be summed across all cores to arrive at 
 
 \subsection{Feasible Performance Envelope}
 The first step in applying POSE is to construct a feasible performance envelope.
-Manufacturers publish the power dissipation figures of their hardware, however these values are usually conservative for safety reasons.
+Many manufacturers publish power dissipation figures for their hardware, however for safety reasons these are usually conservative estimates.
 POSE works best when the maximum and minimum power bounds are as tight as possible, therefore we determine $P_{\max}$ and $P_{\min}$ empirically.
 
-We describe power benchmarks using $(S,A,C)$ tuples with P-state $S$, activity factor $A$ and active core count $C$; the three properties which link software to CPU power draw.
+We specify power benchmarks using $(S,A,C)$ tuples, with P-state $S$, activity factor $A$ and active core count $C$.
 Our $P_{min}$ and $P_{max}$ benchmarks should reflect the range of values these properties can take for a given code $\theta$.
-We formalise this notion in \autoref{eq:pbench}.
+This notion is formalised by \autoref{eq:pbench}.
 \begin{align}
   \label{eq:pbench}
   \begin{split}
@@ -54,7 +54,7 @@ POSE models for inherently serial codes should be constructed using single threa
 
 The \texttt{cpufrequtils} package allows us to override DVFS and manually set the desired P-state $S$.
 We control the number of active cores $C$ by specifying the number of threads used by our benchmarking routines and pinning each one to its own core to prevent migration.
-The only remaining property is activity factor, which is influenced by benchmark code.
+The remaining property is activity factor, which is influenced by benchmark code.
 
 \begin{figure}[ht]
 \centering
@@ -69,7 +69,8 @@ Our code for targeting activity factor $\alpha$ is given in \autoref{fig:microbe
 This benchmark executes a single \texttt{jmp} instruction each clock cycle, preventing instruction pipelining.
 It performs no floating point or integer calculations and no memory accesses whilst keeping control logic to a minimum.
 
-Any non-trivial code will perform more work than our benchmark and will therefore have a higher activity factor.
+Non-trivial codes perform more work per unit time than our minimal benchmark.
+This additional work means more transistors changing state per cycle, and hence a higher activity factor.
 The only exception occurs when applications are blocked for long periods, allowing the processor to enter an idle state.
 This can be addressed by adding delays to the benchmark if necessary.
 
@@ -161,7 +162,8 @@ POSE provides the following insights for LavaMD:
 
 \subsection{POSE Models for Frequency Scaling}
 The relationship between P-state and performance is non-linear and dependent on workload.
-Operating at a lower P-state will reduce power draw but can also increase runtime and in some cases energy consumption.
+Operating at lower power P-states can significantly increase runtime, offsetting some or all of the potential energy savings.
+
 In general, applications for which external bottlenecks like 
 
 In general, P-states with unning a processor 
