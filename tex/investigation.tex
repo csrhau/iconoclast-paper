@@ -79,8 +79,8 @@ This tool is designed to trigger near-peak power consumption across a range of x
 It consists of hand optimised assembly routines which raise activity factor above the level achievable with high level languages.
 Prime95 and Linpack were also evaluated as potential $\beta$ benchmarks however they were consistently outperformed by FIRESTARTER.
 
-The benchmark parameter space is small enough to fully characterise a processor by measuirng all $(S,A,C)$ configurations.
-Benchmarking runs lasted for 120 seconds to allow enough time for power readings to stabilize.
+The benchmark parameter space is small enough to fully characterise a processor by measuring all $(S,A,C)$ configurations.
+Benchmarking runs lasted for 120 seconds to allow enough time for power readings to stabilise.
 We extended the Unix \texttt{time} binary to gather power consumption figures using Intel's Running Average Power Limit (RAPL) technology~\cite{david:2010aa}.
 The techniques described in \cite{hahnel:2012aa} were used to promote measurement accuracy.
 Results are presented in \autoref{tab:fpe_params}, which identifies P-states by their frequency component.
@@ -136,8 +136,8 @@ POSE provides the following insights for LavaMD:
   \item At most 353.36J can be saved by reducing power consumption
   \item The maximum slowdown from energy optimisation is 4.12s
   \item The most power optimised value of $E^1t^2$ is 6332609, a 30.59\% reduction
-  \item A speedup of 8.77s, or 1.15x, strictly outperforms $\theta$
-  \item A speedup of 15.29s, or 1.30x, strictly outperforms any power optimisation
+  \item A speed up of 8.77s, or 1.15x, strictly outperforms $\theta$
+  \item A speed up of 15.29s, or 1.30x, strictly outperforms any power optimisation
 \end{itemize}
 
 \begin{figure}[t]%
@@ -169,7 +169,7 @@ In general, applications for which external bottlenecks like
 In general, P-states with unning a processor 
 
 
-DVFS selects the P-state which offers the best energy/runtime tradeoff for the current workload.
+DVFS selects the P-state which offers the best energy/runtime trade-off for the current workload.
 This reactive approach is sub-optimal for dynamic workloads.
 Proactive, application-aware scaling can save energy in these cases~\cite{choi:2004aa}.
 We show how POSE can be used to reason about this class of optimisation.
