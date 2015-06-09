@@ -2,10 +2,10 @@
 \label{sec:investigation}
 We now use POSE to investigate the CPU power consumption of codes from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} benchmark suites.
 The applications studied are simplified versions of production codes intended for research purposes.
-As such they have relatively compact code bases and well understood behaviours while still providing represantative workloads.
+As such they have relatively compact code bases and well understood behaviours while still providing representative workloads.
 
 CPU energy consumption accounts for a significant portion of the energy used by high performance systems~\cite{rong:2010aa} and is therefore a prime target for optimisation.
-It can also be measured accurately on comodity hardware~\cite{hackenberg:2013aa} making it a suitable candidate for POSE modelling.
+It can also be measured accurately on commodity hardware~\cite{hackenberg:2013aa} making it a suitable candidate for POSE modelling.
 
 \subsection{CPU Power Consumption}
 \label{ssec:cpupower}
@@ -31,7 +31,7 @@ Dynamic Voltage and Frequency Scaling (DVFS) selects a P-state based on workload
 Finally, capacitance and leakage current are constants dictated by hardware design.
 
 Processor architecture also plays a significant roll in determining total power consumption.
-Each core in a multicore architecture operates independantly with its own activity factor and in some cases P-state.
+Each core in a multi-core architecture operates independently with its own activity factor and in some cases P-state.
 As a result, \autoref{eq:totpwr} should be summed across all cores to arrive at a value for the entire processor.
 
 \subsection{Feasible Performance Envelope}
@@ -155,28 +155,25 @@ POSE provides the following insights for LavaMD:
   \begin{center}%
     \ref{minimd:legend}%
   \end{center}%
-  \caption{$E^1t^2$ POSE comparrison}%
-  \label{fig:comparrison}%
+  \caption{$E^1t^2$ POSE comparison}%
+  \label{fig:comparison}%
 \end{figure}
 
 
 \subsection{POSE Models for Frequency Scaling}
-The relationship between P-state and performance is non-linear and dependent on workload.
-Operating at lower power P-states can significantly increase runtime, offsetting some or all of the potential energy savings.
+The relationship between P-state and energy consumption is non-linear and workload dependent.
+Operating in low power states can increase runtime, offsetting any energy savings from reduced power draw~\cite{le:2010aa}.
+Application-aware DVFS can save energy by selecting the optimal P-state schedule for a given code~\cite{choi:2004aa}.
+We now use POSE to reason about this class of optimisation.
 
-In general, applications for which external bottlenecks like 
+Overriding DVFS with \texttt{cpufrequtils} allowed us to measure the performance of our codes at every P-state.
+\autoref{fig:pstates} shows that for both codes this approach can reduce energy consumption at the cost of increased runtime.
+That said, the lowest $E^1t^2$ value for both codes occurs at 3.2 GHz, meaning race to halt is the optimal strategy in terms of this metric. 
 
-In general, P-states with unning a processor 
-
-
-DVFS selects the P-state which offers the best energy/runtime trade-off for the current workload.
-This reactive approach is sub-optimal for dynamic workloads.
-Proactive, application-aware scaling can save energy in these cases~\cite{choi:2004aa}.
-We show how POSE can be used to reason about this class of optimisation.
-
-For this demonstration we suppose that optimisations can arbitrarily impact P-state as well as activity factor.
-This corresponds to the feasible performance envelope given in \autoref{eq:pbfreq}.
-
+While useful, this simple analysis fails to account for potential co-opti\-misa\-tion of activity factor and P-state.
+It is possible that different optimisations may be required to achieve optimal performance in different P-states.
+The flexibility of POSE allows us to model this scenario by considering optimisations which can impact P-state as well as activity factor.
+The corresponding feasible performance envelope is given by \autoref{eq:pbfreq}.
 \begin{align}
   \label{eq:pbfreq}
   \begin{split}
@@ -185,17 +182,19 @@ This corresponds to the feasible performance envelope given in \autoref{eq:pbfre
   \end{split}
 \end{align}
 
-We begin by plotting the POSE models for our unmodified code running under the control of DVFS. 
+
 
 \begin{figure}[t]%
 \begin{subfigure}[t]{.5\linewidth}%
 \centering%
 \input{plot/minimd-pstates/plot_core}%
 \caption{MiniMD}%
+\label{fig:minimd-pstates}%
 \end{subfigure}%
 \begin{subfigure}[t]{.5\linewidth}%
 \input{plot/lavamd-pstates/plot_core}%
 \caption{LavaMD}%
+\label{fig:lavamd-pstates}%
 \end{subfigure}%
 \begin{center}%
 \ref{minimd-pstate:legend}%
@@ -204,7 +203,15 @@ We begin by plotting the POSE models for our unmodified code running under the c
 \label{fig:pstates}%
 \end{figure}%
 
-It is trivial to perform the same kind of investigation for optimisations which impact core counts.
+We choose the 3.2 GHz run as our initial `unoptimised' baseline because this is the P-state our system defaults to when running MiniMD or LavaMD.
+If the POSE models for two P-states do not overlap then switching to the higher performance P-state beats any possible power optimisation at the weaker state.
+This state can then be excluded from any search for power optimisations.
 
-\todo{Not actually scaling individual kernels}
+For MiniMD, \autoref{fig:minimd-pstates} shows that the first POSE model which does not overlap with the one built for our baseline occurs at 2.2 GHz.
+This means no power optimisations exists at P-states 2.2 GHz and below which can match the $E^1t^2$ performance of our unoptimised baseline.
+Conversely, such an optimisation may exist at frequencies between 3.2 GHz and 2.2 GHz as shown by the overlapping of the respective POSE models.
+For LavaMD this optimisation threshold is slightly lower at 2.1 GHz, lending support to the claim that of these two codes LavaMD is more amenable to power optimisation.
 
+Dynamic Concurrency Throttling has also been proposed as a means to reduce energy consumption~\cite{maury:2006aa}.
+It would be trivial to use POSE to model optimisations which influence core count.
+The only difference between this and our DVFS investigation would be slightly different parameterisation of the feasible performance envelope ($C_{min}=1$).
