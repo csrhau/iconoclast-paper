@@ -96,6 +96,10 @@ The second category indicates how much scope a code has for power optimisation.
 The difference in runtime between intersect $E$ and $\theta$ represents the maximum increase in runtime we could feasibly trade off to achieve a slower yet more energy efficient code.
 The value $t_\theta / t_B$ represents the smallest speed-up which would guarantee a code which outperformed $\theta$ with respect to $M$.
 Finally, $t_\theta / t_A$ is the smallest speed-up guaranteed to outperform any power optimised version of $\theta$.
+
+The figures produced by POSE are all upper bounds, and the benefits of power optimisation will be more modest in practice.
+Even so, these figures are useful as they allow performance engineers to make informed decisions about where best to focus their optimisation efforts.
+
 \begin{figure}
 \centering
 \input{plot/multimetric-technique/plot_core}
