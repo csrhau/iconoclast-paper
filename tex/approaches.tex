@@ -36,7 +36,7 @@ This is the most abstract category of performance models and the one in which ou
 Rather than attempting to faithfully represent an entire system, heuristic models provide a simplified analogy which helps developers reason about particular properties of a code.
 Ease of construction and the clarity of their insights mean heuristic models are well suited to guiding the early stages of optimisation.
 
-A popular example of this class is the Roofline~\cite{williams:2009aa} model.
+A popular example of this class is the Roofline model~\cite{williams:2009aa}.
 Roofline frames application performance in terms of its operational intensity and two system bottlenecks; off-chip memory bandwidth and floating point performance.
 This simplification limits Roofline's use as a predictive model but it also means a developer can easily isolate the limiting factor of code performance and target their optimisation efforts accordingly.
 

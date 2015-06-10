@@ -1,7 +1,7 @@
 \section{Power Optimised Software Envelope}
 \label{sec:pose}
 
-The POSE heuristic partitions the Energy/Runtime plane into areas with differing performance characteristics relative to some initial unoptimised code.
+The POSE heuristic partitions the energy/runtime plane into areas with differing performance characteristics relative to some initial unoptimised code.
 This section introduces the bounds which make up POSE and provides their derivations for the $E^mt^n$ family of metrics.
 The only prerequisites of our model are that time and energy consumption can be accurately measured on the target platform.
 
@@ -22,7 +22,7 @@ The $\langle Runtime, Energy\rangle$ costs incurred by running any given code $\
 To constrain our search space further we consider the metric we wish to reduce.
 
 \begin{definition}
-For logically equivalent codes $\theta$ and $\lambda$, the transformation ${\theta \to \lambda}$ is a valid optimisation with respect to cost metric $M$ if and only if ${M(\lambda) < M(\theta)}$.
+For logically equivalent codes $\theta$ and $\lambda$, the transformation ${\theta \to \lambda}$ is a valid optimisation with respect to metric $M$ if and only if ${M(\lambda) \succ M(\theta)}$.
 \label{def:optimisation}
 \end{definition}
 
@@ -60,7 +60,7 @@ It makes sense to use the most appropriate tools while searching for optimisatio
 If an optimisation yields dramatic reductions in runtime with only minor reductions in power consumption then it is reasonable to classify it as a runtime optimisation and state that conventional time-based profilers and performance engineering tools are better suited to finding it.
 It is the Contribution Bound which enables our model to make this distinction.
 \subsection{Optimisation Limit}
-The bounds described thus far delineate those areas of the Energy/Runtime plane in which runtime and power optimised versions of a given code may exist.
+The bounds described thus far delineate those areas of the energy/runtime plane in which runtime and power optimised versions of a given code may exist.
 The final component of POSE is the Optimisation Limit.
 This partitions runtime optimisations into those which strictly dominate all power optimisations and those which could potentially be outperformed by them.
 
@@ -70,7 +70,7 @@ All optimisations below this limit strictly dominate any possible power optimisa
 
 \section{POSE Insights}
 \label{sec:insights}
-The POSE Model partitions the feasible performance envelope in \autoref{fig:technique} into several areas.
+The POSE model partitions the feasible performance envelope in \autoref{fig:technique} into several areas.
 Potential optimisations can be classified according to which of the following labelled areas they appear in:
 \begin{multicols}{2}
 \begin{enumerate}
@@ -82,15 +82,15 @@ Potential optimisations can be classified according to which of the following la
 \end{multicols}
 Area \textbf{1} encompasses all points with a better $M$ value than the best case power optimisation for $\theta$.
 Area \textbf{2} encompasses all possible runtime optimisations which have a better performance than $\theta$ in terms of $M$ yet may in turn be beaten by some power optimised version of $\theta$.
-Area \textbf{3} contains all optimised versions of $\theta$ for which reductions in $M$ are due primarily or entirely to reductions in power consumption.
-Finally, area \textbf{4} corresponds to all codes with strictly worse performance than $\theta$.
+Area \textbf{3} contains all optimised versions of $\theta$ for which reductions in $M$ are primarily or entirely due to reductions in power consumption.
+Area \textbf{4} corresponds to all codes with strictly worse performance than $\theta$.
 
 A key strength of POSE is that it produces quantitative and actionable insights relating directly to properties of the code.
 These insights fall into one of two broad categories, which taken together allow a performance engineer to decide if power optimisation is likely to prove worthwhile.
 
 The first of these categories relates to how much benefit may be offered by power optimisation.
 Taking the difference in energy between point $\theta$ and $D$ gives us an upper limit on the amount of energy which can be saved by power optimisation. 
-Similarly, the value $M(\theta) - M(C)$ bounds the amount of improvement in our metric we can expect to see from power optimisation.
+Similarly, the difference in value between $M(\theta)$ and $M(C)$ bounds the amount of improvement in our metric we can expect to see from power optimisation.
 
 The second category indicates how much scope a code has for power optimisation.
 The difference in runtime between intersect $E$ and $\theta$ represents the maximum increase in runtime we could feasibly trade off to achieve a slower yet more energy efficient code.

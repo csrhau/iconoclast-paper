@@ -109,7 +109,7 @@ The energy and runtime costs associated with each code is given in \autoref{tab:
 All codes ran in parallel across four cores.
 They also spent a negligible amount of time waiting for resources. 
 This allowed the CPU to run at its maximum supported frequency of 3.2 GHz.
-For the first stage of this investigation we disregard optimisations which reduce parallelism ($C < 4$) or processor throughput ($S < 3.2GHz$).
+For the first stage of this investigation we disregard optimisations which reduce parallelism ($C < 4$) or processor throughput (S < 3.2 GHz).
 The benchmark configurations used were $(\text{3.2 GHz}, \alpha, 4)$ for $P_{min}$ and $(\text{3.2 GHz}, \beta, 4)$ for $P_{max}$, yielding power draws of 26.88W and 49.61W respectively.
 
 \begin{table}
@@ -137,8 +137,8 @@ POSE provides the following insights for LavaMD:
   \item At most 353.36J can be saved by reducing power consumption.
   \item The maximum slowdown from energy optimisation is 4.12s.
   \item The most power optimised value of $E^1t^2$ is 6332609, a 30.59\% reduction.
-  \item A speed up of 8.77s, or 1.15x, strictly outperforms $\theta$.
-  \item A speed up of 15.29s, or 1.30x, strictly outperforms any power optimisation.
+  \item A speed up of 8.77s, or $1.15 \times$, strictly outperforms $\theta$.
+  \item A speed up of 15.29s, or $1.30 \times$, strictly outperforms any power optimisation.
 \end{itemize}
 
 \begin{figure}[t]%
