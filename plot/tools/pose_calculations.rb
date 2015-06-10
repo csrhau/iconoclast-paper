@@ -19,11 +19,11 @@ class Parser
         options.roof_power = rp
       end
       #P_{\theta}
-      opts.on('--code-power CP', Float, 'Unoptimized Code Power (W)') do |cp|
+      opts.on('--code-power CP', Float, 'Unoptimised Code Power (W)') do |cp|
         options.code_power = cp
       end
       #D_{\theta}
-      opts.on('--code-time T', Float, 'Unoptimized Code Runtime (s)') do |ct|
+      opts.on('--code-time T', Float, 'Unoptimised Code Runtime (s)') do |ct|
         options.code_time = ct
       end
       #E^m m value

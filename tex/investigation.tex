@@ -6,6 +6,7 @@ As such they have relatively compact code bases and well understood behaviours w
 
 CPU energy consumption accounts for a significant portion of the energy used by high performance systems~\cite{rong:2010aa} and is therefore a prime target for optimisation.
 It can also be measured accurately on commodity hardware~\cite{hackenberg:2013aa} making it a suitable candidate for POSE modelling.
+Our experiments were carried out on an Intel Core i5-3470 Ivy Bridge CPU which supports Intel's Running Average Power Limit (RAPL) technology~\cite{david:2010aa}.
 
 \subsection{CPU Power Consumption}
 \label{ssec:cpupower}
@@ -81,7 +82,7 @@ Prime95 and Linpack were also evaluated as potential $\beta$ benchmarks however 
 
 The benchmark parameter space is small enough to fully characterise a processor by measuring all $(S,A,C)$ configurations.
 Benchmarking runs lasted for 120 seconds to allow enough time for power readings to stabilise.
-We extended the Unix \texttt{time} binary to gather power consumption figures using Intel's Running Average Power Limit (RAPL) technology~\cite{david:2010aa}.
+We extended the Unix \texttt{time} binary to gather power consumption figures using RAPL.
 The techniques described in \cite{hahnel:2012aa} were used to promote measurement accuracy.
 Results are presented in \autoref{tab:fpe_params}, which identifies P-states by their frequency component.
 
@@ -133,11 +134,11 @@ POSE models for these two codes are reproduced graphically in \autoref{fig:minim
 When comparing these diagrams it is readily apparent that LavaMD offers far more scope for power optimisation than MiniMD, which offers virtually none. 
 POSE provides the following insights for LavaMD:
 \begin{itemize}
-  \item At most 353.36J can be saved by reducing power consumption
-  \item The maximum slowdown from energy optimisation is 4.12s
-  \item The most power optimised value of $E^1t^2$ is 6332609, a 30.59\% reduction
-  \item A speed up of 8.77s, or 1.15x, strictly outperforms $\theta$
-  \item A speed up of 15.29s, or 1.30x, strictly outperforms any power optimisation
+  \item At most 353.36J can be saved by reducing power consumption.
+  \item The maximum slowdown from energy optimisation is 4.12s.
+  \item The most power optimised value of $E^1t^2$ is 6332609, a 30.59\% reduction.
+  \item A speed up of 8.77s, or 1.15x, strictly outperforms $\theta$.
+  \item A speed up of 15.29s, or 1.30x, strictly outperforms any power optimisation.
 \end{itemize}
 
 \begin{figure}[t]%
@@ -164,16 +165,18 @@ POSE provides the following insights for LavaMD:
 The relationship between P-state and energy consumption is non-linear and workload dependent.
 Operating in low power states can increase runtime, offsetting any energy savings from reduced power draw~\cite{le:2010aa}.
 Application-aware DVFS can save energy by selecting the optimal P-state schedule for a given code~\cite{choi:2004aa}.
+This implies that code changes may effect the optimal P-state assignment. 
 We now use POSE to reason about this class of optimisation.
 
-Overriding DVFS with \texttt{cpufrequtils} allowed us to measure the performance of our codes at every P-state.
-\autoref{fig:pstates} shows that for both codes this approach can reduce energy consumption at the cost of increased runtime.
-That said, the lowest $E^1t^2$ value for both codes occurs at 3.2 GHz, meaning race to halt is the optimal strategy in terms of this metric. 
+The performance of MiniMD and LavaMD was measured for each P-state supported by our system.
+\autoref{fig:pstates} shows that the energy consumption of both codes can be reduced at the cost of increased runtime.
+That said, the lowest $E^1t^2$ value for both codes occurs at 3.2 GHz, meaning race-to-halt is the optimal strategy in terms of this metric. 
 
 While useful, this simple analysis fails to account for potential co-opti\-misa\-tion of activity factor and P-state.
 It is possible that different optimisations may be required to achieve optimal performance in different P-states.
 The flexibility of POSE allows us to model this scenario by considering optimisations which can impact P-state as well as activity factor.
-The corresponding feasible performance envelope is given by \autoref{eq:pbfreq}.
+\autoref{eq:pbfreq} gives the feasible performance envelope corresponding to this class of optimisation.
+
 \begin{align}
   \label{eq:pbfreq}
   \begin{split}

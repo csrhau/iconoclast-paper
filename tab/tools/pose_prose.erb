@@ -11,4 +11,4 @@ The maximum improvement in <%= Metric %> is <%= sprintf('%.2f', T[Metric].to_f -
 All codes with runtime in excess of <%= E['Runtime (s)'] %> have higher <%= Metric %>.
 This means we can trade at most <%= sprintf('%.2f', E['Runtime (s)'].to_f -  T['Runtime (s)'].to_f) %>s in exchange for better power performance.
 A runtime optimization of <%= sprintf('%.2f', T['Runtime (s)'].to_f - B['Runtime (s)'].to_f) %>s, or <%= sprintf('%.2f', T['Runtime (s)'].to_f / B['Runtime (s)'].to_f) %>x is guaranteed to beat $\theta$ in terms of <%= Metric %>. 
-A runtime optimization of <%= sprintf('%.2f', T['Runtime (s)'].to_f - A['Runtime (s)'].to_f) %>s, or <%= sprintf('%.2f', T['Runtime (s)'].to_f / A['Runtime (s)'].to_f) %>x, is guaranteed to beat any power optimized version of $\theta$ in terms of <%= Metric %> 
+A runtime optimization of <%= sprintf('%.2f', T['Runtime (s)'].to_f - A['Runtime (s)'].to_f) %>s, or <%= sprintf('%.2f', T['Runtime (s)'].to_f / A['Runtime (s)'].to_f) %>x, is guaranteed to beat any power optimised version of $\theta$ in terms of <%= Metric %> 
