@@ -13,7 +13,7 @@ end
 
 namespace :latex do
   desc "Compile Latex Paper"
-  file 'paper.pdf' => PAPER_TEX + TABLES.map { |t| t[:tex] } do |tex|
+  file 'paper.pdf' => PAPER_TEX + TABLES.map { |t| t[:tex] } + %w[bib/all.bib] do |tex|
     system("pdflatex paper.tex")
     system("bibtex paper.aux")
     system("pdflatex paper.tex")
