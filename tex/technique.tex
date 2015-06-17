@@ -26,7 +26,8 @@ For logically equivalent codes $\theta$ and $\lambda$, the transformation ${\the
 \label{def:optimisation}
 \end{definition}
 
-We plot a curve passing through $\theta$ linking all points where ${M(\lambda) = M(\theta)}$. By \autoref{def:optimisation} any optimised versions of $\theta$ must exist below this bound.
+We plot curve \emph{B --- E} in \autoref{fig:technique} which passes through $\theta$ linking all points where ${M(\lambda) = M(\theta)}$. 
+By \autoref{def:optimisation} any optimised versions of $\theta$ must exist below this bound.
 Naturally the equation for the Optimisation Bound depends on the metric we are optimising for.
 \autoref{fig:technique} shows the Optimisation Bound for $E^1t^2$.
 The general form of this bound for the $E^mt^n$ family of metrics is derived as follows:
@@ -45,7 +46,7 @@ An optimisation $\theta \to \lambda$ with respect to metric $M$ is a power optim
 \label{def:poweropt}
 \end{definition}
 
-We plot a curve through $\theta$ linking all points for which power and runtime factors contribute to $M$ in the same ratio as our original code.
+We plot curve \emph{C --- $\theta$} in \autoref{fig:technique} linking all points for which power and runtime factors contribute to $M$ in the same ratio as our original code.
 By \autoref{def:poweropt} any power-optimised versions of $\theta$ must lie below this Contribution Bound.
 Again the equation for the Contribution Bound depends on the metric chosen. 
 \autoref{fig:technique} shows the bound for $E^1t^2$ while the general form for $E^mt^n$ metrics is derived as follows:
@@ -65,7 +66,7 @@ The final component of POSE is the Optimisation Limit.
 This partitions runtime optimisations into those which strictly dominate all power optimisations and those which could potentially be outperformed by them.
 
 This limit is related to the Optimisation Bound and is likewise based on \autoref{eq:optimisation}.
-It connects all points with the same value for $M$ as the maximally power-optimised point in our envelope $C$.
+It connects all points with the same value for $M$ as the maximally power-optimised point in our envelope $C$, shown as curve \emph{A --- C} in \autoref{fig:technique} a.
 All optimisations below this limit strictly dominate any possible power optimisation.
 
 \section{POSE Insights}
