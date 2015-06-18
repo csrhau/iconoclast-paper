@@ -1,4 +1,4 @@
-\documentclass[runningheads,a4paper,draft]{llncs} % TODO remove draft mode
+\documentclass[runningheads,a4paper,draft]{IEEEtran} % TODO remove draft mode
 \usepackage{booktabs}
 \usepackage[hidelinks]{hyperref}
 \usepackage{pgfplots}
@@ -12,16 +12,7 @@
 \usepackage[T1]{fontenc} % For literal \{ and \} in author emails
 \pgfplotsset{compat=1.12}
 
-\author{Stephen Roberts\inst{1} \and Stephen Jarvis\inst{1} \\ 
-Chris January\inst{2} \and Jonathan Byrd\inst{2}}
-
-\institute{The University of Warwick \\
-  \email{\{S.I.Roberts, S.A.Jarvis\}@warwick.ac.uk}
-\and
-  Allinea Software
-}
-
-\authorrunning{Stephen Roberts et al.}
+\newtheorem{definition}{Definition} %Hack to allow definition in IEEE
 \title{POSE: A New Technique to Guide Energy Aware Code Optimisation}
 
 \newcommand{\DRAFT}[1]{•}
