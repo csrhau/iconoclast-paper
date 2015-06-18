@@ -118,12 +118,12 @@ The benchmark configurations used were $(\text{3.2 GHz}, \alpha, 4)$ for $P_{min
   \setlength{\tabcolsep}{.5em}
   \scriptsize
   \caption{$E^1t^2$ POSE Coordinates}
-  \begin{subtable}{\textwidth}
+  \begin{subtable}{\linewidth}
   \centering
   \caption{Time (s)}
   \input{tab/tex/code_pose_time.tex}
   \end{subtable}
-  \begin{subtable}{\textwidth}
+  \begin{subtable}{\linewidth}
   \centering
   \caption{Energy (J)}
   \input{tab/tex/code_pose_energy.tex}
@@ -144,7 +144,7 @@ POSE provides the following insights for LavaMD:
   \item A speed up of 15.29s, or $1.30 \times$, strictly outperforms any power optimisation.
 \end{itemize}
 
-\begin{figure}[t]%
+\begin{figure*}[t]%
   \providecommand{\plotwidth}{.95\linewidth}
   \begin{subfigure}[t]{.5\linewidth}%
     \input{plot/minimd-investigation/plot_core}%
@@ -161,7 +161,7 @@ POSE provides the following insights for LavaMD:
   \end{center}%
   \caption{$E^1t^2$ POSE comparison}%
   \label{fig:comparison}%
-\end{figure}
+\end{figure*}
 
 
 \subsection{POSE Models for Frequency Scaling}
@@ -190,7 +190,7 @@ The flexibility of POSE allows us to model this scenario by considering optimisa
 
 
 
-\begin{figure}[t]%
+\begin{figure*}[t]%
 \begin{subfigure}[t]{.5\linewidth}%
 \centering%
 \input{plot/minimd-pstates/plot_core}%
@@ -207,7 +207,7 @@ The flexibility of POSE allows us to model this scenario by considering optimisa
 \end{center}%
 \caption{$E^1t^2$ POSE for P-state Optimisation}%
 \label{fig:pstates}%
-\end{figure}%
+\end{figure*}%
 
 We choose the 3.2 GHz run as our initial `unoptimised' baseline because this is the P-state our system defaults to when running MiniMD or LavaMD.
 If the POSE models for two P-states do not overlap then switching to the higher performance P-state beats any possible power optimisation at the weaker state.

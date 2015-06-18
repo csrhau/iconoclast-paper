@@ -1,19 +1,20 @@
 \section{Related Work}
 \label{sec:related}
 Performance modelling techniques enable the rapid exploration of large hardware and software design spaces.
-This section describes various approaches to performance modelling and explains how POSE fits into this area.
+This section describes various approaches to performance modelling and explains where POSE fits.
 
-\subsubsection{Simulators:} 
+\noindent
+\subsubsection{Simulators} 
 Tools like SST~\cite{rodrigues:2011aa} and McPAT~\cite{li:2009aa} gather data while executing a simplified representation of the original code.
 These approaches can be extremely insightful, however constructing and validating representative simulations is often challenging.
 They also tend to be expensive to run, sometimes even more so than the original code.
 
-\subsubsection{Analytical Models:} This approach distils the structure and performance of a program into parameterised expressions.
+\subsubsection{Analytical Models} This approach distils the structure and performance of a program into parameterised expressions.
 Modelling frameworks like LogGP~\cite{alexandrov:1997aa} and BTL~\cite{manousakis:2012aa} provide model skeletons which must then be tailored to individual codes.
 Analytical models produce results more quickly than simulations, making them particularly useful when performing parameter sweeps.
 Ensuring the model is expressive enough to capture all possible program behaviours is the biggest obstacle to this approach as it requires a deep understanding of the target application.
 
-\subsubsection{Heuristic Models:}
+\subsubsection{Heuristic Models}
 This is the most abstract category of performance models and the one in which our work belongs.
 Rather than attempting to faithfully represent an entire system, heuristic models provide a simplified analogy which helps developers reason about particular properties of a code.
 Ease of construction and the clarity of their insights mean heuristic models are well suited to guiding the early stages of optimisation.

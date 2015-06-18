@@ -1,4 +1,5 @@
-\documentclass[runningheads,a4paper,draft]{IEEEtran} % TODO remove draft mode
+\documentclass[runningheads,a4paper,conference]{IEEEtran} % TODO remove draft mode
+\usepackage{etex}
 \usepackage{booktabs}
 \usepackage[hidelinks]{hyperref}
 \usepackage{pgfplots}
@@ -18,6 +19,13 @@
 \newcommand{\DRAFT}[1]{•}
 \renewcommand*{\sectionautorefname}{Section} % make sec: autorefs capitalized.
 
+\author{
+\IEEEauthorblockN{Author1\IEEEauthorrefmark{1}, Author2\IEEEauthorrefmark{2}, Author3\IEEEauthorrefmark{2}, Author4\IEEEauthorrefmark{1}}
+  \IEEEauthorblockA{\IEEEauthorrefmark{1}Institution1
+  \\\{1, 4\}@abc.com}
+  \IEEEauthorblockA{\IEEEauthorrefmark{2}Institution2
+  \\\{2, 3\}@def.com}
+}
 \date{}
 \input{tex/doc_utils}
 \begin{document}
@@ -29,6 +37,6 @@
   \input{tex/technique}
   \input{tex/investigation}
   \input{tex/conclusion}
-  \bibliographystyle{plain}
+\bibliographystyle{IEEEtran}
   \bibliography{bib/all} 
 \end{document}

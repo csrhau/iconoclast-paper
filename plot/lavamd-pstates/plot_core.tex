@@ -5,6 +5,7 @@
 \begin{tikzpicture}
   \begin{axis}[
     width=0.95\linewidth,
+    height=6.5cm,
     axis on top,
     axis x line=bottom,
     axis y line=left,
@@ -133,15 +134,8 @@
     %% 3.2 GHz start point
     \pgfmathsetmacro{\brnodex}{87.73374843784023}
     \pgfmathsetmacro{\blnodex}{49.11016716922632}
-    \addplot[name path=edpdef, draw=none, domain=\blnodex:\codetime+1, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-    \addplot[name path=edpopt, draw=none, domain=\codetime-1:\brnodex, forget plot] {metricbound(\codepower, \codetime, x, 2)};
-    \path[name path=edpspace,
-      intersection segments={
-        of=edpdef and edpopt,
-        sequence=A0 -- B1,
-      }
-      ]; 
-    \addplot[gray] fill between[of=edpspace and basebound]; 
+    \addplot[name path=edpdef, darkgray, thick, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+    \addplot[name path=edpopt, darkgray, thick, domain=\codetime:\brnodex] {metricbound(\codepower, \codetime, x, 2)};
     \addlegendentry{3.2 GHz POSE}
 
     %% 2.1 Ghz non-overlapping pose
@@ -149,15 +143,8 @@
     \pgfmathsetmacro{\codepower}{18.820670933416725}
     \pgfmathsetmacro{\blnodex}{89.0932975465577}
     \pgfmathsetmacro{\brnodex}{111.12875134327918}
-    \addplot[name path=edpdef, draw=none, domain=\blnodex:\codetime+1, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-    \addplot[name path=edpopt, draw=none, domain=\codetime-1:\brnodex, forget plot] {metricbound(\codepower, \codetime, x, 2)};
-    \path[name path=edpspace,
-      intersection segments={
-        of=edpdef and edpopt,
-        sequence=A0 -- B1,
-      }
-      ]; 
-    \addplot[lightgray] fill between[of=edpspace and basebound]; 
+    \addplot[name path=edpdef, gray, thick, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+    \addplot[name path=edpopt, gray, thick, domain=\codetime:\brnodex] {metricbound(\codepower, \codetime, x, 2)};
     \addlegendentry{First Non-Overlapping POSE}
   \end{axis}
 \end{tikzpicture}
