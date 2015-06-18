@@ -14,9 +14,9 @@ The only prerequisites of our model are that time and energy consumption can be 
 
 \subsection{Feasible Performance Envelope}
 POSE is built around the concept of a \emph{Feasible Performance Envelope}.
-We construct this by plotting lines of gradient $P_{max}$ and $P_{min}$ in \autoref{fig:technique}.
-These values represent the maximum and minimum rates of power consumption which can occur during normal operation of the target platform.
-The $\langle Runtime, Energy\rangle$ costs incurred by running any given code $\theta$ under similar conditions must be represented somewhere within this envelope.
+We construct this by plotting lines of gradient $P_{min}$ and $P_{max}$ in \autoref{fig:technique}.
+These values represent the minimum and maximum rates of power consumption which can occur during normal operation of the target platform.
+The \textit{(Runtime, Energy)} costs incurred by running any given code $\theta$ under similar conditions must be represented somewhere within this envelope.
 
 \subsection{Optimisation Bound}
 To constrain our search space further we consider the metric we wish to reduce.
@@ -59,14 +59,15 @@ Again the equation for the Contribution Bound depends on the metric chosen.
 
 It makes sense to use the most appropriate tools while searching for optimisations.
 If an optimisation yields dramatic reductions in runtime with only minor reductions in power consumption then it is reasonable to classify it as a runtime optimisation and state that conventional time-based profilers and performance engineering tools are better suited to finding it.
-It is the Contribution Bound which enables our model to make this distinction.
+The Contribution Bound enables our model to make this distinction.
+
 \subsection{Optimisation Limit}
 The bounds described thus far delineate those areas of the energy/runtime plane in which runtime and power optimised versions of a given code may exist.
 The final component of POSE is the Optimisation Limit.
 This partitions runtime optimisations into those which strictly dominate all power optimisations and those which could potentially be outperformed by them.
 
 This limit is related to the Optimisation Bound and is likewise based on \autoref{eq:optimisation}.
-It connects all points with the same value for $M$ as the maximally power-optimised point in our envelope $C$, shown as curve \emph{A --- C} in \autoref{fig:technique} a.
+It connects all points with the same value for $M$ as the maximally power-optimised point in our envelope $C$, shown as curve \emph{A --- C} in \autoref{fig:technique}.
 All optimisations below this limit strictly dominate any possible power optimisation.
 
 \section{POSE Insights}

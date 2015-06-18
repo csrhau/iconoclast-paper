@@ -1,5 +1,5 @@
-\begin{tabular}{@{}<%= 'c'*data.headers.length -%>@{}} \toprule
-<%= data.headers.join(' & ') %> \\
+\begin{tabular}{@{}l<%= 'r'*(data.headers.length-1) -%>@{}} \toprule
+<%= data.headers.first + '&' +  data.headers.drop(1).map{|h| "\\multicolumn{1}{c}{#{h}}"}.join(' & ') %> \\
 \midrule
 <% data.each do |row| -%>
   <%= row.collect{|k, v| sprintf('%.2f', v) rescue v}.join(' & ') %> \\

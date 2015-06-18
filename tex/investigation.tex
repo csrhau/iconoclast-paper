@@ -27,7 +27,7 @@ P_{leak} = V\times I_{leak} \label{eq:staticpwr}
 \autoref{eq:staticpwr} is a simplified expression for leakage power which exploits the fact that leakage current ($I_{leak}$) is invariant to processor workload~\cite{kim:2003aa}.
 
 Activity factor captures the fraction of logic elements which change state each clock cycle.
-Frequency and supply voltage vary in tandem, taking values from a set of $(frequency, voltage)$ pairs known as P-states.
+Frequency and supply voltage vary in tandem, taking values from a set of \textit{(frequency, voltage)} pairs known as P-states.
 Dynamic Voltage and Frequency Scaling (DVFS) selects a P-state based on workload, or places the CPU into an energy saving mode if no work is available.
 Finally, capacitance and leakage current are constants dictated by hardware design.
 
@@ -38,7 +38,7 @@ As a result, \autoref{eq:totpwr} should be summed across all cores to arrive at 
 \subsection{Feasible Performance Envelope}
 The first step in applying POSE is to construct a feasible performance envelope.
 Many manufacturers publish power dissipation figures for their hardware, however for safety reasons these are usually conservative estimates.
-POSE works best when the maximum and minimum power bounds are as tight as possible, therefore we determine $P_{\max}$ and $P_{\min}$ empirically.
+POSE works best when the minimum and maximum power bounds are as tight as possible, therefore we determine $P_{\min}$ and $P_{\max}$ empirically.
 
 We specify power benchmarks using $(S,A,C)$ tuples, with P-state $S$, activity factor $A$ and active core count $C$.
 Our $P_{min}$ and $P_{max}$ benchmarks should reflect the range of values these properties can take for a given code $\theta$.
@@ -46,7 +46,7 @@ This notion is formalised by \autoref{eq:pbench}.
 \begin{align}
   \label{eq:pbench}
   \begin{split}
-    P_{min} &= (S_{min}, A_{min}, C_{min}~\vert~\theta), \\
+    P_{min} &= (S_{min}, A_{min}, C_{min}~\vert~\theta) \\
     P_{max} &= (S_{max}, A_{max}, C_{max}~\vert~\theta) 
   \end{split}
 \end{align}
@@ -68,7 +68,7 @@ The remaining property is activity factor, which is influenced by benchmark code
 We define the range of values that $A$ can take for some fixed $S$ and $C$ as $[\alpha,~\beta]$ where $0 < \alpha < \beta < 1$.
 Our code for targeting activity factor $\alpha$ is given in \autoref{fig:microbench}.
 This benchmark executes a single \texttt{jmp} instruction each clock cycle, preventing instruction pipelining.
-It performs no floating point or integer calculations and no memory accesses whilst keeping control logic to a minimum.
+It performs no floating point or integer calculations and no memory accesses while keeping control logic to a minimum.
 
 Non-trivial codes perform more work per unit time than our minimal benchmark.
 This additional work means more transistors changing state per cycle, and hence a higher activity factor.
@@ -87,10 +87,11 @@ Techniques described by Hahnel~et~al.~\cite{hahnel:2012aa} were used to promote 
 Results are presented in \autoref{tab:fpe_params}, which identifies P-states by their frequency component.
 
 \begin{table}
-\centering
-\caption{Feasible Performance Envelope Parameters (W)}
-\label{tab:fpe_params}
-\input{tab/tex/fpe_params.tex}
+  \scriptsize
+  \centering
+  \caption{Feasible Performance Envelope Parameters (W)}
+  \label{tab:fpe_params}
+  \input{tab/tex/fpe_params.tex}
 \end{table}
 
 \subsection{POSE Models for Code Optimisation}
@@ -100,10 +101,11 @@ Codes were run with default configurations where available.
 The energy and runtime costs associated with each code is given in \autoref{tab:code_metrics}.
 
 \begin{table}
-\centering
-\caption{Code Metrics for $S = 3.2\text{ GHz}$, $C = 4$}
-\label{tab:code_metrics}
-\input{tab/tex/code_metrics.tex}
+  \scriptsize
+  \centering
+  \caption{Code Metrics for $S = 3.2\text{ GHz}$, $C = 4$}
+  \label{tab:code_metrics}
+  \input{tab/tex/code_metrics.tex}
 \end{table}
 
 All codes ran in parallel across four cores.
@@ -114,7 +116,8 @@ The benchmark configurations used were $(\text{3.2 GHz}, \alpha, 4)$ for $P_{min
 
 \begin{table}
   \setlength{\tabcolsep}{.5em}
-  \caption{$E^1t^2$ POSE Points}
+  \scriptsize
+  \caption{$E^1t^2$ POSE Coordinates}
   \begin{subtable}{\textwidth}
   \centering
   \caption{Time (s)}

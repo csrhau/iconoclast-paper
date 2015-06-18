@@ -1,4 +1,4 @@
-\begin{tabular}{@{}<%= 'c'*data.headers.length -%>c@{}} \toprule
+\begin{tabular}{@{}l<%= 'r'*(data.headers.length-1+1) -%>c@{}} \toprule
 <%= data.headers.join(' & ') %> & $E^1t^2$ \\
 \midrule
 <% data.each do |row| -%>

@@ -1,10 +1,10 @@
 {\setlength{\tabcolsep}{.5em} 
-\begin{tabular}{ccccccccc}\toprule
+\begin{tabular}{crrrrrrrr}\toprule
   &\multicolumn{8}{c}{CPU Cores Active} \\
   \cmidrule(){2-9}
    & \multicolumn{2}{c}{1} & \multicolumn{2}{c}{2} & \multicolumn{2}{c}{3} & \multicolumn{2}{c}{4} \\
    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7} \cmidrule(lr){8-9}
-<%= data.headers.join(' & ') %> \\
+   <%= data.headers.map{|h| "\\multicolumn{1}{c}{#{h}}"}.join(' & ') %> \\
 \midrule
 <% data.each do |row| -%>
   <%= row.collect{|k, v| sprintf('%.2f', v)}.join(' & ') %> \\
