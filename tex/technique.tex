@@ -70,22 +70,13 @@ This limit is related to the Optimisation Bound and is likewise based on \autore
 It connects all points with the same value for $M$ as the maximally power-optimised point in our envelope $C$, shown as curve \emph{A --- C} in \autoref{fig:technique}.
 All optimisations below this limit strictly dominate any possible power optimisation.
 
-\section{POSE Insights}
+\subsection{POSE Insights}
 \label{sec:insights}
-The POSE model partitions the feasible performance envelope in \autoref{fig:technique} into several areas.
-Potential optimisations can be classified according to which of the following labelled areas they appear in:
-\begin{multicols}{2}
-\begin{enumerate}
-\item Strong Runtime Optimisation
-\item Weak Runtime Optimisation
-\item Power Optimisation
-\item Performance Degradation  
-\end{enumerate}
-\end{multicols}
-Area \textbf{1} encompasses all points with a better $M$ value than the best case power optimisation for $\theta$.
-Area \textbf{2} encompasses all possible runtime optimisations which have a better performance than $\theta$ in terms of $M$ yet may in turn be beaten by some power optimised version of $\theta$.
-Area \textbf{3} contains all optimised versions of $\theta$ for which reductions in $M$ are primarily or entirely due to reductions in power consumption.
-Area \textbf{4} corresponds to all codes with strictly worse performance than $\theta$.
+POSE partitions the feasible performance envelope into areas corresponding to different types of optimisation.
+Area 1 encompasses runtime optimisations which dominate the best case power optimisation in terms of $M$ (\emph{Strong Runtime Optimisation}).
+Area 2 encompasses runtime optimisations which dominate $\theta$ in terms of $M$ yet may in turn be beaten by some power optimised version of $\theta$ (\emph{Weak Runtime Optimisation}).
+Area 3 encompasses optimisations for which improvements to $M$ are primarily due to reduced power consumption (\emph{Power Optimisation}).
+Area 4 corresponds to codes with strictly worse performance than $\theta$ (\emph{Performance Degradation}).
 
 A key strength of POSE is that it produces quantitative and actionable insights relating directly to properties of the code.
 These insights fall into one of two broad categories, which taken together allow a performance engineer to decide if power optimisation is likely to prove worthwhile.

@@ -2,24 +2,6 @@
 \label{sec:related}
 Performance modelling techniques enable the rapid exploration of large hardware and software design spaces.
 This section describes various approaches to performance modelling and explains how POSE fits into this area.
-\autoref{tab:approaches} divides the performance modelling ecosystem into categories based on model domain and granularity and provides examples for each.
-
-\begin{table}
-  \centering
-  \caption{Performance Model Classifications}
-  \setlength{\tabcolsep}{8pt}
-  \begin{tabular}{lll}
-  \toprule
-    & \multicolumn{2}{l}{Domain}\\ \cmidrule(){2-3}
-  Model Type  & Runtime & Energy \\
-    \midrule
-  Simulation & SST~\cite{rodrigues:2011aa}, WARRP~\cite{hammond:2009aa} & Wattch~\cite{brooks:2000aa}, McPAT~\cite{li:2009aa}  \\
-  Analytical & LogP~\cite{culler:1993aa}, LogGP~\cite{alexandrov:1997aa} & BTL~\cite{manousakis:2012aa}, CAPE~\cite{kamble:1997aa} \\
-  Heuristic & Roofline~\cite{williams:2009aa}, Amdahl's Law~\cite{amdahl:1967aa} & \textbf{POSE}, Energy Roofline~\cite{choi:2013aa} \\
-  \bottomrule
-  \end{tabular}
-  \label{tab:approaches}
-\end{table}
 
 \subsubsection{Simulators:} 
 Tools like SST~\cite{rodrigues:2011aa} and McPAT~\cite{li:2009aa} gather data while executing a simplified representation of the original code.
@@ -27,7 +9,7 @@ These approaches can be extremely insightful, however constructing and validatin
 They also tend to be expensive to run, sometimes even more so than the original code.
 
 \subsubsection{Analytical Models:} This approach distils the structure and performance of a program into parameterised expressions.
-Frameworks like LogGP~\cite{alexandrov:1997aa} and BTL~\cite{manousakis:2012aa} provide model skeletons which must then be tailored to individual codes.
+Modelling frameworks like LogGP~\cite{alexandrov:1997aa} and BTL~\cite{manousakis:2012aa} provide model skeletons which must then be tailored to individual codes.
 Analytical models produce results more quickly than simulations, making them particularly useful when performing parameter sweeps.
 Ensuring the model is expressive enough to capture all possible program behaviours is the biggest obstacle to this approach as it requires a deep understanding of the target application.
 
