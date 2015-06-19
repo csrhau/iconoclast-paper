@@ -1,5 +1,6 @@
 \section{Investigation}
 \label{sec:investigation}
+\noindent
 We now use POSE to investigate the CPU power consumption of codes from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} benchmark suites.
 The applications studied are simplified versions of production codes intended for research purposes.
 As such they have relatively compact code bases and well understood behaviours while still providing representative workloads.
@@ -10,6 +11,7 @@ Our experiments were carried out on an Intel Core i5-3470 Ivy Bridge CPU which s
 
 \subsection{CPU Power Consumption}
 \label{ssec:cpupower}
+\noindent
 Current processors are based on Complimentary Metal Oxide Semiconductor (CMOS) technology.
 \autoref{eq:totpwr} separates the power draw of CMOS chips into its component parts, of which dynamic and leakage power are the most significant.
 \begin{equation}
@@ -36,6 +38,7 @@ Each core in a multi-core architecture operates independently with its own activ
 As a result, \autoref{eq:totpwr} should be summed across all cores to arrive at a value for the entire processor.
 
 \subsection{Feasible Performance Envelope}
+\noindent
 The first step in applying POSE is to construct a feasible performance envelope.
 Many manufacturers publish power dissipation figures for their hardware, however for safety reasons these are usually conservative estimates.
 POSE works best when the minimum and maximum power bounds are as tight as possible, therefore we determine $P_{\min}$ and $P_{\max}$ empirically.
@@ -95,6 +98,7 @@ Results are presented in \autoref{tab:fpe_params}, which identifies P-states by 
 \end{table}
 
 \subsection{POSE Models for Code Optimisation}
+\noindent
 Having characterised our system we now proceed to build POSE models for applications in the Mantevo and Rodinia suites.
 These codes were compiled with ICC version 14.0.0.
 Codes were run with default configurations where available.
@@ -145,7 +149,7 @@ POSE provides the following insights for LavaMD:
 \end{itemize}
 
 \begin{figure*}[t]%
-  \providecommand{\plotwidth}{.95\linewidth}
+  \providecommand{\plotwidth}{.80\linewidth}
   \begin{subfigure}[t]{.5\linewidth}%
     \input{plot/minimd-investigation/plot_core}%
     \caption{MiniMD}%
@@ -165,6 +169,7 @@ POSE provides the following insights for LavaMD:
 
 
 \subsection{POSE Models for Frequency Scaling}
+\noindent
 The relationship between P-state and energy consumption is non-linear and workload dependent.
 Operating in low power states can increase runtime, offsetting any energy savings from reduced power draw~\cite{le:2010aa}.
 Application-aware DVFS can save energy by selecting the optimal P-state schedule for a given code~\cite{choi:2004aa}.
@@ -187,8 +192,6 @@ The flexibility of POSE allows us to model this scenario by considering optimisa
     P_{max} &= (3.2\text{ GHz}, \beta, 4) = 49.61W
   \end{split}
 \end{align}
-
-
 
 \begin{figure*}[t]%
 \begin{subfigure}[t]{.5\linewidth}%

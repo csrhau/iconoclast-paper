@@ -1,8 +1,9 @@
 \section{Related Work}
 \label{sec:related}
+\noindent
 Performance modelling techniques enable the rapid exploration of large hardware and software design spaces.
 This section describes various approaches to performance modelling and explains how POSE fits into this area.
-\autoref{tab:approaches} divides the performance modelling ecosystem into categories based on model domain and granularity and provides examples for each.
+\autoref{tab:approaches} divides the performance modelling ecosystem into categories based on model domain and granularity.
 
 \begin{table}
   \scriptsize
@@ -14,7 +15,7 @@ This section describes various approaches to performance modelling and explains 
   Model Type  & Runtime & Energy \\
     \midrule
   Simulation & SST~\cite{rodrigues:2011aa}, WARRP~\cite{hammond:2009aa} & Wattch~\cite{brooks:2000aa}, McPAT~\cite{li:2009aa}  \\
-  Analytical & LogP~\cite{culler:1993aa}, LogGP~\cite{alexandrov:1997aa} & BTL~\cite{manousakis:2012aa}, CAPE~\cite{kamble:1997aa} \\
+  Analytical & PRAM~\cite{karp:1991aa}, LogP~\cite{culler:1993aa}, LogGP~\cite{alexandrov:1997aa} & BTL~\cite{manousakis:2012aa}, CAPE~\cite{kamble:1997aa} \\
   Heuristic & Roofline~\cite{williams:2009aa}, Amdahl's Law~\cite{amdahl:1967aa} & \textbf{POSE}, Energy Roofline~\cite{choi:2013aa} \\
   \bottomrule
   \end{tabular}
@@ -23,12 +24,19 @@ This section describes various approaches to performance modelling and explains 
 
 \noindent
 \subsubsection{Simulators} 
-Tools like SST~\cite{rodrigues:2011aa} and McPAT~\cite{li:2009aa} gather data while executing a simplified representation of the original code.
+Tools like SST~\cite{rodrigues:2011aa} and WARRP~\cite{hammond:2009aa} gather performance data by executing a simplified representation of the original code.
+Using code as a modelling input reduces the burden of model construction placed on the user, meaning model accuracy depends instead on how faithfully the simulator is able to model a particular system.
 These approaches can be extremely insightful, however constructing and validating representative simulations is often challenging.
-They also tend to be expensive to run, sometimes even more so than the original code.
+They also tend to be expensive to run due to the additional overheads introduced by system simulation.
+
+Tools like Wattch~\cite{brooks:2000aa} and McPAT~\cite{li:2009aa} extend simulators with models of power draw.
+These models use the energy costs associated with particular hardware actions to estimate the power consumption characteristics of simulated code.
 
 \subsubsection{Analytical Models} This approach distils the structure and performance of a program into parameterised expressions.
-Modelling frameworks like LogGP~\cite{alexandrov:1997aa} and BTL~\cite{manousakis:2012aa} provide model skeletons which must then be tailored to individual codes.
+Most analytical models are based on one of a handful of generalised approaches to analytical modelling based on some simplified understanding of system architecture.
+Examples of these models include LogP~\cite{culler:1993aa}, LogGP~\cite{alexandrov:1997aa} and PRAM~\cite{karp:1991aa} which provide model skeletons which must then be tailored to individual codes.
+BTL~\cite{manousakis:2012aa} and CAPE~\cite{kamble:1997aa} use a similar approach to capture the power consumption characteristics of code. 
+
 Analytical models produce results more quickly than simulations, making them particularly useful when performing parameter sweeps.
 Ensuring the model is expressive enough to capture all possible program behaviours is the biggest obstacle to this approach as it requires a deep understanding of the target application.
 
@@ -37,7 +45,8 @@ This is the most abstract category of performance models and the one in which ou
 Rather than attempting to faithfully represent an entire system, heuristic models provide a simplified analogy which helps developers reason about particular properties of a code.
 Ease of construction and the clarity of their insights mean heuristic models are well suited to guiding the early stages of optimisation.
 
-A popular example of this class is the Roofline model~\cite{williams:2009aa}.
+Ahmdal's Law~\cite{amdahl:1967aa} is arguably the most well known heuristic model, which states that the performance gains from parallelization is limited by the serial portion of a parallel program.
+Another popular example of this class is the Roofline model~\cite{williams:2009aa}.
 Roofline frames application performance in terms of its operational intensity and two system bottlenecks; off-chip memory bandwidth and floating point performance.
 This simplification limits Roofline's use as a predictive model but it also means a developer can easily isolate the limiting factor of code performance and target their optimisation efforts accordingly.
 
