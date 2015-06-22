@@ -124,15 +124,8 @@
     %% 3.2 GHz start point
     \pgfmathsetmacro{\blnodex}{23.77199310523716}
     \pgfmathsetmacro{\brnodex}{38.6049404590049}
-    \addplot[name path=edpdef, draw=none, domain=\blnodex:\codetime+1, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-    \addplot[name path=edpopt, draw=none, domain=\codetime-1:\brnodex, forget plot] {metricbound(\codepower, \codetime, x, 2)};
-    \path[name path=edpspace,
-      intersection segments={
-        of=edpdef and edpopt,
-        sequence=A0 -- B1,
-      }
-      ]; 
-    \addplot[gray] fill between[of=edpspace and basebound]; 
+    \addplot[name path=edpdef, darkgray, thick, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+    \addplot[name path=edpopt, darkgray, thick, domain=\codetime:\brnodex] {metricbound(\codepower, \codetime, x, 2)};
     \addlegendentry{3.2 GHz POSE}
 
     % 2.2 GHz non-overlapping pose
@@ -140,15 +133,8 @@
     \pgfmathsetmacro{\codepower}{17.552650110758528}
     \pgfmathsetmacro{\blnodex}{39.55555231782452}
     \pgfmathsetmacro{\brnodex}{47.097072968441026}
-    \addplot[name path=edpdef, draw=none, domain=\blnodex:\codetime+1, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
-    \addplot[name path=edpopt, draw=none, domain=\codetime:\brnodex, forget plot] {metricbound(\codepower, \codetime, x, 2)};
-    \path[name path=edpspace,
-      intersection segments={
-        of=edpdef and edpopt,
-        sequence=A0 -- B1,
-      }
-      ]; 
-    \addplot[lightgray] fill between[of=edpspace and basebound]; 
+    \addplot[name path=edpdef, gray, thick, domain=\blnodex:\codetime, forget plot] {definitionbound(\codepower, \codetime, x, 2)};
+    \addplot[name path=edpopt, gray, thick, domain=\codetime:\brnodex] {metricbound(\codepower, \codetime, x, 2)};
     \addlegendentry{First Non-Overlapping POSE}
     
     %% PState progression

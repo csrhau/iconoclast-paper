@@ -1,4 +1,5 @@
-\documentclass[runningheads,a4paper,draft]{llncs} % TODO remove draft mode
+\documentclass[runningheads,a4paper,conference]{IEEEtran} % TODO remove draft mode
+\usepackage{etex}
 \usepackage{booktabs}
 \usepackage[hidelinks]{hyperref}
 \usepackage{pgfplots}
@@ -12,21 +13,20 @@
 \usepackage[T1]{fontenc} % For literal \{ and \} in author emails
 \pgfplotsset{compat=1.12}
 
-\author{Stephen Roberts\inst{1} \and Stephen Jarvis\inst{1} \\ 
-Chris January\inst{2} \and Jonathan Byrd\inst{2}}
-
-\institute{The University of Warwick \\
-  \email{\{S.I.Roberts, S.A.Jarvis\}@warwick.ac.uk}
-\and
-  Allinea Software
-}
-
-\authorrunning{Stephen Roberts et al.}
+\newtheorem{definition}{Definition} %Hack to allow definition in IEEE
 \title{POSE: A New Technique to Guide Energy Aware Code Optimisation}
 
+\newcommand*{\definitionautorefname}{Definition}
 \newcommand{\DRAFT}[1]{•}
 \renewcommand*{\sectionautorefname}{Section} % make sec: autorefs capitalized.
 
+\author{
+\IEEEauthorblockN{Author1\IEEEauthorrefmark{1}, Author2\IEEEauthorrefmark{2}, Author3\IEEEauthorrefmark{2}, Author4\IEEEauthorrefmark{1}}
+  \IEEEauthorblockA{\IEEEauthorrefmark{1}Institution1
+  \\\{1, 4\}@abc.com}
+  \IEEEauthorblockA{\IEEEauthorrefmark{2}Institution2
+  \\\{2, 3\}@def.com}
+}
 \date{}
 \input{tex/doc_utils}
 \begin{document}
@@ -38,6 +38,6 @@ Chris January\inst{2} \and Jonathan Byrd\inst{2}}
   \input{tex/technique}
   \input{tex/investigation}
   \input{tex/conclusion}
-  \bibliographystyle{plain}
+\bibliographystyle{IEEEtran}
   \bibliography{bib/all} 
 \end{document}
