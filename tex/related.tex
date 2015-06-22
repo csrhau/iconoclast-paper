@@ -6,13 +6,14 @@ This section describes various approaches to performance modelling and explains 
 \autoref{tab:approaches} divides the performance modelling ecosystem into categories based on model domain and granularity.
 
 \begin{table}
-  \scriptsize
   \centering
+  \scriptsize
+  \setlength{\tabcolsep}{.7em} 
   \caption{Performance Model Classifications}
   \begin{tabular}{lll}
   \toprule
     & \multicolumn{2}{l}{Domain}\\ \cmidrule(){2-3}
-  Model Type  & Runtime & Energy \\
+    Approach & Runtime & Energy \\
     \midrule
   Simulation & SST~\cite{rodrigues:2011aa}, WARRP~\cite{hammond:2009aa} & Wattch~\cite{brooks:2000aa}, McPAT~\cite{li:2009aa}  \\
   Analytical & PRAM~\cite{karp:1991aa}, LogP~\cite{culler:1993aa}, LogGP~\cite{alexandrov:1997aa} & BTL~\cite{manousakis:2012aa}, CAPE~\cite{kamble:1997aa} \\
