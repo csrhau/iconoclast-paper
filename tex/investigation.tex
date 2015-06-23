@@ -1,9 +1,7 @@
 \section{Investigation}
 \label{sec:investigation}
 \noindent
-We use POSE to investigate the CPU power consumption of codes from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} benchmark suites.
-The applications studied are simplified versions of production codes intended for research purposes.
-As such they have relatively compact code bases and well understood behaviours while still providing representative workloads.
+This section demonstrates POSE by investigating the scope for CPU power optimisation for a selection of codes from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} benchmark suites.
 
 CPU energy consumption accounts for a significant portion of the energy used by high performance systems~\cite{rong:2010aa} and is therefore a prime target for optimisation.
 It can also be measured accurately on commodity hardware~\cite{hackenberg:2013aa} making it a suitable candidate for POSE modelling.
@@ -138,6 +136,8 @@ The benchmark configurations used were $(\text{3.2 GHz}, \alpha, 4)$ for $P_{min
 \autoref{tab:pose_params} summarises the POSE models constructed for each code.
 The remainder of this section focusses on MiniMD and LavaMD as the two codes representing the extremes of power consumption.
 POSE models for these two codes are reproduced graphically in \autoref{fig:minimd_pose} and \autoref{fig:lavamd_pose}.
+Models for the remaining codes can be found in \autoref{sec:appendix}.
+
 Comparing these diagrams shows that LavaMD offers far more scope for power optimisation than MiniMD, which offers virtually none. 
 POSE provides the following insights for LavaMD:
 \begin{itemize}
