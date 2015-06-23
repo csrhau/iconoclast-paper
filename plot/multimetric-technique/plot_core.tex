@@ -8,7 +8,7 @@
     ylabel={Energy (\emph{J})},    
     xmin=0, xmax=50,
     ymin=0, ymax=3300,
-    width=0.95\linewidth,
+    width=0.80\linewidth,
     legend style={legend pos=north west}
     ]
 
@@ -37,9 +37,9 @@
     \pgfmathsetmacro{\cbie}{19.148936170212767}
     \pgfmathsetmacro{\orie}{23.5}
     \pgfmathsetmacro{\lrie}{9.574468085106384}
-    \addplot[name path=energyopt, forget plot, domain=\orie:\obie, thick, gray] {metricbound(\codepower, \codetime, x, \delayexponent)};
-    \addplot[name path=energylimit, forget plot, domain=\cbie:\lrie, thick, gray]{metricbound(\baselinepower, \cbie, x, \delayexponent)};
-    \addplot[name path=energydef, domain=\cbie:\codetime, thick, gray] {definitionbound(\codepower, \codetime, x, \delayexponent)};
+    \addplot[name path=energyopt, forget plot, domain=\orie:\obie, thick, densely dotted, gray] {metricbound(\codepower, \codetime, x, \delayexponent)};
+    \addplot[name path=energylimit, forget plot, domain=\cbie:\lrie, thick, densely dotted, gray]{metricbound(\baselinepower, \cbie, x, \delayexponent)};
+    \addplot[name path=energydef, domain=\cbie:\codetime, thick, densely dotted, gray] {definitionbound(\codepower, \codetime, x, \delayexponent)};
     \addlegendentry{$E^1t^0$ POSE}
 
     %% ED2P Area %%
@@ -49,9 +49,9 @@
     \pgfmathsetmacro{\cbie}{25.83027641360684}
     \pgfmathsetmacro{\orie}{27.654774650781338}
     \pgfmathsetmacro{\lrie}{20.501503975794428}
-    \addplot[name path=energyopt, forget plot, domain=\orie:\obie, thick, darkgray] {metricbound(\codepower, \codetime, x, \delayexponent)};
-    \addplot[name path=energylimit, forget plot, domain=\cbie:\lrie, thick, darkgray]{metricbound(\baselinepower, \cbie, x, \delayexponent)};
-    \addplot[name path=energydef, domain=\cbie:\codetime,thick, darkgray] {definitionbound(\codepower, \codetime, x, \delayexponent)};
+    \addplot[name path=energyopt, forget plot, domain=\orie:\obie, thick, densely dashed, darkgray] {metricbound(\codepower, \codetime, x, \delayexponent)};
+    \addplot[name path=energylimit, forget plot, domain=\cbie:\lrie, thick, densely dashed, darkgray]{metricbound(\baselinepower, \cbie, x, \delayexponent)};
+    \addplot[name path=energydef, domain=\cbie:\codetime,thick, densely dashed, darkgray] {definitionbound(\codepower, \codetime, x, \delayexponent)};
     \addlegendentry{$E^1t^2$ POSE}
 
 

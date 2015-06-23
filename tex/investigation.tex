@@ -80,7 +80,7 @@ This can be addressed by adding delays to the benchmark if necessary.
 
 FIRESTARTER~\cite{hackenberg:2013ab} serves as our benchmark for activity factor $\beta$.
 This tool is designed to trigger near-peak power consumption across a range of x86\_64 processors.
-It consists of hand optimised assembly routines which raise activity factor above the level achievable with high level languages.
+It consists of hand optimised assembly routines which raise the activity factor above the level achievable with high level languages.
 Prime95 and Linpack were also evaluated as potential $\beta$ benchmarks however they were consistently outperformed by FIRESTARTER.
 
 The benchmark parameter space is small enough to fully characterise a processor by measuring all $(S,A,C)$ configurations.
@@ -138,18 +138,27 @@ The benchmark configurations used were $(\text{3.2 GHz}, \alpha, 4)$ for $P_{min
 \autoref{tab:pose_params} summarises the POSE models constructed for each code.
 The remainder of this section focusses on MiniMD and LavaMD as the two codes representing the extremes of power consumption.
 POSE models for these two codes are reproduced graphically in \autoref{fig:minimd_pose} and \autoref{fig:lavamd_pose}.
-When comparing these diagrams it is readily apparent that LavaMD offers far more scope for power optimisation than MiniMD, which offers virtually none. 
+Comparing these diagrams shows that LavaMD offers far more scope for power optimisation than MiniMD, which offers virtually none. 
 POSE provides the following insights for LavaMD:
 \begin{itemize}
-  \item At most 353.36J can be saved by reducing power consumption.
-  \item The maximum slowdown from energy optimisation is 4.12s.
-  \item The most power optimised value of $E^1t^2$ is 6332609, a 30.59\% reduction.
-  \item A speed up of 8.77s, or $1.15 \times$, strictly outperforms $\theta$.
-  \item A speed up of 15.29s, or $1.30 \times$, strictly outperforms any power optimisation.
+  \item Power optimisation can save at most 353.36J;
+  \item The slowdown from power optimisation is at most 4.12s;
+  \item Power optimisation can reduce $E^1t^2$ by at most 30.59\%;
+  \item A speed up of 8.77s, or 1.15$\times$, strictly outperforms $\theta$;
+  \item A speed up of 15.29s, or 1.30$\times$, strictly outperforms any power optimisation.
+\end{itemize}
+\noindent 
+And for MiniMD:
+\begin{itemize}
+  \item Power optimisation can save at most 32.82J;
+  \item The slowdown from power optimisation is at most 0.40s;
+  \item Power optimisation can reduce $E^1t^2$ by at most 7.60\%;
+  \item A speed up of 5.27s, or 1.21$\times$, strictly outperforms $\theta$; 
+  \item A speed up of 5.92s, or 1.24$\times$, strictly outperform any power optimisation.
 \end{itemize}
 
 \begin{figure*}[t]%
-  \providecommand{\plotwidth}{.80\linewidth}
+  \scriptsize
   \begin{subfigure}[t]{.5\linewidth}%
     \input{plot/minimd-investigation/plot_core}%
     \caption{MiniMD}%
@@ -194,8 +203,8 @@ The flexibility of POSE allows us to model this scenario by considering optimisa
 \end{align}
 
 \begin{figure*}[t]%
+  \scriptsize
 \begin{subfigure}[t]{.5\linewidth}%
-\centering%
 \input{plot/minimd-pstates/plot_core}%
 \caption{MiniMD}%
 \label{fig:minimd-pstates}%
@@ -213,7 +222,7 @@ The flexibility of POSE allows us to model this scenario by considering optimisa
 \end{figure*}%
 
 We choose the 3.2 GHz run as our initial `unoptimised' baseline because this is the P-state our system defaults to when running MiniMD or LavaMD.
-If the POSE models for two P-states do not overlap then switching to the higher performance P-state beats any possible power optimisation at the weaker state.
+If the POSE models for two P-states do not overlap then switching to the higher performance P-state outperforms any possible power optimisation at the weaker state.
 This state can then be excluded from any search for power optimisations.
 
 For MiniMD, \autoref{fig:minimd-pstates} shows that the first POSE model which does not overlap with the one built for our baseline occurs at 2.2 GHz.

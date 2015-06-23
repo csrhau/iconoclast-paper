@@ -5,29 +5,30 @@
     axis y line=left,
     xlabel={Runtime (\emph{s})},
     ylabel={Energy (\emph{J})},    
-    xmin=24, xmax=31,
-    ymin=600, ymax=1650,
+     xmin=28, xmax=43,
+    ymin=750, ymax=1874,
+    ymin=650, ymax=2250,
     width=0.75\linewidth,
     legend columns=3,
-    legend to name=minimd:legend,
+    legend to name=leukocyte:legend,
     legend style={/tikz/every even column/.append style={column sep=0.2cm}} % space out columns a bit
     ]
 
     %% Model Parameters %%
     \pgfmathsetmacro{\baselinepower}{26.876067}
     \pgfmathsetmacro{\rooflinepower}{49.60612}
-    \pgfmathsetmacro{\codepower}{27.95947000000066} 
-    \pgfmathsetmacro{\codetime}{30.293834}
-    \pgfmathsetmacro{\codeenergy}{846.999542908}
+    \pgfmathsetmacro{\codepower}{30.775140866344813} 
+    \pgfmathsetmacro{\codetime}{38.924663}
+    \pgfmathsetmacro{\codeenergy}{1197.911987}
     \pgfmathsetmacro{\energyexp}{1.0}
     \pgfmathsetmacro{\timeexp}{2.0}
 
     % Sadly, pgfplots sucks too much to calculate cube roots
     % These values are calculated with a ruby script in tools
-    \pgfmathsetmacro{\blnodex}{29.897382525363728}
-    \pgfmathsetmacro{\brnodex}{30.69554258273286}
-    \pgfmathsetmacro{\trnodex}{25.0237350439618}
-    \pgfmathsetmacro{\tlnodex}{24.373056016397907}
+    \pgfmathsetmacro{\blnodex}{37.20603724152065}
+    \pgfmathsetmacro{\brnodex}{40.72267572674299}
+    \pgfmathsetmacro{\trnodex}{33.19809203308976}
+    \pgfmathsetmacro{\tlnodex}{30.33124485283807}
 
     %% Intermezzo Values %%
     \pgfmathsetmacro{\brnodey}{\brnodex * \baselinepower}

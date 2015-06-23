@@ -1,9 +1,9 @@
 \section{Optimisation Metrics}
 \label{sec:metrics}
 \noindent
-Energy is the integral of power consumed over time, or simply $E = \bar{P}t$.
+Energy is the integral of power consumed over time, or put simply $E = \bar{P}t$.
 As such, reducing the energy consumed by a code can be achieved either through shortening its runtime ($t$) with conventional program optimisations or reducing the average power consumption ($\bar{P}$) with power optimisations.
-The POSE heuristic enables performance engineers to compare the potential benefits of each approach and focus their efforts on whichever offers the greatest rewards.
+The POSE heuristic enables performance engineers to compare the potential benefits of each approach for a given code and thus focus their efforts on whichever offers the greatest rewards.
 
 Energy to solution is a reasonable metric when energy consumption is of paramount importance.
 This metric leaves open the possibility of significant loss of runtime performance however, limiting its usefulness in time-sensitive domains.
@@ -16,7 +16,7 @@ The simplest of these is the Energy Delay Product (EDP) metric \cite{gonzales:19
   \label{eq:edp}
 \end{align}
 
-Variants of EDP have been proposed which assign different weights to each components in order to better reflect the demands of specific domains.
+Variants of EDP have been proposed which assign different weights to each component in order to better reflect the demands of specific domains.
 Common examples include Energy Delay Squared Product ($E^1t^{2}$) and Energy Delay Cubed Product ($E^1t^{3}$).
 We refer to this as the $E^mt^n$ family of metrics, which also includes power ($E^1t^{-1}$), energy ($E^1t^0$) and time ($E^0t^1$) as members.
 

@@ -2,8 +2,8 @@
 \label{sec:related}
 \noindent
 Performance modelling techniques enable the rapid exploration of large hardware and software design spaces.
-This section describes various approaches to performance modelling and explains how POSE fits into this area.
-\autoref{tab:approaches} divides the performance modelling ecosystem into categories based on model domain and granularity.
+This section describes various approaches to performance modelling and explains how POSE fits into this arena.
+\autoref{tab:approaches} categorises the performance modelling ecosystem based on model domain and granularity.
 
 \begin{table}
   \centering
@@ -25,15 +25,15 @@ This section describes various approaches to performance modelling and explains 
 
 \noindent
 \subsubsection{Simulators} 
-Tools like SST~\cite{rodrigues:2011aa} and WARRP~\cite{hammond:2009aa} gather performance data by executing a simplified representation of the original code.
-Using code as a modelling input reduces the burden of model construction placed on the user, meaning model accuracy depends instead on how faithfully the simulator is able to model a particular system.
-These approaches can be extremely insightful, however constructing and validating representative simulations is often challenging.
-They also tend to be expensive to run due to the additional overheads introduced by system simulation.
+Tools such as SST~\cite{rodrigues:2011aa} and WARRP~\cite{hammond:2009aa} gather performance data by executing a simplified representation of the original code.
+Using code as a modelling input reduces the burden of model construction placed on the user, meaning model accuracy depends instead on how faithfully the simulator is able to model an underlying system.
+These approaches can be extremely insightful, however constructing and validating representative simulations is often time consuming.
+They also tend to be expensive to run due to the overheads introduced by system simulation.
 
-Tools like Wattch~\cite{brooks:2000aa} and McPAT~\cite{li:2009aa} extend simulators with models of power draw.
+Tools such as Wattch~\cite{brooks:2000aa} and McPAT~\cite{li:2009aa} extend simulators with models of power draw.
 These models use the energy costs associated with particular hardware actions to estimate the power consumption characteristics of simulated code.
 
-\subsubsection{Analytical Models} This approach distils the structure and performance of a program into parameterised expressions.
+\subsubsection{Analytical Models} This approach distils the structure and performance of a program into parameterised mathematical expressions.
 Most analytical models are based on one of a handful of generalised approaches to analytical modelling based on some simplified understanding of system architecture.
 Examples of these models include LogP~\cite{culler:1993aa}, LogGP~\cite{alexandrov:1997aa} and PRAM~\cite{karp:1991aa}, which provide model skeletons which must then be tailored to individual codes.
 BTL~\cite{manousakis:2012aa} and CAPE~\cite{kamble:1997aa} use a similar approach to capture the power consumption characteristics of code. 
@@ -51,6 +51,6 @@ Another popular example of this class is the Roofline model~\cite{williams:2009a
 Roofline frames application performance in terms of its operational intensity and two system bottlenecks; off-chip memory bandwidth and floating point performance.
 This simplification limits Roofline's use as a predictive model but it also means a developer can easily isolate the limiting factor of code performance and target their optimisation efforts accordingly.
 
-The POSE heuristic serves as a preliminary `first cut' modelling technique intended to guide energy-aware optimisation efforts.
+POSE serves as a preliminary `first cut' modelling technique intended to guide energy-aware optimisation efforts.
 Our model provides an asymptotic analysis of the scope for optimisation in the power and runtime domains, allowing performance engineers to focus their efforts wherever they will be most beneficial.
 POSE also draws inspiration from the Roofline model in that its insights can be presented in an intuitive graphical format.
