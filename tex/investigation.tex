@@ -1,30 +1,31 @@
 \section{Investigation}
 \label{sec:investigation}
 \noindent
-This section demonstrates POSE by investigating the scope for CPU power optimisation for a selection of codes from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} benchmark suites.
+We use POSE to investigate the scope for CPU power optimisation for a selection of codes from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} benchmark suites.
 
 CPU energy consumption accounts for a significant portion of the energy used by high performance systems~\cite{rong:2010aa} and is therefore a prime target for optimisation.
 It can also be measured accurately on commodity hardware~\cite{hackenberg:2013aa} making it a suitable candidate for POSE modelling.
-Our experiments were carried out on an Intel Core i5-3470 Ivy Bridge CPU which supports Intel's Running Average Power Limit (RAPL) technology~\cite{david:2010aa}.
+
+Our experiments were carried out on an Intel Core i5-3470 Ivy Bridge CPU, which supports Intel's Running Average Power Limit (RAPL) technology~\cite{david:2010aa}.
 
 \subsection{CPU Power Consumption}
 \label{ssec:cpupower}
 \noindent
 Current processors are based on Complimentary Metal Oxide Semiconductor (CMOS) technology.
-\autoref{eq:totpwr} separates the power draw of CMOS chips into its component parts, of which dynamic and leakage power are the most significant.
+\autoref{eq:totpwr} separates the power draw of CMOS chips into component parts, of which dynamic and leakage power are the most significant.
 \begin{equation}
 \label{eq:totpwr}
 P_{tot} = P_{dyn} + P_{leak} + P_{other}
 \end{equation}
 Dynamic power is consumed when logic gates change state.
-Leakage power exists because at microscopic scales the insulating properties of silicon break down, allowing some current to escape even when gates remain inactive.
-Other forms of power dissipation exist, however their effects are relatively minor \cite{kaxiras:2008aa}.
+Leakage power exists because at microscopic scales the insulating properties of silicon break down, allowing current to escape even when gates remain inactive.
+Other forms of power dissipation exist; though their effects are relatively minor \cite{kaxiras:2008aa}.
 \begin{gather}
 P_{dyn} \propto CV^{2}Af \label{eq:dynpwr} \\
 P_{leak} = V\times I_{leak} \label{eq:staticpwr}
 \end{gather}
-\autoref{eq:dynpwr} is a common approximation for dynamic power in which $C$ denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency.
-\autoref{eq:staticpwr} is a simplified expression for leakage power which exploits the fact that leakage current ($I_{leak}$) is invariant to processor workload~\cite{kim:2003aa}.
+\autoref{eq:dynpwr} is an approximation for dynamic power in which $C$ denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency.
+\autoref{eq:staticpwr} is a simplified expression for leakage power which exploits the fact that leakage current ($I_{leak}$) is invariant to workload~\cite{kim:2003aa}.
 
 Activity factor captures the fraction of logic elements which change state each clock cycle.
 Frequency and supply voltage vary in tandem, taking values from a set of \textit{(frequency, voltage)} pairs known as P-states.
@@ -33,13 +34,13 @@ Finally, capacitance and leakage current are constants dictated by hardware desi
 
 Processor architecture also plays a significant roll in determining total power consumption.
 Each core in a multi-core architecture operates independently with its own activity factor and in some cases P-state.
-As a result, \autoref{eq:totpwr} should be summed across all cores to arrive at a value for the entire processor.
+\autoref{eq:totpwr} should be summed across all cores to obtain a value for the entire processor.
 
 \subsection{Feasible Performance Envelope}
 \noindent
 The first step in applying POSE is to construct a feasible performance envelope.
 Many manufacturers publish power dissipation figures for their hardware, however for safety reasons these are usually conservative estimates.
-POSE works best when the minimum and maximum power bounds are as tight as possible, therefore we determine $P_{\min}$ and $P_{\max}$ empirically.
+POSE works best when the power bounds are as tight as possible, therefore we determine $P_{\min}$ and $P_{\max}$ empirically.
 
 We specify power benchmarks using $(S,A,C)$ tuples, with P-state $S$, activity factor $A$ and active core count $C$.
 Our $P_{min}$ and $P_{max}$ benchmarks should reflect the range of values these properties can take for a given code $\theta$.
@@ -58,31 +59,23 @@ The \texttt{cpufrequtils} package allows us to override DVFS and manually set th
 We control the number of active cores $C$ by specifying the number of threads used by our benchmarking routines and pinning each one to its own core to prevent migration.
 The remaining property is activity factor, which is influenced by benchmark code.
 
-\begin{figure}[ht]
-\centering
-\lstset{basicstyle=\ttfamily\footnotesize\bfseries, frame=tb} %small bold text, lines top and bottom
-\lstinputlisting[]{lst/alpha_benchmark.c}
-\caption{Activity Factor $\alpha$ Benchmark Code}
-\label{fig:microbench}
-\end{figure}
-
 We define the range of values that $A$ can take for some fixed $S$ and $C$ as $[\alpha,~\beta]$ where $0 < \alpha < \beta < 1$.
-Our code for targeting activity factor $\alpha$ is given in \autoref{fig:microbench}.
-This benchmark executes a single \texttt{jmp} instruction each clock cycle, preventing instruction pipelining.
-It performs no floating point or integer calculations and no memory accesses while keeping control logic to a minimum.
+Our $\alpha$ benchmark executes a single \texttt{jmp} instruction each clock cycle, preventing instruction pipelining.
+It performs no calculations or memory accesses while keeping control logic to a minimum.
+Supporting benchmark code can be downloaded from the link given in Acknowledgements.
 
 Non-trivial codes perform more work per unit time than our minimal benchmark.
 This additional work means more transistors changing state per cycle, and hence a higher activity factor.
 The only exception occurs when applications are blocked for long periods, allowing the processor to enter an idle state.
-This can be addressed by adding delays to the benchmark if necessary.
+This can be addressed by adding delays to the benchmark.
 
 FIRESTARTER~\cite{hackenberg:2013ab} serves as our benchmark for activity factor $\beta$.
 This tool is designed to trigger near-peak power consumption across a range of x86\_64 processors.
 It consists of hand optimised assembly routines which raise the activity factor above the level achievable with high level languages.
-Prime95 and Linpack were also evaluated as potential $\beta$ benchmarks however they were consistently outperformed by FIRESTARTER.
+Prime95 and Linpack were evaluated as $\beta$ benchmarks however they were outperformed by FIRESTARTER.
 
 The benchmark parameter space is small enough to fully characterise a processor by measuring all $(S,A,C)$ configurations.
-Benchmarking runs lasted for 120 seconds to allow enough time for power readings to stabilise.
+Benchmarking runs lasted for 120 seconds to allow time for power readings to stabilise.
 We extended the Unix \texttt{time} binary to gather power consumption figures using RAPL.
 Techniques described by Hahnel~et~al.~\cite{hahnel:2012aa} were used to promote measurement accuracy.
 Results are presented in \autoref{tab:fpe_params}, which identifies P-states by their frequency component.
@@ -138,7 +131,7 @@ The remainder of this section focusses on MiniMD and LavaMD as the two codes rep
 POSE models for these two codes are reproduced graphically in \autoref{fig:minimd_pose} and \autoref{fig:lavamd_pose}.
 Models for the remaining codes can be found in \autoref{sec:appendix}.
 
-Comparing these diagrams shows that LavaMD offers far more scope for power optimisation than MiniMD, which offers virtually none. 
+These diagram show that LavaMD offers far more scope for power optimisation than MiniMD, which offers virtually none. 
 POSE provides the following insights for LavaMD:
 \begin{itemize}
   \item Power optimisation can save at most 353.36J;
@@ -154,7 +147,7 @@ And for MiniMD:
   \item The slowdown from power optimisation is at most 0.40s;
   \item Power optimisation can reduce $E^1t^2$ by at most 7.60\%;
   \item A speed up of 5.27s, or 1.21$\times$, strictly outperforms $\theta$; 
-  \item A speed up of 5.92s, or 1.24$\times$, strictly outperform any power optimisation.
+  \item A speed up of 5.92s, or 1.24$\times$, strictly outperforms any power optimisation.
 \end{itemize}
 
 \begin{figure*}[t]%

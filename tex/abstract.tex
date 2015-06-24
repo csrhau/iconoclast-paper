@@ -1,10 +1,11 @@
 \begin{abstract}
 Performance engineers are beginning to explore software-level optimisation as a means to reduce the energy consumed when running their codes.
-This paper presents POSE, a mathematical and visual model of the relationship between runtime and power consumption for a particular code and architecture.
-POSE allows developers to assess how much improvement can be expected from power optimisations and hence whether they are worth pursuing.
+This paper presents POSE, a mathematical and visual modelling tool which highlights the relationship between runtime and power consumption.
+POSE allows developers to assess whether power optimisation is worth pursuing for their codes.
 
 We demonstrate POSE by studying the power optimisation characteristics of codes from the Mantevo and Rodinia benchmark suites.
-We show that LavaMD has the most scope for CPU power optimisation out of these codes, with the potential to improve Energy Delay Squared Product by up to 30.59\%.
-Conversely, MiniMD offers the least scope with improvements to the same metric limited to 7.60\%.
-We also consider the effect frequency scaling has on the scope for power optimisation.
+We show that LavaMD has the most scope for CPU power optimisation, with improvements in Energy Delay Squared Product ($ED^2P$) of up to 30.59\% feasible.
+Conversely, MiniMD offers the least scope, with improvements to the same metric limited to 7.60\%.
+We also show no power optimised version of MiniMD operating below 2.3 GHz can match the $ED^2P$ performance of the original code running at 3.2 GHz.
+For LavaMD this limit is slightly less restrictive at 2.2 GHz.
 \end{abstract}

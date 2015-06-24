@@ -1,12 +1,13 @@
 \section{POSE Models}
 \label{sec:appendix}
+\scriptsize
 \subsection{leukocyte}
 \begin{itemize}
   \item Power optimisation can save at most 151.77J;
   \item The slowdown from power optimisation is at most 1.80s;
   \item Power optimisation can reduce $E^1t^2$ by at most 23.73\%;
   \item A speed up of 5.73s, or 1.17$\times$, strictly outperforms $\theta$;
-  \item A speed up of 8.59s, or 1.28$\times$, strictly outperform any power optimisation.
+  \item A speed up of 8.59s, or 1.28$\times$, strictly outperforms any power optimisation.
 \end{itemize}
 
 \subsection{CFD}
@@ -15,7 +16,7 @@
   \item The slowdown from power optimisation is at most 1.58s;
   \item Power optimisation can reduce $E^1t^2$ by at most 26.75\%;
   \item A speed up of 4.20s, or 1.16$\times$, strictly outperforms $\theta$;
-  \item A speed up of 6.72s, or 1.29$\times$, strictly outperform any power optimisation.
+  \item A speed up of 6.72s, or 1.29$\times$, strictly outperforms any power optimisation.
 \end{itemize}
 
 \subsection{Heartwall}
@@ -24,7 +25,7 @@
   \item The slowdown from power optimisation is at most 1.47s;
   \item Power optimisation can reduce $E^1t^2$ by at most 29.32\%;
   \item A speed up of 3.35s, or 1.16$\times$, strictly outperforms $\theta$
-  \item A speed up of 5.68s, or 1.30$\times$, strictly outperform any power optimisation.
+  \item A speed up of 5.68s, or 1.30$\times$, strictly outperforms any power optimisation.
 \end{itemize}
 
 \subsection{streamcluster}
@@ -33,37 +34,44 @@
   \item The slowdown from power optimisation is at most 2.06s;
   \item Power optimisation can reduce $E^1t^2$ by at most 29.88\%;
   \item A speed up of 4.57s, or 1.16$\times$, strictly outperforms $\theta$;
-  \item A speed up of 7.84s, or 1.30$\times$, strictly outperform any power optimisation.
+  \item A speed up of 7.84s, or 1.30$\times$, strictly outperforms any power optimisation.
 \end{itemize}
 
 
-\begin{figure*}[]%
+\begin{figure}[h]%
   \scriptsize
-  \begin{subfigure}[t]{.5\linewidth}%
+  \begin{subfigure}[t]{\linewidth}%
+    \centering 
     \input{plot/leukocyte-investigation/plot_core}%
     \caption{leukocyte}%
     \label{fig:leukocyte_pose}
   \end{subfigure}%
-  \begin{subfigure}[t]{.5\linewidth}%
+  \vskip\baselineskip
+  \begin{subfigure}[t]{\linewidth}%
+    \centering 
     \input{plot/cfd-investigation/plot_core}%
     \caption{CFD}%
     \label{fig:cfd_pose}
   \end{subfigure}%
   \vskip\baselineskip
-  \begin{subfigure}[t]{.5\linewidth}%
+  \begin{subfigure}[t]{\linewidth}%
+    \centering 
     \input{plot/heartwall-investigation/plot_core}%
     \caption{Heartwall}%
     \label{fig:heartwall_pose}
   \end{subfigure}%
-  \begin{subfigure}[t]{.5\linewidth}%
+  \vskip\baselineskip
+  \begin{subfigure}[t]{\linewidth}%
+    \centering 
     \input{plot/streamcluster-investigation/plot_core}%
     \caption{streamcluster}%
     \label{fig:streamcluster_pose}
   \end{subfigure}%
+  \vskip\baselineskip
   \begin{center}%
     \ref{leukocyte:legend}%
   \end{center}%
-  \caption{$E^1t^2$ POSE Models}%
-  \label{fig:models}%
-\end{figure*}
+  \caption{$E^1t^2$ POSE Models for Remaining Codes}%
+  %\label{fig:models}%
+\end{figure}
 

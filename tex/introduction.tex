@@ -1,11 +1,12 @@
 \section{Introduction} \noindent
-Advances in processor design have delivered improvements in CPU performance for decades. As physical limits are reached, however, refinements to the same basic technologies are beginning to show diminishing returns \cite{esmaeilzadeh:2011aa}. One side-effect of this is an unsustainable rise in system power use, which the US Department of Energy has identified as a primary constraint for exascale systems \cite{shalf:2011aa}.
+Advances in processor design have delivered improvements in CPU performance for decades. As physical limits are reached, however, refinements to the same basic technologies are beginning to show diminishing returns \cite{esmaeilzadeh:2011aa}. 
+One side-effect of this is an unsustainable rise in system power use, which the US Department of Energy has identified as a primary constraint for exascale systems \cite{shalf:2011aa}.
 
 Hardware manufacturers are increasingly prioritising energy efficiency in processor designs~\cite{kurd:2014aa}. 
 Research suggests that software modifications will be required to fully exploit the resulting improvements in modern processors~\cite{shao:2013aa}.
 
 In this paper we present the Power Optimised Software Envelope (POSE).
-POSE is a mathematical and visual model which provides insights into the energy consumption characteristics of a code.
+POSE is a mathematical and visual modelling tool which provides insights into the energy consumption characteristics of a code.
 Our work helps performance engineers understand whether power or runtime optimisation is the best strategy for improving the energy efficiency of their codes.
 The contributions made in this work are:
 \begin{itemize}
@@ -21,5 +22,5 @@ The remainder of this paper is structured as follows:
 \autoref{sec:related} presents a survey of related work; 
 \autoref{sec:metrics} provides a summary of key concepts and metrics;
 \autoref{sec:pose} details the construction of POSE along with the various insights it provides;
-\autoref{sec:investigation} demonstrates our new model with a study into the CPU power optimisation opportunities presented by a range of benchmark applications;
-and finally \autoref{sec:conclusion} concludes this work.
+\autoref{sec:investigation} demonstrates our new modelling tool with a study into the CPU power optimisation opportunities presented by a range of benchmark applications;
+and finally \autoref{sec:conclusion} concludes the paper and describes future research.

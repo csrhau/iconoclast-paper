@@ -18,19 +18,19 @@ The only prerequisites of our model are that time and energy consumption can be 
 POSE is built around the concept of a \emph{Feasible Performance Envelope}.
 We construct this by plotting lines of gradient $P_{min}$ and $P_{max}$ in \autoref{fig:technique}.
 These values represent the minimum and maximum rates of power consumption which can occur during normal operation of the target platform.
-The \textit{(Runtime, Energy)} costs incurred by running any given code $\theta$ under similar conditions must be represented somewhere within this envelope.
+The \textit{(Runtime, Energy)} costs incurred by running any given code $\theta$ under similar conditions must be represented within this envelope.
 
 \subsection{Optimisation Bound}
 \noindent
 To constrain our search space further we consider the metric we wish to reduce.
 
 \begin{definition}
-\textit{For logically equivalent codes $\theta$ and $\lambda$, the transformation ${\theta \to \lambda}$ is a valid optimisation with respect to metric $M$ if and only if ${M(\lambda) \succ M(\theta)}$.}
+\textit{For logically equivalent codes $\theta$ and $\lambda$, the transformation ${\theta \to \lambda}$ is a valid optimisation with respect to metric $M$ iff ${M(\lambda) \succ M(\theta)}$.}
 \label{def:optimisation}
 \end{definition}
 
 \noindent
-We plot curve \emph{B --- E} in \autoref{fig:technique} which passes through $\theta$ linking all points where ${M(\lambda) = M(\theta)}$. 
+We plot curve \emph{B --- E} in \autoref{fig:technique}, which passes through $\theta$ linking all points where ${M(\lambda) = M(\theta)}$. 
 By \autoref{def:optimisation} any optimised versions of $\theta$ must exist below this bound.
 Naturally the equation for the Optimisation Bound depends on the metric we are optimising for.
 \autoref{fig:technique} shows the Optimisation Bound for $E^1t^2$.
@@ -46,7 +46,7 @@ The general form of this bound for the $E^mt^n$ family of metrics is derived as 
 \noindent
 Our second bound considers what it means to optimise for reduced power draw.
 \begin{definition}
-\textit{An optimisation $\theta \to \lambda$ with respect to metric $M$ is a power optimisation if the reduction in power draw it delivers is responsible for the majority of the improvement in terms of $M$.}
+\textit{An optimisation $\theta \to \lambda$ with respect to metric $M$ is a power optimisation iff the reduction in power draw it delivers is responsible for the majority of the improvement in terms of $M$.}
 \label{def:poweropt}
 \end{definition}
 
@@ -62,8 +62,9 @@ Again the equation for the Contribution Bound depends on the metric chosen.
   E_{\lambda} &= (\frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n+1})^{\frac{1}{m}} 
 \end{align}
 
-It makes sense to use the most appropriate tools while searching for optimisations.
-If an optimisation yields significant reductions in runtime with only minor reductions in power consumption then it is reasonable to classify it as a runtime optimisation and state that conventional time-based profilers and performance engineering tools are better suited to finding it.
+We seek to use the most appropriate tools while searching for optimisations.
+If an optimisation yields significant reductions in runtime, with only minor reductions in power consumption, then it is reasonable to classify it as a runtime optimisation.
+Conventional time-based profilers and performance engineering tools are therefore better suited to finding this optimisation.
 It is the Contribution Bound which enables our model to make this distinction.
 
 \subsection{Optimisation Limit}
@@ -78,23 +79,23 @@ All optimisations below this limit strictly dominate any possible power optimisa
 
 \subsection{POSE Insights}
 \noindent
-POSE partitions the feasible performance envelope into areas corresponding to different types of optimisation.
+POSE partitions the feasible performance envelope of \autoref{fig:technique} into areas with different performance characteristics.
 Area 1 encompasses runtime optimisations which dominate the best case power optimisation in terms of $M$ (\emph{Strong Runtime Optimisation}).
-Area 2 encompasses runtime optimisations which dominate $\theta$ in terms of $M$, yet may in turn be beaten by some power optimised version of $\theta$ (\emph{Weak Runtime Optimisation}).
+Area 2 encompasses runtime optimisations which dominate $\theta$ in terms of $M$, yet may be outperformed by some power optimised version of $\theta$ (\emph{Weak Runtime Optimisation}).
 Area 3 encompasses optimisations for which improvements to $M$ are primarily due to reduced power consumption (\emph{Power Optimisation}).
-Area 4 corresponds to codes with strictly worse performance than $\theta$ (\emph{Performance Degradation}).
+Area 4 corresponds to codes with worse performance than $\theta$ (\emph{Performance Degradation}).
 
 A key strength of POSE is that it produces quantitative and actionable insights relating directly to properties of the code.
 These insights fall into one of two broad categories, which taken together allow a performance engineer to decide if power optimisation is likely to prove worthwhile.
 
-The first of these categories relates to how much benefit may be offered by power optimisation.
+The first of these categories relates to \textit{the benefit offered by power optimisation}.
 Taking the difference in energy between point $\theta$ and $D$ gives us an upper limit on the amount of energy which can be saved by power optimisation. 
 Similarly, the difference in value between $M(\theta)$ and $M(C)$ gives an upper bound on the improvement in our metric we can expect to see from power optimisation.
 
-The second category indicates how much scope a code has for power optimisation.
+The second category indicates \textit{the scope a code has for power optimisation}.
 The difference in runtime between intersect $E$ and $\theta$ represents the maximum increase in runtime we could feasibly trade off to achieve a slower yet more energy efficient code.
-The value $t_\theta / t_B$ represents the smallest speed-up which would guarantee a code which outperformed $\theta$ with respect to $M$.
-Finally, $t_\theta / t_A$ is the smallest speed-up guaranteed to outperform any power optimised version of $\theta$.
+The value $t_\theta / t_B$ represents the smallest speed up which guarantees a code that outperformed $\theta$ with respect to $M$.
+Finally, $t_\theta / t_A$ is the smallest speed up guaranteed to outperform any power optimised version of $\theta$.
 
 The figures produced by POSE are all upper bounds, and the benefits of power optimisation will be more modest in practice.
 Even so, these figures are useful as they allow performance engineers to make informed decisions about where best to focus their optimisation efforts.
@@ -107,5 +108,5 @@ Even so, these figures are useful as they allow performance engineers to make in
 \label{fig:multimetric-technique}
 \end{figure}
 
-It is worth restating that POSE is a metric-agnostic heuristic. \autoref{fig:multimetric-technique} shows how the POSE heuristic varies with choice of metric using Energy ($E^1t^0$) and Energy Delay Squared Product $E^1t^2$ as examples. POSE offers the same insights regardless of the metric chosen.
+It is worth restating that POSE is a metric-agnostic heuristic. \autoref{fig:multimetric-technique} shows how the POSE heuristic varies with choice of metric using Energy ($E^1t^0$) and Energy Delay Squared Product ($E^1t^2$) as examples. POSE offers the same insights regardless of the metric chosen.
 
