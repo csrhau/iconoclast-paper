@@ -1,14 +1,3 @@
-\pgfplotsset{
-    legend image with text/.style={
-        legend image code/.code={%
-            \node[anchor=center] at (0.3cm,0cm) {#1};
-        }
-    },
-}
-\newcommand{\legendline}[1]{%
-  \raisebox{2pt}{\tikz{\draw[#1](0,0) -- (4.5mm,0);}}%
-}
-
 \begin{tikzpicture}
   \begin{axis}[ticks = none, 
     axis on top,

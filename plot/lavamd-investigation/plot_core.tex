@@ -44,6 +44,17 @@
       \pgfmathparse{((#1 / #2^3) * #3^4)}%
     }
 
+    \addplot[color=printorange, forget plot, domain=\trnodex:\brnodex] { metricbound(\codepower, \codetime, x)};
+    \addlegendimage{legend image with text={B\legendline{printorange}E}}
+    \addlegendentry{Optimisation Bound}
+
+    \addplot[color=printblue, forget plot, domain=\blnodex:\codetime] { definitionbound(\codepower, \codetime, x)};
+    \addlegendimage{legend image with text={C\legendline{printblue}$\theta$}}
+    \addlegendentry{Contribution Bound}
+
+    \addplot[color=printorange, forget plot, densely dashed, domain=\tlnodex:\blnodex] {metricbound(\baselinepower, \blnodex, x)};
+    \addlegendimage{legend image with text={A\legendline{printorange, densely dashed}C}}
+    \addlegendentry{Optimisation Limit}
 
    % BETA ROOFLINE BOUND 
     \addplot[color=printred, very thick, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
@@ -52,15 +63,6 @@
     % ALPHA BASELINE BOUND 
     \addplot[color=printgreen, very thick, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
     \addlegendentry{$P_{min}$ Energy Bound} 
-
-    \addplot[color=printorange, domain=\trnodex:\brnodex] { metricbound(\codepower, \codetime, x)};
-    \addlegendentry{Optimisation Bound}
-
-    \addplot[color=printblue, domain=\blnodex:\codetime] { definitionbound(\codepower, \codetime, x)};
-    \addlegendentry{Contribution Bound}
-
-    \addplot[color=printorange, densely dashed, domain=\tlnodex:\blnodex] {metricbound(\baselinepower, \blnodex, x)};
-    \addlegendentry{Optimisation Limit}
 
     % Constant Time (Vertical) dotted line
     \draw[densely dotted] ({axis cs:\codetime,\baselineenergy}) -- ({axis cs:\codetime,\codeenergy});

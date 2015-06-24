@@ -13,6 +13,19 @@
 \definecolor{printblue}{RGB}{43,131,186}
 \definecolor{printlilac}{RGB}{178,171,210}
 
+\pgfplotsset{
+    legend image with text/.style={
+        legend image code/.code={%
+            \node[anchor=center] at (0.3cm,0cm) {#1};
+        }
+    },
+}
+\newcommand{\legendline}[1]{%
+  \raisebox{2pt}{\tikz{\draw[#1](0,0) -- (4.5mm,0);}}%
+}
+
+
+
 \begin{document}
 \begin{figure}[ht]
 \include{plot_core}
