@@ -5,13 +5,14 @@ This paper presents POSE, a mathematical and visual model which captures the tra
 POSE provides insights regarding the scope a code has for power optimisation as well as the level of improvement which can be expected.
 These insights help developers to determine whether power or runtime optimisation is the best approach for improving the efficiency of a code.
 
-POSE works by partitioning the energy/runtime plane into areas corresponding to runtime and power optimised versions of an initial code with respect to a cost metric.
-We provide derivations of POSE's boundaries for the Energy Delay Squared family of metrics.
-We also demonstrate how to apply POSE in practice by modelling the CPU power consumption of a number of codes taken from the Rodinia and Mantevo benchmark suites.  
+POSE works by partitioning the energy/runtime plane into areas corresponding to runtime and power optimised versions of an initial code with respect to an optimisation metric.
+We provide derivations of POSE's boundaries for the Energy Delay Product family of metrics.
+We also discuss the various insights our model provides.
 
-The results in this paper illustrate that runtime optimisation is the preferred approach to reducing the energy consumption of MiniMD and to a lesser extent LavaMD.
+We demonstrate POSE by modelling the CPU power consumption of a number of codes taken from the Rodinia and Mantevo benchmark suites.  
+Our results illustrate that runtime optimisation is the preferred approach to reducing the energy consumption of MiniMD, whilst LavaMD shows some scope for power optimisation.
 Our investigation into frequency scaling also highlights the ability of POSE to rule out dominated configurations and hence reduce the optimisation search space.
-We believe that both results are of interest to performance engineers and serve to demonstrate the practical utility of POSE.
+We believe these results are of interest to performance engineers and serve to demonstrate the practical utility of POSE.
 
 POSE is under consideration for inclusion into a state of the art application analytics for HPC clusters and applications \textit{[paragraph redacted to preserve anonymity]}.
 
