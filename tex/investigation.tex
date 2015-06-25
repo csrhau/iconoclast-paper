@@ -62,7 +62,7 @@ The remaining property is activity factor, which is influenced by benchmark code
 We define the range of values that $A$ can take for some fixed $S$ and $C$ as $[\alpha,~\beta]$ where $0 < \alpha < \beta < 1$.
 Our $\alpha$ benchmark executes a single \texttt{jmp} instruction each clock cycle, preventing instruction pipelining.
 It performs no calculations or memory accesses while keeping control logic to a minimum.
-Supporting benchmark code can be downloaded from the link given under Acknowledgements.
+Supporting benchmark code can be downloaded from the link given in the Acknowledgements section of this paper.
 
 Non-trivial codes perform more work per unit time than our minimal benchmark.
 This additional work means more transistors changing state per cycle, and hence a higher activity factor.
@@ -129,7 +129,7 @@ The benchmark configurations used were $(\text{3.2 GHz}, \alpha, 4)$ for $P_{min
 \autoref{tab:pose_params} summarises the POSE models constructed for each code.
 The remainder of this section focusses on MiniMD and LavaMD as the two codes representing the extremes of power consumption.
 POSE models for these two codes are reproduced graphically in \autoref{fig:minimd_pose} and \autoref{fig:lavamd_pose}.
-Models for the remaining codes can be found in \autoref{sec:appendix}.
+Model summaries for the remaining codes can be found in the Appendix.
 
 These diagram show that LavaMD offers far more scope for power optimisation than MiniMD, which offers virtually none. 
 POSE provides the following insights for LavaMD:
@@ -218,11 +218,10 @@ We choose the 3.2 GHz run as our initial `unoptimised' baseline because this is 
 If the POSE models for two P-states do not overlap then switching to the higher performance P-state outperforms any possible power optimisation at the weaker state.
 This state can then be excluded from any search for power optimisations.
 
-For MiniMD, \autoref{fig:minimd-pstates} shows that the first POSE model which does not overlap with the one built for our baseline occurs at 2.2 GHz.
-This means no power optimisations exists at P-states 2.2 GHz and below which can match the $E^1t^2$ performance of our unoptimised baseline.
+For MiniMD, \autoref{fig:minimd-pstates} shows that the first POSE model which does not overlap with that for our baseline occurs at 2.2 GHz.
+This means that no power optimisations exist at P-states 2.2 GHz and below which can match the $E^1t^2$ performance of our unoptimised baseline.
 Conversely, such an optimisation may exist at frequencies between 3.2 GHz and 2.2 GHz as shown by the overlapping of the respective POSE models.
-For LavaMD this optimisation threshold is slightly lower at 2.1 GHz, lending support to the claim that of these two codes LavaMD is more amenable to power optimisation.
+For LavaMD this optimisation threshold is lower at 2.1 GHz, lending support to the claim that of these two codes LavaMD is more amenable to power optimisation.
 
 Dynamic Concurrency Throttling has also been proposed as a means to reduce energy consumption~\cite{maury:2006aa}.
-It would be trivial to use POSE to model optimisations which influence core count.
-The only difference between this and our DVFS investigation would be slightly different parameterisation of the feasible performance envelope ($C_{min}=1$).
+It would be trivial to use POSE to model optimisations which influence core count; requiring a small change to the parameterisation of the feasible performance envelope ($C_{min}=1$).

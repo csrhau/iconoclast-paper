@@ -204,13 +204,15 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
     \end{itemize}
   \end{frame}
 
-%Fragile frames can't be indented. which sucks.
-\begin{frame}[fragile]
-\frametitle{Baseline Measurement}
-\centering                                                                      
-\lstset{basicstyle=\ttfamily\footnotesize\bfseries, frame=tb} %small bold text, lines top and bottom 
-\lstinputlisting[caption=Baseline Power Microbenchmark]{lst/alpha_benchmark.c}              
-\end{frame}
+
+  \begin{frame}
+    \frametitle{Baseline Measurement}
+    \begin{itemize}
+      \item No-op code
+    \end{itemize}
+  \end{frame}
+
+
 
   \begin{frame}
     \frametitle{Roofline Measurement}

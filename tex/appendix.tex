@@ -1,77 +1,36 @@
 \label{sec:appendix}
-POSE models for the remaining codes are displayed in \autoref{fig:models}. These plots, along with all POSE models shown in this paper, were generated automatically. Software for building POSE models and producing performance reports can be downloaded from the link given under Acknowledgements.
+\autoref{tab:remaining} summarises the results of POSE models for the remaining codes documented in this paper.
+These results were generated automatically.
+Software for building POSE models and producing these energy performance reports can be downloaded from the link given in Acknowledgements.
 
-\subsection{leukocyte (\autoref{fig:leukocyte_pose})}
-\begin{itemize}
-  \item Power optimisation can save at most 151.77J;
-  \item The slowdown from power optimisation is at most 1.80s;
-  \item Power optimisation can reduce $E^1t^2$ by at most 23.73\%;
-  \item A speed up of 5.73s, or 1.17$\times$, strictly outperforms $\theta$;
-  \item A speed up of 8.59s, or 1.28$\times$, strictly outperforms any power optimisation.
-\end{itemize}
-
-\subsection{CFD (\autoref{fig:cfd_pose})}
-\begin{itemize}
-  \item Power optimisation can save at most 134.52J;
-  \item The slowdown from power optimisation is at most 1.58s;
-  \item Power optimisation can reduce $E^1t^2$ by at most 26.75\%;
-  \item A speed up of 4.20s, or 1.16$\times$, strictly outperforms $\theta$;
-  \item A speed up of 6.72s, or 1.29$\times$, strictly outperforms any power optimisation.
-\end{itemize}
-
-\subsection{Heartwall (\autoref{fig:heartwall_pose})}
-\begin{itemize}
-  \item Power optimisation can save at most 125.40J;
-  \item The slowdown from power optimisation is at most 1.47s;
-  \item Power optimisation can reduce $E^1t^2$ by at most 29.32\%;
-  \item A speed up of 3.35s, or 1.16$\times$, strictly outperforms $\theta$
-  \item A speed up of 5.68s, or 1.30$\times$, strictly outperforms any power optimisation.
-\end{itemize}
-
-\subsection{streamcluster (\autoref{fig:streamcluster_pose})}
-\begin{itemize}
-  \item Power optimisation can save at most 176.74J;
-  \item The slowdown from power optimisation is at most 2.06s;
-  \item Power optimisation can reduce $E^1t^2$ by at most 29.88\%;
-  \item A speed up of 4.57s, or 1.16$\times$, strictly outperforms $\theta$;
-  \item A speed up of 7.84s, or 1.30$\times$, strictly outperforms any power optimisation.
-\end{itemize}
-
-
-\begin{figure}[t]%
-  \scriptsize
-  \begin{subfigure}[t]{\linewidth}%
-    \centering 
-    \input{plot/leukocyte-investigation/plot_core}%
-    \caption{leukocyte}%
-    \label{fig:leukocyte_pose}
-  \end{subfigure}%
-  \vskip\baselineskip
-  \begin{subfigure}[t]{\linewidth}%
-    \centering 
-    \input{plot/cfd-investigation/plot_core}%
-    \caption{CFD}%
-    \label{fig:cfd_pose}
-  \end{subfigure}%
-  \vskip\baselineskip
-  \begin{subfigure}[t]{\linewidth}%
-    \centering 
-    \input{plot/heartwall-investigation/plot_core}%
-    \caption{Heartwall}%
-    \label{fig:heartwall_pose}
-  \end{subfigure}%
-  \vskip\baselineskip
-  \begin{subfigure}[t]{\linewidth}%
-    \centering 
-    \input{plot/streamcluster-investigation/plot_core}%
-    \caption{streamcluster}%
-    \label{fig:streamcluster_pose}
-  \end{subfigure}%
-  \vskip\baselineskip
-  \begin{center}%
-    \ref{leukocyte:legend}%
-  \end{center}%
-  \caption{$E^1t^2$ POSE Models for Remaining Codes}%
-  \label{fig:models}
-\end{figure}
-
+\begin{table}[h!]
+\caption{POSE Summaries for Remaining Codes}
+\label{tab:remaining}
+\begin{tabular}{@{}ll@{}}\toprule
+ \textbf{\emph{leukocyte}}&\\
+ Best Case Energy Saved by Reducing Power Consumption & 151.77J \\
+ Worst Case Slowdown as a result of Power Optimisation & 1.80s \\
+ Best Case Improvement in $E^1t^2$ from Power Optimisation & 23.73\% \\
+ Minimum Speed Up Guaranteed to Outperform $\theta$ & 5.73s; 1.17$\times$ \\
+ Speed Up Required to Dominate Power Optimisation & 8.59s; 1.28$\times$ \\
+ \textbf{\textit{CFD}}& \\
+ Best Case Energy Saved by Reducing Power Consumption & 134.52J \\
+ Worst Case Slowdown as a result of Power Optimisation & 1.58s \\
+ Best Case Improvement in $E^1t^2$ from Power Optimisation & 26.75\% \\
+ Minimum Speed Up Guaranteed to Outperform $\theta$ & 4.20s; 1.16$\times$ \\
+ Speed Up Required to Dominate Power Optimisation & 6.72s; 1.29$\times$ \\
+ \textbf{\textit{Heartwall}}&\\
+ Best Case Energy Saved by Reducing Power Consumption & 125.40J \\
+ Worst Case Slowdown as a result of Power Optimisation & 1.47s \\
+ Best Case Improvement in $E^1t^2$ from Power Optimisation & 29.32\% \\
+ Minimum Speed Up Guaranteed to Outperform $\theta$ & 3.35s; 1.16$\times$ \\
+ Speed Up Required to Dominate Power Optimisation & 5.68s; 1.30$\times$ \\
+ \textbf{\textit{streamcluster}}&\\
+ Best Case Energy Saved by Reducing Power Consumption & 176.64J \\
+ Worst Case Slowdown as a result of Power Optimisation & 2.06s \\
+ Best Case Improvement in $E^1t^2$ from Power Optimisation & 29.88\% \\
+ Minimum Speed Up Guaranteed to Outperform $\theta$ & 4.57s; 1.16$\times$ \\
+ Speed Up Required to Dominate Power Optimisation & 7.84s; 1.30$\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}

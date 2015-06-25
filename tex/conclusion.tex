@@ -10,15 +10,19 @@ We provide derivations of POSE's boundaries for the Energy Delay Product family 
 We also discuss the various insights our model provides.
 
 We demonstrate POSE by modelling the CPU power consumption of a number of codes taken from the Rodinia and Mantevo benchmark suites.  
-Our results illustrate that runtime optimisation is the preferred approach to reducing the energy consumption of MiniMD, whilst LavaMD shows some scope for power optimisation.
-Our investigation into frequency scaling also highlights the ability of POSE to rule out dominated configurations and hence reduce the optimisation search space.
-We believe these results are of interest to performance engineers and serve to demonstrate the practical utility of POSE.
+Our results illustrate that runtime optimisation is the preferred approach to reducing the energy consumption of MiniMD; power optimisation is limited to improving the $E^1t^2$ of this code by at most 7.60\%.
+LavaMD shows more scope for power optimisation, offering improvements of up to 30.59\% in the same metric. 
 
-POSE is being considered for inclusion into a state of the art application analytics for HPC clusters and applications \textit{[paragraph redacted to preserve anonymity]}.
+Our investigation into frequency scaling highlights the ability of POSE to rule out dominated configurations and hence reduce the optimisation search space.
+We show that no power optimised version of MiniMD operating at P-states below 2.3 GHz can match the $ED^2P$ performance of the original unoptimised code running at 3.2 GHz.
+Once again LavaMD shows more scope for optimisation, with this limit falling at the marginally less restrictive level of 2.2 GHz.
+
+We believe our results are of interest to performance engineers and serve to demonstrate the practical utility of POSE.
+POSE is being engineered for inclusion into a well-known state-of-the-art application analytics tool for HPC clusters and applications \textit{[paragraph on this redacted to preserve anonymity]}.
 
 \subsection*{Future Work}
 \noindent
-Future work will further validate POSE by applying it to a broader selection of scientific codes running on a range of machines.
+Future work will further validate POSE by applying it to a broader selection of scientific codes running on a range of architectures.
 The quantitative nature of our technique makes it particularly well suited to comparison studies.
 As such, we are particularly keen to investigate the power optimisation opportunities presented by different architectures.
 

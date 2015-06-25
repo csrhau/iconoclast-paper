@@ -1,15 +1,6 @@
 \section{Related Work}
 \label{sec:related}
 \noindent
-Any attempt to optimise a program requires an appropriate metric.
-Energy to solution is suitable when energy consumption is of paramount importance, however its usefulness in time-sensitive domains is limited by its failure to take runtime performance into account.
-
-Horowitz proposed Energy Delay Product as a metric to evaluate the energy and performance trade offs in low power design~\cite{horowitz:1994aa}:
-Brooks extended this by weighting each component to better reflect the demands of specific domains~\cite{brooks:2000ab}.
-We refer to these as the $E^mt^n$ family of metrics, which includes power ($E^1t^{-1}$), energy ($E^1t^0$) and time ($E^0t^1$) as members.
-
-Most examples in this paper use Energy Delay Squared Product ($E^1t^2$); described by Brooks as the most appropriate $E^mt^n$ metric when considering a fixed micro-architecture \cite{brooks:2000aa}.
-
 Performance modelling techniques enable the rapid exploration of large hardware and software design spaces.
 \autoref{tab:approaches} categorises the performance modelling ecosystem based on model domain and granularity.
 
@@ -23,7 +14,7 @@ Performance modelling techniques enable the rapid exploration of large hardware 
     & \multicolumn{2}{l}{Domain}\\ \cmidrule(){2-3}
     Approach & Runtime & Energy \\
     \midrule
-  Simulation & SST~\cite{rodrigues:2011aa}, WARRP~\cite{hammond:2009aa} & Wattch~\cite{brooks:2000aa}, McPAT~\cite{li:2009aa}  \\
+  Simulation & SST~\cite{rodrigues:2011aa}, WARRP~\cite{hammond:2009aa}, PACE~\cite{cao:2000aa} & Wattch~\cite{brooks:2000aa}, McPAT~\cite{li:2009aa}  \\
   Analytical & PRAM~\cite{karp:1991aa}, LogP~\cite{culler:1993aa}, LogGP~\cite{alexandrov:1997aa} & BTL~\cite{manousakis:2012aa}, CAPE~\cite{kamble:1997aa} \\
   Heuristic & Roofline~\cite{williams:2009aa}, Amdahl's Law~\cite{amdahl:1967aa} & \textbf{POSE}, Energy Roofline~\cite{choi:2013aa} \\
   \bottomrule
@@ -33,24 +24,24 @@ Performance modelling techniques enable the rapid exploration of large hardware 
 
 \noindent
 \subsection{Simulators} 
-Tools such as SST~\cite{rodrigues:2011aa} and WARRP~\cite{hammond:2009aa} gather performance data by executing a simplified representation of the original code.
+Tools such as SST~\cite{rodrigues:2011aa}, WARRP~\cite{hammond:2009aa} and PACE~\cite{cao:2000aa} gather performance data by executing a simplified representation of the original code.
 Using code as a modelling input reduces the burden of model construction placed on the user, meaning model accuracy depends instead on how faithfully the simulator is able to model an underlying system.
 These approaches can be extremely insightful, however constructing and validating representative simulations is often limited by the need for numerous micro-benchmarks and also the time and state-space overheads of the underlying discrete event simulator.
-They also tend to be expensive to run due to the overheads introduced by system simulation.
 
 Tools such as Wattch~\cite{brooks:2000aa} and McPAT~\cite{li:2009aa} extend performance simulators with models of power draw.
 These models use the energy costs associated with particular hardware actions to estimate the power consumption characteristics of simulated code.
 
-\subsection{Analytical Models} This approach distils the structure and performance of a program into parameterised mathematical expressions.
+\subsection{Analytical Models} 
+Analytical Models distil the structure and performance of a program into parameterised mathematical expressions.
 Most analytical models are based on a generalised approach to analytical modelling based on a simplified understanding of system architecture.
 Examples include LogP~\cite{culler:1993aa}, LogGP~\cite{alexandrov:1997aa} and PRAM~\cite{karp:1991aa}, which provide model skeletons which must then be tailored to individual codes.
 BTL~\cite{manousakis:2012aa} and CAPE~\cite{kamble:1997aa} use a similar approach to capture the power consumption characteristics of code. 
 
 Analytical models produce results more quickly than simulations, making them particularly suitable for parameter sweeps.
-Ensuring the model is expressive enough to capture all possible program behaviours is an to this approach, as it requires a deep understanding of the target application.
+Ensuring the model is expressive enough to capture all possible program behaviours is however challenging as it requires a deep understanding of the target application.
 
 \subsection{Heuristic Models}
-This is the most abstract category of performance models and the one to which our work belongs.
+Heuristic models represent the most abstract category of performance models and the one to which our work belongs.
 Rather than attempting to faithfully represent an entire system, heuristic models provide a simplified analogy which helps developers reason about particular properties of a code.
 Ease of construction and the clarity of insights mean heuristic models are well suited to early stages of optimisation.
 
@@ -61,3 +52,9 @@ This simplification limits Roofline's use as a predictive model but it also mean
 POSE serves as a preliminary `first cut' modelling technique intended to guide energy-aware optimisation efforts.
 Our model provides an asymptotic analysis of the scope for optimisation in the power and runtime domains, allowing performance engineers to focus their efforts wherever they will be most beneficial.
 POSE draws inspiration from the Roofline model in that its insights are also presented in an intuitive graphical format.
+
+Horowitz proposed the Energy Delay Product as a metric to evaluate the energy and performance trade-offs in low power design~\cite{horowitz:1994aa}:
+Brooks extended this by weighting each component to better reflect the demands of specific domains~\cite{brooks:2000ab}.
+We refer to these as the $E^mt^n$ family of metrics, which includes power ($E^1t^{-1}$), energy ($E^1t^0$) and time ($E^0t^1$) as members.
+
+Most of the examples found in this paper use Energy Delay Squared Product ($E^1t^2$); described by Brooks as the most appropriate $E^mt^n$ metric when considering a fixed micro-architecture \cite{brooks:2000aa}.
