@@ -15,7 +15,7 @@ Performance modelling techniques enable the rapid exploration of large hardware 
     Approach & Runtime & Energy \\
     \midrule
   Simulation & SST~\cite{rodrigues:2011aa}, WARRP~\cite{hammond:2009aa}, PACE~\cite{cao:2000aa} & Wattch~\cite{brooks:2000aa}, McPAT~\cite{li:2009aa}  \\
-  Analytical & PRAM~\cite{karp:1991aa}, LogP~\cite{culler:1993aa}, LogGP~\cite{alexandrov:1997aa} & BTL~\cite{manousakis:2012aa}, CAPE~\cite{kamble:1997aa} \\
+  Analytical & LogP~\cite{culler:1993aa}, LogGP~\cite{alexandrov:1997aa}, PRAM~\cite{karp:1991aa}  & BTL~\cite{manousakis:2012aa}, CAPE~\cite{kamble:1997aa} \\
   Heuristic & Roofline~\cite{williams:2009aa}, Amdahl's Law~\cite{amdahl:1967aa} & \textbf{POSE}, Energy Roofline~\cite{choi:2013aa} \\
   \bottomrule
   \end{tabular}
@@ -24,34 +24,36 @@ Performance modelling techniques enable the rapid exploration of large hardware 
 
 \noindent
 \subsection{Simulators} 
-Tools such as SST~\cite{rodrigues:2011aa}, WARRP~\cite{hammond:2009aa} and PACE~\cite{cao:2000aa} gather performance data by executing a simplified representation of the original code.
+Performance simulators such as SST~\cite{rodrigues:2011aa}, WARRP~\cite{hammond:2009aa} and PACE~\cite{cao:2000aa} gather performance data by executing a simplified representation of the original code.
 Using code as a modelling input reduces the burden of model construction placed on the user, meaning model accuracy depends instead on how faithfully the simulator is able to model an underlying system.
-These approaches can be extremely insightful, however constructing and validating representative simulations is often limited by the need for numerous micro-benchmarks and also the time and state-space overheads of the underlying discrete event simulator.
+
+These approaches can be extremely insightful when searching for optimisations, however constructing and validating representative simulations is often limited by the need for numerous micro-benchmarks and also the time and state-space overheads of the underlying discrete event simulator.
 
 Tools such as Wattch~\cite{brooks:2000aa} and McPAT~\cite{li:2009aa} extend performance simulators with models of power draw.
 These models use the energy costs associated with particular hardware actions to estimate the power consumption characteristics of simulated code.
 
 \subsection{Analytical Models} 
 Analytical Models distil the structure and performance of a program into parameterised mathematical expressions.
-Most analytical models are based on a generalised approach to analytical modelling based on a simplified understanding of system architecture.
-Examples include LogP~\cite{culler:1993aa}, LogGP~\cite{alexandrov:1997aa} and PRAM~\cite{karp:1991aa}, which provide model skeletons which must then be tailored to individual codes.
-BTL~\cite{manousakis:2012aa} and CAPE~\cite{kamble:1997aa} use a similar approach to capture the power consumption characteristics of code. 
-
 Analytical models produce results more quickly than simulations, making them particularly suitable for parameter sweeps.
 Ensuring the model is expressive enough to capture all possible program behaviours is however challenging as it requires a deep understanding of the target application.
+
+Examples of this approach include LogP~\cite{culler:1993aa}, LogGP~\cite{alexandrov:1997aa} and PRAM~\cite{karp:1991aa}, which provide model skeletons which must then be tailored to individual codes.
+This approach has also been applied to modelling energy consumption, with examples including BTL~\cite{manousakis:2012aa} and CAPE~\cite{kamble:1997aa}.
 
 \subsection{Heuristic Models}
 Heuristic models represent the most abstract category of performance models and the one to which our work belongs.
 Rather than attempting to faithfully represent an entire system, heuristic models provide a simplified analogy which helps developers reason about particular properties of a code.
-Ease of construction and the clarity of insights mean heuristic models are well suited to early stages of optimisation.
+Ease of construction and the clarity of their insights mean heuristic models are well suited to early stages of optimisation.
 
-Ahmdal's Law~\cite{amdahl:1967aa} is arguably the most well known heuristic model, which states that the performance gains from parallelization is limited by the serial portion of a parallel program.
+Ahmdal's Law~\cite{amdahl:1967aa}, arguably the best known heuristic model, states that the performance gains from parallelization are limited by the serial portion of a parallel program.
 A further example of this class is the Roofline model~\cite{williams:2009aa}, which frames application performance in terms of its operational intensity and two system bottlenecks; off-chip memory bandwidth and floating point performance.
-This simplification limits Roofline's use as a predictive model but it also means a developer can easily isolate the limiting factor of code performance and target their optimisation efforts accordingly.
+This simplification limits Roofline's use as a predictive model but does mean a developer can easily isolate the limiting factor of code performance and target their optimisation efforts accordingly.
 
 POSE serves as a preliminary `first cut' modelling technique intended to guide energy-aware optimisation efforts.
 Our model provides an asymptotic analysis of the scope for optimisation in the power and runtime domains, allowing performance engineers to focus their efforts wherever they will be most beneficial.
 POSE draws inspiration from the Roofline model in that its insights are also presented in an intuitive graphical format.
+POSE differs from the other models described in that it does not identify optimisation opportunities, but rather which tools and approaches are best suited to finding them.  
+
 
 Horowitz proposed the Energy Delay Product as a metric to evaluate the energy and performance trade-offs in low power design~\cite{horowitz:1994aa}:
 Brooks extended this by weighting each component to better reflect the demands of specific domains~\cite{brooks:2000ab}.

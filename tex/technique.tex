@@ -86,10 +86,10 @@ All optimisations below this limit strictly dominate any possible power optimisa
 \noindent
 
 POSE partitions the feasible performance envelope of \autoref{fig:technique} into areas with differing performance characteristics.
-Area 1 encompasses runtime optimisations which dominate the best case power optimisation in terms of $M$ (\emph{Strong Runtime Optimisation}).
-Area 2 encompasses runtime optimisations which dominate $\theta$ in terms of $M$, yet may be outperformed by some power optimised version of $\theta$ (\emph{Weak Runtime Optimisation}).
-Area 3 encompasses optimisations for which improvements to $M$ are primarily due to reduced power consumption (\emph{Power Optimisation}).
-Area 4 corresponds to codes with worse performance than $\theta$ (\emph{Performance Degradation}).
+Area 1 contains runtime optimisations which dominate the best case power optimisation in terms of $M$ (\emph{Strong Runtime Optimisation}).
+Area 2 contains runtime optimisations which dominate $\theta$ in terms of $M$, yet may be outperformed by some power optimised version of $\theta$ (\emph{Weak Runtime Optimisation}).
+Area 3 contains optimisations for which improvements to $M$ are primarily due to reduced power consumption (\emph{Power Optimisation}).
+Finally, Area 4 corresponds to codes with worse performance than $\theta$ (\emph{Performance Degradation}).
 
 A key strength of POSE is that it produces quantitative and actionable insights relating directly to properties of the code.
 These insights fall into one of two broad categories, which taken together allow a performance engineer to decide if power optimisation is likely to prove worthwhile.
@@ -100,7 +100,7 @@ Similarly, the difference in value between $M(\theta)$ and $M(C)$ gives an upper
 
 The second category indicates \textit{the scope a code has for power optimisation}.
 The difference in runtime between intersect $E$ and $\theta$ represents the maximum increase in runtime we could feasibly trade off to achieve a slower yet more energy efficient code.
-The value $t_\theta / t_B$ represents the smallest speed up which guarantees a code that outperformed $\theta$ with respect to $M$.
+The value $t_\theta / t_B$ represents the smallest speed up which guarantees a code that outperforms $\theta$ with respect to $M$.
 Finally, $t_\theta / t_A$ is the smallest speed up guaranteed to outperform any power optimised version of $\theta$.
 
 The figures produced by POSE are all upper bounds, and the benefits of power optimisation will be more modest in practice.

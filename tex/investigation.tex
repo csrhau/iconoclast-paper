@@ -1,7 +1,7 @@
 \section{Investigation}
 \label{sec:investigation}
 \noindent
-We use POSE to investigate the scope for CPU power optimisation for a selection of codes from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} benchmark suites.
+We use POSE to investigate the scope for CPU power optimisation for a selection of codes taken from the Mantevo~\cite{heroux:2009aa} and Rodinia~\cite{che:2009aa} benchmark suites.
 
 CPU energy consumption accounts for a significant portion of the energy used by high performance systems~\cite{rong:2010aa} and is therefore a prime target for optimisation.
 It can also be measured accurately on commodity hardware~\cite{hackenberg:2013aa} making it a suitable candidate for POSE modelling.
@@ -72,13 +72,13 @@ This can be addressed by adding delays to the benchmark.
 FIRESTARTER~\cite{hackenberg:2013ab} serves as our benchmark for activity factor $\beta$.
 This tool is designed to trigger near-peak power consumption across a range of x86\_64 processors.
 It consists of hand optimised assembly routines which raise the activity factor above the level achievable with high level languages.
-Prime95 and Linpack were evaluated as $\beta$ benchmarks however they were outperformed by FIRESTARTER.
+Prime95 and Linpack were also evaluated as $\beta$ benchmarks however they were outperformed by FIRESTARTER.
 
-The benchmark parameter space is small enough to fully characterise a processor by measuring all $(S,A,C)$ configurations.
-Benchmarking runs lasted for 120 seconds to allow time for power readings to stabilise.
+The benchmark parameter space is small enough for us to fully characterise our processor by measuring all $(S,A,C)$ configurations.
+Benchmarking runs lasted for 120 seconds, allowing sufficient time for power readings to stabilise.
 We extended the Unix \texttt{time} binary to gather power consumption figures using RAPL.
 Techniques described by Hahnel~et~al.~\cite{hahnel:2012aa} were used to promote measurement accuracy.
-Results are presented in \autoref{tab:fpe_params}, which identifies P-states by their frequency component.
+The results of this characterisation are presented in \autoref{tab:fpe_params}, which identifies P-states by their frequency component.
 
 \begin{table}
   \scriptsize
@@ -93,7 +93,7 @@ Results are presented in \autoref{tab:fpe_params}, which identifies P-states by 
 Having characterised our system we now proceed to build POSE models for benchmarks in the Mantevo and Rodinia suites.
 These codes were compiled with ICC version 14.0.0.
 Codes were run with default configurations where available.
-The energy and runtime costs associated with each code is given in \autoref{tab:code_metrics}.
+The energy and runtime costs incurred by running each code is given in \autoref{tab:code_metrics}.
 
 \begin{table}
   \scriptsize
@@ -118,6 +118,7 @@ The benchmark configurations used were $(\text{3.2 GHz}, \alpha, 4)$ for $P_{min
   \caption{Time (s)}
   \input{tab/tex/code_pose_time.tex}
   \end{subtable}
+  \par\bigskip 
   \begin{subtable}{\linewidth}
   \centering
   \caption{Energy (J)}
@@ -128,27 +129,28 @@ The benchmark configurations used were $(\text{3.2 GHz}, \alpha, 4)$ for $P_{min
 
 \autoref{tab:pose_params} summarises the POSE models constructed for each code.
 The remainder of this section focusses on MiniMD and LavaMD as the two codes representing the extremes of power consumption.
-POSE models for these two codes are reproduced graphically in \autoref{fig:minimd_pose} and \autoref{fig:lavamd_pose}.
-Model summaries for the remaining codes can be found in the Appendix.
+POSE models for these two codes are reproduced graphically in \autoref{fig:minimd_pose} and \autoref{fig:lavamd_pose}, and the results of these models are presented in \autoref{tab:summaries}.
+Results for the remaining codes can be found in the Appendix.
 
-These diagram show that LavaMD offers far more scope for power optimisation than MiniMD, which offers virtually none. 
-POSE provides the following insights for LavaMD:
-\begin{itemize}
-  \item Power optimisation can save at most 353.36J;
-  \item The slowdown from power optimisation is at most 4.12s;
-  \item Power optimisation can reduce $E^1t^2$ by at most 30.59\%;
-  \item A speed up of 8.77s, or 1.15$\times$, strictly outperforms $\theta$;
-  \item A speed up of 15.29s, or 1.30$\times$, strictly outperforms any power optimisation.
-\end{itemize}
-\noindent 
-And for MiniMD:
-\begin{itemize}
-  \item Power optimisation can save at most 32.82J;
-  \item The slowdown from power optimisation is at most 0.40s;
-  \item Power optimisation can reduce $E^1t^2$ by at most 7.60\%;
-  \item A speed up of 5.27s, or 1.21$\times$, strictly outperforms $\theta$; 
-  \item A speed up of 5.92s, or 1.24$\times$, strictly outperforms any power optimisation.
-\end{itemize}
+\begin{table}[h!]
+\caption{POSE Model Summaries}
+\label{tab:summaries}
+\begin{tabular}{@{}ll@{}}\toprule
+ \textbf{\emph{LavaMD}}&\\
+ Best Case Energy Saved by Reducing Power Consumption & 353.36J \\
+ Worst Case Slowdown as a result of Power Optimisation & 4.12s \\
+ Best Case Improvement in $E^1t^2$ from Power Optimisation & 30.59\% \\
+ Minimum Speed Up Guaranteed to Outperform $\theta$ & 8.77s; 1.15$\times$ \\
+ Speed Up Required to Dominate Power Optimisation & 15.29s; 1.30$\times$ \\
+ \rule{0pt}{2.5ex}\textbf{\textit{MiniMD}}& \\
+ Best Case Energy Saved by Reducing Power Consumption & 32.82J \\
+ Worst Case Slowdown as a result of Power Optimisation & 0.40s \\
+ Best Case Improvement in $E^1t^2$ from Power Optimisation & 7.60\% \\
+ Minimum Speed Up Guaranteed to Outperform $\theta$ & 5.27s; 1.21$\times$ \\
+ Speed Up Required to Dominate Power Optimisation & 5.92s; 1.24$\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \begin{figure*}[t]%
   \scriptsize
@@ -169,6 +171,7 @@ And for MiniMD:
   \label{fig:comparison}%
 \end{figure*}
 
+These results show that LavaMD is more amenable to power optimisation than MiniMD, in terms of both scope and benefit; a fact illustrated by the difference in size between the power optimised areas in \autoref{fig:minimd_pose} and \autoref{fig:lavamd_pose}.
 
 \subsection{POSE Models for Frequency Scaling}
 \noindent
@@ -185,8 +188,9 @@ Despite this, the lowest $E^1t^2$ value for both codes occurs at 3.2 GHz, meanin
 While useful, this simple analysis fails to account for potential co-opti\-misa\-tion of activity factor and P-state.
 It is possible that different optimisations may be required to achieve optimal performance in different P-states.
 The flexibility of POSE allows us to model this scenario by considering optimisations which can impact P-state as well as activity factor.
-\autoref{eq:pbfreq} gives the feasible performance envelope corresponding to this class of optimisation.
 
+\autoref{eq:pbfreq} gives the feasible performance envelope corresponding to this class of optimisation.
+We choose 3.2 GHz as our initial `unoptimised' baseline because this is the P-state our system defaults to when running MiniMD or LavaMD.
 \begin{align}
   \label{eq:pbfreq}
   \begin{split}
@@ -214,9 +218,9 @@ The flexibility of POSE allows us to model this scenario by considering optimisa
 \label{fig:pstates}%
 \end{figure*}%
 
-We choose the 3.2 GHz run as our initial `unoptimised' baseline because this is the P-state our system defaults to when running MiniMD or LavaMD.
-If the POSE models for two P-states do not overlap then switching to the higher performance P-state outperforms any possible power optimisation at the weaker state.
-This state can then be excluded from any search for power optimisations.
+If two P-states have overlapping POSE models then it may be possible for a power optimised code running at the lower frequency P-state to outperform an unoptimised code running at a higher frequency.
+Conversely, if their POSE models do not overlap then switching to the higher performance P-state dominates any possible power optimisation at the weaker state.
+This analysis allows the weaker state to be excluded from any search for power optimisations.
 
 For MiniMD, \autoref{fig:minimd-pstates} shows that the first POSE model which does not overlap with that for our baseline occurs at 2.2 GHz.
 This means that no power optimisations exist at P-states 2.2 GHz and below which can match the $E^1t^2$ performance of our unoptimised baseline.
@@ -224,4 +228,4 @@ Conversely, such an optimisation may exist at frequencies between 3.2 GHz and 2.
 For LavaMD this optimisation threshold is lower at 2.1 GHz, lending support to the claim that of these two codes LavaMD is more amenable to power optimisation.
 
 Dynamic Concurrency Throttling has also been proposed as a means to reduce energy consumption~\cite{maury:2006aa}.
-It would be trivial to use POSE to model optimisations which influence core count; requiring a small change to the parameterisation of the feasible performance envelope ($C_{min}=1$).
+POSE could be used to model such optimisations in a similar manner to our P-state investigation; the only difference being the parameterisation of the feasible performance envelope ($C_{min}=1$).
