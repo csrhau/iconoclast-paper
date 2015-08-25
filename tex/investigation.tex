@@ -7,6 +7,7 @@ CPU energy consumption accounts for a significant portion of the energy used by 
 It can also be measured accurately on commodity hardware~\cite{hackenberg:2013aa} making it a suitable candidate for POSE modelling.
 
 Our experiments were carried out on an Intel Core i5-3470 Ivy Bridge CPU, which supports Intel's Running Average Power Limit (RAPL) technology~\cite{david:2010aa}.
+The choices of platform and power measurement technique were motivated by their availability as POSE places no restrictions on either.
 
 \subsection{CPU Power Consumption}
 \label{ssec:cpupower}
@@ -92,7 +93,8 @@ The results of this characterisation are presented in \autoref{tab:fpe_params}, 
 \noindent
 Having characterised our system we now proceed to build POSE models for benchmarks in the Mantevo and Rodinia suites.
 These codes were compiled with ICC version 14.0.0.
-Codes were run with default configurations where available.
+Applications were run with the default configuration given by their documentation where available.
+In the absence of suitable defaults parameters were chosen to yield runtimes in line with the other applications.
 The energy and runtime costs incurred by running each code is given in \autoref{tab:code_metrics}.
 
 \begin{table}
@@ -103,10 +105,8 @@ The energy and runtime costs incurred by running each code is given in \autoref{
   \input{tab/tex/code_metrics.tex}
 \end{table}
 
-All codes ran in parallel across four cores.
-They also spent a negligible amount of time waiting for resources. 
-This allowed the CPU to run at its maximum supported frequency of 3.2 GHz.
-For the first stage of this investigation we disregard optimisations which reduce parallelism ($C < 4$) or processor throughput (S < 3.2 GHz).
+All codes ran in parallel across four cores and spent negligible time waiting for resources.
+We therefore disregard optimisations which reduce parallelism ($C < 4$) or processor throughput (S < 3.2 GHz).
 The benchmark configurations used were $(\text{3.2 GHz}, \alpha, 4)$ for $P_{min}$ and $(\text{3.2 GHz}, \beta, 4)$ for $P_{max}$, yielding power draws of 26.88W and 49.61W respectively.
 
 \begin{table}
