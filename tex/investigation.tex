@@ -107,7 +107,14 @@ The energy and runtime costs incurred by running each code is given in \autoref{
 
 All codes ran in parallel across four cores and spent negligible time waiting for resources.
 We therefore disregard optimisations which reduce parallelism ($C < 4$) or processor throughput (S < 3.2 GHz).
-The benchmark configurations used were $(\text{3.2 GHz}, \alpha, 4)$ for $P_{min}$ and $(\text{3.2 GHz}, \beta, 4)$ for $P_{max}$, yielding power draws of 26.88W and 49.61W respectively.
+This corresponds to the feasible performance envelope given by \autoref{eq:pbfreq}.
+\begin{align}
+  \label{eq:pbfreq}
+  \begin{split}
+    P_{min} &= (3.2\text{ GHz}, \alpha, 4) = 26.88W, \\
+    P_{max} &= (3.2\text{ GHz}, \beta, 4) = 49.61W
+  \end{split}
+\end{align}
 
 \begin{table}
   \setlength{\tabcolsep}{.5em}
@@ -189,10 +196,10 @@ While useful, this simple analysis fails to account for potential co-opti\-misa\
 It is possible that different optimisations may be required to achieve optimal performance in different P-states.
 The flexibility of POSE allows us to model this scenario by considering optimisations which can impact P-state as well as activity factor.
 
-\autoref{eq:pbfreq} gives the feasible performance envelope corresponding to this class of optimisation.
+\autoref{eq:fsfreq} gives the feasible performance envelope corresponding to this class of optimisation.
 We choose 3.2 GHz as our initial `unoptimised' baseline because this is the P-state our system defaults to when running MiniMD or LavaMD.
 \begin{align}
-  \label{eq:pbfreq}
+  \label{eq:fsfreq}
   \begin{split}
     P_{min} &= (1.6\text{ GHz}, \alpha, 4) = 13.51W, \\
     P_{max} &= (3.2\text{ GHz}, \beta, 4) = 49.61W
