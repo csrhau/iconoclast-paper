@@ -43,9 +43,9 @@ This approach has also been applied to modelling energy consumption, with exampl
 \subsection{Heuristic Models}
 Heuristic models represent the most abstract category of performance models and the one to which our work belongs.
 Rather than attempting to faithfully represent an entire system, heuristic models provide a simplified analogy which helps developers reason about particular properties of a code.
-Ease of construction and the clarity of their insights mean heuristic models are well suited to early stages of optimisation.
+Ease of construction and the clarity of their insights mean heuristic models are well suited to the early stages of optimisation.
 
-Ahmdal's Law~\cite{amdahl:1967aa}, arguably the best known heuristic model, states that the performance gains from parallelization are limited by the serial portion of a parallel program.
+Ahmdal's Law~\cite{amdahl:1967aa}, arguably the best known heuristic model, states that the performance gains from parallelisation are limited by the serial portion of a parallel program.
 A further example of this class is the Roofline model~\cite{williams:2009aa}, which frames application performance in terms of its operational intensity and two system bottlenecks; off-chip memory bandwidth and floating point performance.
 This simplification limits Roofline's use as a predictive model but does mean a developer can easily isolate the limiting factor of code performance and target their optimisation efforts accordingly.
 
@@ -59,4 +59,4 @@ Horowitz proposed the Energy Delay Product as a metric to evaluate the energy an
 Brooks extended this by weighting each component to better reflect the demands of specific domains~\cite{brooks:2000ab}.
 We refer to these as the $E^mt^n$ family of metrics, which includes power ($E^1t^{-1}$), energy ($E^1t^0$) and time ($E^0t^1$) as members.
 
-Most of the examples found in this paper use Energy Delay Squared Product ($E^1t^2$); described by Brooks as the most appropriate $E^mt^n$ metric when considering a fixed micro-architecture \cite{brooks:2000aa}.
+Most of the examples found in this paper use Energy Delay Squared Product ($E^1t^2$), described by Brooks \emph{et al.}\ as the most appropriate $E^mt^n$ metric when considering a fixed micro-architecture \cite{brooks:2000aa}.

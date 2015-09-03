@@ -28,7 +28,7 @@ P_{leak} = V\times I_{leak} \label{eq:staticpwr}
 \autoref{eq:dynpwr} is an approximation for dynamic power in which $C$ denotes load capacitance, $V$ the supply voltage, $A$ the activity factor and $f$ the clock frequency.
 \autoref{eq:staticpwr} is a simplified expression for leakage power which exploits the fact that leakage current ($I_{leak}$) is not related to workload~\cite{kim:2003aa}.
 
-Activity factor captures the fraction of logic elements which change state each clock cycle.
+Activity factor captures the fraction of logic elements that change state each clock cycle.
 Frequency and supply voltage vary in tandem, taking values from a set of \textit{(frequency, voltage)} pairs known as P-states.
 Dynamic Voltage and Frequency Scaling (DVFS) selects a P-state based on workload, or places the CPU into an energy saving mode if no work is available.
 Finally, capacitance and leakage current are constants dictated by hardware design.
@@ -94,7 +94,7 @@ The results of this characterisation are presented in \autoref{tab:fpe_params}, 
 Having characterised our system we now proceed to build POSE models for benchmarks in the Mantevo and Rodinia suites.
 These codes were compiled with ICC version 14.0.0.
 Applications were run with the default configuration given by their documentation where available.
-In the absence of suitable defaults parameters were chosen to yield runtimes in line with the other applications.
+In the absence of suitable defaults, parameters were chosen to yield runtimes in line with the other applications.
 The energy and runtime costs incurred by running each code is given in \autoref{tab:code_metrics}.
 
 \begin{table}
@@ -106,7 +106,7 @@ The energy and runtime costs incurred by running each code is given in \autoref{
 \end{table}
 
 All codes ran in parallel across four cores and spent negligible time waiting for resources.
-We therefore disregard optimisations which reduce parallelism ($C < 4$) or processor throughput (S < 3.2 GHz).
+We therefore disregard optimisations which reduce parallelism (C < 4) or processor throughput (S < 3.2 GHz).
 This corresponds to the feasible performance envelope given by \autoref{eq:pbfreq}.
 \begin{align}
   \label{eq:pbfreq}
