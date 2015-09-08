@@ -67,6 +67,7 @@ Again the equation for the Contribution Bound depends on the metric chosen.
   E_{\lambda} &= (\frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n+1})^{\frac{1}{m}} 
 \end{align}
 
+\noindent
 We seek to use the most appropriate tools while searching for optimisations.
 If an optimisation yields significant reductions in runtime, with only minor reductions in power consumption, then it is reasonable to classify it as a runtime optimisation.
 Conventional time-based profilers and performance engineering tools are therefore better suited to finding these optimisations.
@@ -84,7 +85,6 @@ All optimisations below this limit strictly dominate any possible power optimisa
 
 \subsection{POSE Insights}
 \noindent
-
 POSE partitions the feasible performance envelope of \autoref{fig:technique} into areas with differing performance characteristics.
 Area 1 contains runtime optimisations which dominate the best case power optimisation in terms of $M$ (\emph{Strong Runtime Optimisation}).
 Area 2 contains runtime optimisations which dominate $\theta$ in terms of $M$, yet may be outperformed by some power optimised version of $\theta$ (\emph{Weak Runtime Optimisation}).

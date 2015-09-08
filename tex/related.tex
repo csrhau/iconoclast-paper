@@ -24,6 +24,7 @@ Performance modelling techniques enable the rapid exploration of large hardware 
 
 \noindent
 \subsection{Simulators} 
+\noindent
 Performance simulators such as SST~\cite{rodrigues:2011aa}, WARRP~\cite{hammond:2009aa} and PACE~\cite{cao:2000aa} gather performance data by executing a simplified representation of the original code.
 Using code as a modelling input reduces the burden of model construction placed on the user, meaning model accuracy depends instead on how faithfully the simulator is able to model an underlying system.
 
@@ -33,6 +34,7 @@ Tools such as Wattch~\cite{brooks:2000aa} and McPAT~\cite{li:2009aa} extend perf
 These models use the energy costs associated with particular hardware actions to estimate the power consumption characteristics of simulated code.
 
 \subsection{Analytical Models} 
+\noindent
 Analytical models distil the structure and performance of a program into parameterised mathematical expressions.
 Analytical models produce results more quickly than simulations, making them particularly suitable for parameter sweeps.
 Ensuring the model is expressive enough to capture all possible program behaviours is challenging however and requires a deep understanding of the target application.
@@ -41,6 +43,7 @@ Examples of this approach include LogP~\cite{culler:1993aa}, LogGP~\cite{alexand
 This approach has also been applied to modelling energy consumption, with examples including BTL~\cite{manousakis:2012aa} and CAPE~\cite{kamble:1997aa}.
 
 \subsection{Heuristic Models}
+\noindent
 Heuristic models represent the most abstract category of performance models and the one to which our work belongs.
 Rather than attempting to faithfully represent an entire system, heuristic models provide a simplified analogy which helps developers reason about particular properties of a code.
 Ease of construction and the clarity of their insights mean heuristic models are well suited to the early stages of optimisation.
