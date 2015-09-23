@@ -75,12 +75,13 @@ This tool is designed to trigger near-peak power consumption across a range of x
 It consists of hand optimised assembly routines which raise the activity factor above the level achievable with high level languages.
 Prime95 and Linpack were also evaluated as $\beta$ benchmarks however they were outperformed by FIRESTARTER.
 
+We extended the Unix \texttt{time} binary to measure cumulative power consumption figures.
+Our tool polls the RAPL interface periodically to identify and compensate for any wraparound of the RAPL registers.
+Techniques described by Hahnel~et~al.~\cite{hahnel:2012aa} were used to promote measurement accuracy.
+
 The benchmark parameter space is small enough for us to fully characterise our processor by measuring all $(S,A,C)$ configurations.
 Benchmarking runs lasted for 120 seconds, allowing sufficient time for power readings to stabilise.
-We extended the Unix \texttt{time} binary to gather power consumption figures using RAPL.
-Techniques described by Hahnel~et~al.~\cite{hahnel:2012aa} were used to promote measurement accuracy.
 The results of this characterisation are presented in \autoref{tab:fpe_params}, which identifies P-states by their frequency component.
-
 \begin{table}
   \scriptsize
   \centering
@@ -124,18 +125,23 @@ This corresponds to the feasible performance envelope given by \autoref{eq:pbfre
   \centering
   \caption{Time (s)}
   \input{tab/tex/code_pose_time.tex}
+  \label{tab:pose_params_time}
   \end{subtable}
   \par\bigskip 
   \begin{subtable}{\linewidth}
   \centering
   \caption{Energy (J)}
   \input{tab/tex/code_pose_energy.tex}
+  \label{tab:pose_params_energy}
   \end{subtable}
   \label{tab:pose_params}
 \end{table}
 
 \noindent
 \autoref{tab:pose_params} summarises the POSE models constructed for each code.
+The time and energy costs of each code are given in the $\theta$ columns of \autoref{tab:pose_params_time} and \autoref{tab:pose_params_energy} respectively.
+The POSE model coordinates given in the remaining columns are obtained by solving Equations \ref{eq:optimisation} and \ref{eq:contribution} for these values, as described in \autoref{sec:pose}.
+
 The remainder of this section focusses on MiniMD and LavaMD as the two codes representing the extremes of power consumption.
 POSE models for these two codes are reproduced graphically in \autoref{fig:minimd_pose} and \autoref{fig:lavamd_pose}, and the results of these models are presented in \autoref{tab:summaries}.
 Results for the remaining codes can be found in the Appendix.

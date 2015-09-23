@@ -5,7 +5,7 @@ Energy is the integral of power consumed over time, or put simply $E = \bar{P}t$
 As such, the energy efficiency of a code can be achieved either through shortening its runtime ($t$) with conventional program optimisations or reducing average power consumption ($\bar{P}$) with power optimisations.
 POSE enables performance engineers to compare the potential benefits of each approach for a given code and thus focus their efforts on whichever offers the greatest rewards.
 
-The POSE heuristic partitions the energy/runtime plane into areas with differing performance characteristics relative to some initial unoptimised code.
+The POSE heuristic partitions the energy/runtime plane into areas with differing performance characteristics relative to some initial unoptimised code and input.
 POSE is a general purpose heuristic which applies to all members of the $E^mt^n$ group with $m > 0$ and $n \geq 0$, and indeed any metric that increases in line with runtime and energy consumption.
 We introduce the bounds which make up POSE and provide their derivations for the $E^mt^n$ family of metrics.
 The only prerequisites of our model are that time and energy consumption can be accurately measured or calculated for the target platform.
@@ -65,6 +65,7 @@ Again the equation for the Contribution Bound depends on the metric chosen.
  {P_{\lambda}}^m &= \frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n} \nonumber \\ 
  {E_{\lambda}}^m &= \frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n+1} \nonumber \\ 
   E_{\lambda} &= (\frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n+1})^{\frac{1}{m}} 
+  \label{eq:contribution}
 \end{align}
 
 \noindent
