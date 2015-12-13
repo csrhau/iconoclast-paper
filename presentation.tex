@@ -32,6 +32,9 @@
 
 \begin{document}
   \frame{\titlepage}
+
+  % Something about how POSE was motivated by disingenuous work
+
   \begin{frame}
     \frametitle{Introduction}
     \begin{itemize}
@@ -41,7 +44,7 @@
         \item $\bar{P}$: Power Optimisation
         \item $t$: Runtime Optimisation
       \end{itemize}
-      \item Runtime optimisation is well established. Can we apply the same techniques to optimise for energy? No
+      \item Runtime optimisation is well established. Can we apply similar techniques to optimise for energy? No
        \begin{itemize}
         \item Runtime optimizations can increase energy consumption
         \item Power optimisations can increase runtime \textbf{and} energy consumption
@@ -69,18 +72,41 @@
         &= \bar{P} \times t^2
   \end{align}
   \item $ED^2P$ and $ED^3P$ are also used.
-  \item In general we refer to the $E^mt^n$ metrics 
+  \item In general we refer to these as $E^mt^n$ metrics 
   \end{itemize}
   \end{frame}
 
   \begin{frame}
+    \frametitle{Motivation for POSE}
+    \begin{itemize}
+      \item{How much a given code may benefit from energy optimisation}
+      \begin{itemize}
+        \item{Optimisation is expensive and time consuming}
+        \item{Facilitates cost/benefit analysis}
+      \end{itemize}
+      \item{Whether to focus on reducing power or runtime}
+      \begin{itemize}
+        \item{A heuristic for sensitivity analysis}
+        \item{Depends on the metric chosen}
+      \end{itemize}
+      \item{Whether an optimisation counts as energy optimisation}
+      \begin{itemize}
+        \item{Many purported energy optimisations simply reduce runtime}
+      \end{itemize}
+    \end{itemize}
+   \end{frame}
+
+  \begin{frame}
     \frametitle{Feasible Performance Envelope}
     \begin{itemize}
-      \item Area corresponding to all feasible rates of power consumption
-      \item Depicted with lines of gradient $P_{max}$, $P_{min}$ in plot
+      \item POSE is built around the Feasible Performance Envelope
+      \item The Feasible Performance Envelope contains all possible values for the rate of power consumption 
+      \begin{itemize}
+      \item Depicted as the area between lines of gradient $P_{max}$ and $P_{min}$
+      \end{itemize}
       \item All $\langle Runtime, Energy \rangle$ program costs lie within this envelope
       \begin{itemize}
-        \item For an initial code $\theta$, any modified version $\lambda$ must remain within this envelope
+        \item For an initial code $\theta$, any modified version $\lambda$ must also exist within this envelope
       \end{itemize}
     \end{itemize}
   \end{frame}
@@ -93,6 +119,34 @@
     \caption{Feasible Performance Envelope}
     \end{figure}
   \end{frame}
+
+  \begin{frame}
+    \frametitle{Measurement of $P_{max}$}
+    \begin{itemize}
+      \item Avoid vendor-published TDPs
+      \begin{itemize}
+        \item Typically Overly Conservative Estimates
+      \end{itemize}
+      \item Trialled several stress-test binaries
+      \begin{itemize}
+        \item Linpack
+        \item Streams
+        \item Prime95
+        \item FIRESTARTER
+      \end{itemize}
+      \item Settled on FIRESTARTER as the most energy intensive
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Measurement of $P_{min}$}
+    \begin{block}{$P_{min}$ Assembly Benchmark}
+      \lstinputlisting[language=Python]{listings/noploop.asm}
+    \end{block}
+  \end{frame}
+
+
+
 
   \begin{frame}
     \frametitle{Optimisation Bound}
@@ -121,7 +175,7 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
     \begin{definition}
       Optimisation $\theta \to \lambda$ with respect to metric $M$ to be a power optimisation if the change in power draw it delivers is responsible for the majority of the reduction in $M$. 
       \end{definition}
- All power-otimised versions of $\theta$ must lie below the bound linking all points for which power and runtime factors contribute to $M$ in the same ratio as $\theta$.
+ All power-optimised versions of $\theta$ must lie below the bound linking all points for which power and runtime factors contribute to $M$ in the same ratio as $\theta$.
 \begin{align}
 \frac{{P_{\lambda}}^m}{{t_{\lambda}}^{m+n}} &= \frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \nonumber \\
  {P_{\lambda}}^m &= \frac{{P_{\theta}}^m}{{t_{\theta}}^{m+n}} \times {t_\lambda}^{m+n} \nonumber \\ 
@@ -205,29 +259,6 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
   \end{frame}
 
 
-  \begin{frame}
-    \frametitle{Baseline Measurement}
-    \begin{itemize}
-      \item No-op code
-    \end{itemize}
-  \end{frame}
-
-
-
-  \begin{frame}
-    \frametitle{Roofline Measurement}
-    \begin{itemize}
-      \item Avoided published TDP - overly conservative estimate
-      \item Trialled several stress-test binaries
-      \begin{itemize}
-        \item Linpack
-        \item Streams
-        \item Prime95
-        \item FIRESTARTER
-      \end{itemize}
-      \item Settled on FIRESTARTER as the most energy intensive
-    \end{itemize}
-  \end{frame}
 
   \begin{frame}
     \frametitle{MiniMD}
@@ -273,23 +304,17 @@ The lowest value of $Et^2$ within the envelope is 6332608.91, an improvement of 
 Runtime optimization will be required to deliver any improvements above this level.
 We also know that a speedup of 1.11x, or 6.26s, is guaranteed to beat $\theta$ in terms of $Et^2$.
 Finally, a runtime optimisation of 1.25x, or 13.06s, is guaranteed to beat any power optimised version of $\theta$ in terms of $Et^2$ 
-\end{frame}
-
+  \end{frame}
   \begin{frame}
-    \frametitle{Status}
+    \frametitle{Work Ongoing}
     \begin{itemize}
-    \item Writing Up
-    \item Deadlines:
-    \begin{itemize}
-      \item EPEW Abstract Submission: May 12 
-      \item UKPEW deadline: May 29
-    \end{itemize}
-    \item Proofreading welcome
+      \item{Integration of POSE into Allinea Performance Reports}
+      \item{Case Study: Characterising the energy consumption characteristics of codes run on Warwick's Tinis cluster} 
+      \item{Energy-Aware code optimisation of Hydra and OP2}
     \end{itemize}
   \end{frame}
 
-
   \begin{frame}
-    \frametitle{Questions}
+    \frametitle{Questions?}
   \end{frame}
 \end{document}
