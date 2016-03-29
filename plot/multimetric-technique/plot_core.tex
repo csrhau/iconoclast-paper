@@ -8,7 +8,7 @@
     ylabel={Energy (\emph{J})},    
     xmin=0, xmax=50,
     ymin=0, ymax=3300,
-    width=0.80\linewidth,
+    width=0.90\linewidth,
     legend style={legend pos=north west}
     ]
 
@@ -56,11 +56,11 @@
 
 
     % ALPHA BASELINE BOUND 
-    \addplot[name path=basebound, color=printgreen, very thick, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
+    \addplot[name path=basebound, color=printgreen, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\baselinepower * x};
     \addlegendentry{$P_{min}$ Energy Bound} 
     
     % BETA ROOFLINE BOUND 
-    \addplot[color=printred, very thick, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
+    \addplot[color=printred, domain=\pgfkeysvalueof{/pgfplots/xmin}:\pgfkeysvalueof{/pgfplots/xmax}] {\rooflinepower * x};
     \addlegendentry{$P_{max}$ Energy Bound}
 
     \node[circle,fill,inner sep=1pt] at (axis cs:\codetime,\codeenergy) {};

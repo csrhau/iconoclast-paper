@@ -27,27 +27,45 @@
 }
 \subject{Computer Science}
 
-
 \input{tex/doc_utils}
 
 \begin{document}
   \frame{\titlepage}
-
   % Something about how POSE was motivated by disingenuous work
 
   \begin{frame}
-    \frametitle{Introduction}
+    \frametitle{Background}
     \begin{itemize}
-      \item Energy is the integral of power over time, or $E = \bar{P}t$
-      \item Energy consumption can be reduced via either term:
+      \item<1-> Energy consumption is limiting HPC performance
+      \begin{itemize}
+        \item Cost of ownership increasingly defined by energy bills
+        \item Power dissipation and dark silicon
+      \end{itemize}
+      \item<2-> Performance at any cost is no longer a viable model
+      \item<3-> Exacerbated by the breakdown of Dennard scaling
+      \begin{itemize}
+        \item Incremental improvements to energy efficiency 
+        \item Exponential increases in system performance
+      \end{itemize}
+      \item<4-> Software optimisation will have a role to play
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Problem: Energy/Runtime/Power Trade off}
+    \begin{itemize}
+      \item<1-> Energy is the integral of power over time; $E = \bar{P}t$
+      \begin{itemize}
+      \item Energy consumption can be reduced via either:
       \begin{itemize}
         \item $\bar{P}$: Power Optimisation
         \item $t$: Runtime Optimisation
       \end{itemize}
-      \item Runtime optimisation is well established. Can we apply similar techniques to optimise for energy? No
+      \end{itemize}
+      \item<2-> Runtime optimisation is well established. Can we apply similar techniques to optimise for energy? \textbf{No}
        \begin{itemize}
-        \item Runtime optimizations can increase energy consumption
-        \item Power optimisations can increase runtime \textbf{and} energy consumption
+        \item<3-> Runtime optimisations can increase energy consumption
+        \item<3-> Power optimisations can increase both runtime \textbf{and} energy consumption
       \end{itemize}
     \end{itemize}
   \end{frame}
@@ -63,44 +81,61 @@
   \begin{frame}
   \frametitle{Metrics}
   \begin{itemize}
-  \item Our metric must combine both power and runtime
-  \item Energy is a candidate in energy-critical domains
-  \item Energy Delay Product (EDP) gives a greater weighting to runtime:
+  \item<1-> Practical metrics combine power and runtime costs
+  \item<2-> Energy is a candidate in energy-critical domains
+  \item<3-> Energy Delay Product (EDP) is weighted in favour of runtime:
   \begin{align}
     EDP &= Energy \times Runtime \nonumber \\
         &= E \times t \nonumber \\
         &= \bar{P} \times t^2
   \end{align}
-  \item $ED^2P$ and $ED^3P$ are also used.
-  \item In general we refer to these as $E^mt^n$ metrics 
+  \item<4-> $ED^2P$ and $ED^3P$ are also used.
+  \item<4-> In general we refer to these as $E^mt^n$ metrics 
   \end{itemize}
   \end{frame}
 
   \begin{frame}
     \frametitle{Motivation for POSE}
     \begin{itemize}
-      \item{How much a given code may benefit from energy optimisation}
+      \item<1-> A lightweight `first-cut' modelling tool
+      \begin{itemize}
+        \item Inspired by the Roofline model
+        \item Metric and platform agnostic 
+        \item Allinea Performance Reports 
+      \end{itemize}
+      \item<2->{Will energy optimisation improve our code?}
       \begin{itemize}
         \item{Optimisation is expensive and time consuming}
-        \item{Facilitates cost/benefit analysis}
+        \item{POSE facilitates cost/benefit analysis}
       \end{itemize}
-      \item{Whether to focus on reducing power or runtime}
+      \item<3->{Should optimisation efforts target power or runtime?}
       \begin{itemize}
         \item{A heuristic for sensitivity analysis}
         \item{Depends on the metric chosen}
       \end{itemize}
-      \item{Whether an optimisation counts as energy optimisation}
+      \item<4->{Whether an optimisation counts as energy optimisation}
       \begin{itemize}
-        \item{Many purported energy optimisations simply reduce runtime}
+        \item Runtime optimisations misreported as energy optimisations 
       \end{itemize}
     \end{itemize}
    \end{frame}
+
+   \begin{frame}
+    \frametitle{Aside: Allinea Performance Reports}
+    \begin{center}
+      \includegraphics[height=0.9\textheight]{graphics/apr}
+    \end{center}
+   \end{frame}
+
+
 
   \begin{frame}
     \frametitle{Feasible Performance Envelope}
     \begin{itemize}
       \item POSE is built around the Feasible Performance Envelope
-      \item The Feasible Performance Envelope contains all possible values for the rate of power consumption 
+      \begin{itemize}
+      \item Describes the values system power consumption can take 
+      \end{itemize}
       \begin{itemize}
       \item Depicted as the area between lines of gradient $P_{max}$ and $P_{min}$
       \end{itemize}
@@ -120,40 +155,13 @@
     \end{figure}
   \end{frame}
 
-  \begin{frame}
-    \frametitle{Measurement of $P_{max}$}
-    \begin{itemize}
-      \item Avoid vendor-published TDPs
-      \begin{itemize}
-        \item Typically Overly Conservative Estimates
-      \end{itemize}
-      \item Trialled several stress-test binaries
-      \begin{itemize}
-        \item Linpack
-        \item Streams
-        \item Prime95
-        \item FIRESTARTER
-      \end{itemize}
-      \item Settled on FIRESTARTER as the most energy intensive
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}
-    \frametitle{Measurement of $P_{min}$}
-    \begin{block}{$P_{min}$ Assembly Benchmark}
-      \lstinputlisting[language=Python]{listings/noploop.asm}
-    \end{block}
-  \end{frame}
-
-
-
 
   \begin{frame}
     \frametitle{Optimisation Bound}
     \begin{definition}
     For two logically equivalent codes $\theta$ and $\lambda$, the transformation ${\theta \to \lambda}$ is a valid optimisation with respect to a cost metric $M$ if and only if ${M(\lambda) < M(\theta)}$. 
     \end{definition}
-All optimized versions of $\theta$ must lie below the bound linking all points where ${M(\lambda) = M(\theta)}$.
+All optimised versions of $\theta$ must lie below the bound linking all points where ${M(\lambda) = M(\theta)}$.
 \begin{align}
  {E_\lambda}^m{t_\lambda}^n &= {E_\theta}^m{t_\theta}^n \nonumber \\
  {E_\lambda}^m &= \frac{{E_\theta}^m{t_\theta}^n}{{t_\lambda}^n} \nonumber \\
@@ -199,7 +207,7 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
     \frametitle{Optimisation Limit}
     \begin{itemize}
       \item Shares same definition as Optimisation Bound, except drawn from the maximally power optimised point
-      \item Subdivides runtime optimized area of the Feasible Performance Area
+      \item Subdivides runtime optimised area of the Feasible Performance Area
       \begin{itemize}
         \item Optimisations dominated by best possible power optimisation
         \item Optimisations which dominate best possible power optimisation
@@ -230,8 +238,22 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
     \end{figure}
   \end{frame}
 
-
-
+  \begin{frame}
+    \frametitle{Pose Insights for Power Optimisation}
+    \begin{itemize}
+      \item<1-> For power optimisation:
+      \begin{itemize}
+        \item $E_{\theta} - E_{D}$ - best case energy savings 
+        \item $M_{\theta} - M_{C}$ - best case improvement in $M$
+        \item $T_{E} - T_{\theta}$ - maximum performance penalty
+      \end{itemize}
+      \item<2-> For runtime optimisation:
+      \begin{itemize}
+        \item $T_{\theta} / T_{B}$ - speedup required to guarantee $M$ improves 
+        \item $T_{\theta} / T_{A}$ - speedup which outperforms power optimisation
+      \end{itemize}
+    \end{itemize}
+  \end{frame}
 
   \begin{frame}
     \frametitle{Metric Agnostic POSE}
@@ -241,11 +263,6 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
     \end{figure}
   \end{frame}
 
-
-
-
-
-
   \begin{frame}
     \frametitle{Investigation}
     \begin{itemize}
@@ -254,11 +271,34 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
         \item MiniMD
         \item LavaMD
       \end{itemize}
+      \item Avoid vendor-published TDPs
+      \begin{itemize}
+        \item Typically Overly Conservative Estimates
+      \end{itemize}
       \item Intel RAPL for power measurements
     \end{itemize}
   \end{frame}
 
+  \begin{frame}
+    \frametitle{Measurement of $P_{max}$}
+    \begin{itemize}
+      \item Evaluated several stress-test binaries
+      \begin{itemize}
+        \item Linpack
+        \item Streams
+        \item Prime95
+        \item FIRESTARTER
+      \end{itemize}
+      \item Settled on FIRESTARTER as the most energy intensive
+    \end{itemize}
+  \end{frame}
 
+  \begin{frame}
+    \frametitle{Measurement of $P_{min}$}
+    \begin{block}{$P_{min}$ Assembly Benchmark}
+      \lstinputlisting[language=Python]{listings/noploop.asm}
+    \end{block}
+  \end{frame}
 
   \begin{frame}
     \frametitle{MiniMD}
@@ -277,12 +317,12 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
 
   \begin{frame}
     \frametitle{MiniMD Report}
-    For MiniMD, the longest runtime within the Power Optimized Software Envelope is 30.70s.
-    This means that any optimization which trades increased runtime for improved power efficiency can slow MiniMD down by at most 0.41s before $Et^2$ becomes strictly worse.
+    For MiniMD, the longest runtime within the Power Optimised Software Envelope is 30.70s.
+    This means that any optimisation which trades increased runtime for improved power efficiency can slow MiniMD down by at most 0.41s before $Et^2$ becomes strictly worse.
     The upper limit of energy to be saved from power optimisation alone for MiniMD running on our target platform is is 32.82J.
 
     The lowest value of $Et^2$ within the envelope is 718232.78, an improvement of 7.60\% over the baseline code. 
-    Runtime optimization will be required to deliver any improvements above this level.
+    Runtime optimisation will be required to deliver any improvements above this level.
     We also know that a speedup of, 1.16x, or 4.16s, is guaranteed to beat $\theta$ in terms of $Et^2$.
     Finally, a speedup of 1.19x, or 4.84s, is guaranteed to beat any power optimised version of $\theta$ in terms of $Et^2$
   \end{frame}
@@ -296,12 +336,12 @@ All optimized versions of $\theta$ must lie below the bound linking all points w
   \end{frame}
   \begin{frame}
     \frametitle{LavaMD Report}
-For LavaMD, the longest runtime within the Power Optimized Software Envelope as 69.76s.
-This means that any optimization which trades increased runtime for improved power efficiency can slow LavaMD down by at most 4.12s before $Et^2$ becomes strictly worse.
-The upper limit of energy to be saved from power optimization alone is 353.36J.
+For LavaMD, the longest runtime within the Power Optimised Software Envelope as 69.76s.
+This means that any optimisation which trades increased runtime for improved power efficiency can slow LavaMD down by at most 4.12s before $Et^2$ becomes strictly worse.
+The upper limit of energy to be saved from power optimisation alone is 353.36J.
 
 The lowest value of $Et^2$ within the envelope is 6332608.91, an improvement of 30.59\% over the baseline code.
-Runtime optimization will be required to deliver any improvements above this level.
+Runtime optimisation will be required to deliver any improvements above this level.
 We also know that a speedup of 1.11x, or 6.26s, is guaranteed to beat $\theta$ in terms of $Et^2$.
 Finally, a runtime optimisation of 1.25x, or 13.06s, is guaranteed to beat any power optimised version of $\theta$ in terms of $Et^2$ 
   \end{frame}
@@ -312,6 +352,13 @@ Finally, a runtime optimisation of 1.25x, or 13.06s, is guaranteed to beat any p
       \item{Case Study: Characterising the energy consumption characteristics of codes run on Warwick's Tinis cluster} 
       \item{Energy-Aware code optimisation of Hydra and OP2}
     \end{itemize}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Acknowledgements}
+      This research was part-funded through a U.K. Technology Strategy Board  project, number 131197 (Energy-Efficiency Tools For High-Performance Multi- and Many-core Applications).
+
+
   \end{frame}
 
   \begin{frame}
